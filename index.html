@@ -553,7 +553,7 @@
     }
 
     /* ═══════════════════════════════════════════
-       AGENT DEMO PAGE
+       AGENT DEMO PAGE — Redesigned
     ═══════════════════════════════════════════ */
     .agent-page {
       min-height: 100vh;
@@ -561,9 +561,11 @@
       flex-direction: column;
     }
     .agent-hero {
-      padding: 140px 0 60px;
+      padding: 120px 0 0;
       text-align: center;
     }
+
+    /* Loading State */
     .agent-hero__loading {
       display: flex;
       flex-direction: column;
@@ -572,8 +574,8 @@
       padding: 80px 0;
     }
     .spinner {
-      width: 48px; height: 48px;
-      border: 3px solid var(--border-color);
+      width: 40px; height: 40px;
+      border: 2px solid var(--border-color);
       border-top-color: var(--accent);
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
@@ -581,14 +583,15 @@
     @keyframes spin { to { transform: rotate(360deg); } }
     .agent-hero__loading-text {
       color: var(--text-secondary);
-      font-size: 1rem;
+      font-size: 0.95rem;
+      font-weight: 500;
     }
     .agent-hero__loading-steps {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
       font-family: var(--font-mono);
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-muted);
       text-align: left;
     }
@@ -601,122 +604,166 @@
     .agent-hero__loading-step.done { color: var(--success); }
     .agent-hero__loading-step.active { color: var(--accent); }
 
-    .agent-result {
-      max-width: 800px;
+    /* Result Card — unified layout */
+    .agent-card {
+      max-width: 640px;
       margin: 0 auto;
-      text-align: center;
-    }
-    .agent-result__name {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      margin-bottom: 8px;
-    }
-    .agent-result__address {
-      color: var(--text-secondary);
-      font-size: 1.1rem;
-      margin-bottom: 8px;
-    }
-    .agent-result__meta {
-      display: flex;
-      justify-content: center;
-      gap: 24px;
-      flex-wrap: wrap;
-      margin-bottom: 40px;
-    }
-    .agent-result__meta-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      color: var(--text-secondary);
-      font-size: 0.9rem;
-    }
-    .agent-result__meta-item span:first-child { font-size: 1.1rem; }
-
-    .agent-chat-area {
-      max-width: 700px;
-      margin: 0 auto;
-      padding-bottom: 80px;
-    }
-    .agent-chat__prompt-box {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
-      border-radius: var(--radius-xl);
-      padding: 48px 36px;
-      text-align: center;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 16px 64px rgba(0,0,0,0.4);
     }
-    .agent-chat__prompt-title {
-      font-size: 1.4rem;
-      font-weight: 700;
-      margin-bottom: 10px;
+    .agent-card__header {
+      padding: 40px 40px 28px;
+      border-bottom: 1px solid var(--border-color);
     }
-    .agent-chat__prompt-desc {
-      color: var(--text-secondary);
-      font-size: 1rem;
-      margin-bottom: 28px;
-    }
-    .agent-chat__buttons {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .agent-chat__btn {
+    .agent-card__source {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      padding: 14px 32px;
-      border-radius: var(--radius-xl);
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      padding: 4px 10px;
+      background: var(--bg-secondary);
+      border-radius: 100px;
+      border: 1px solid var(--border-color);
+    }
+    .agent-card__source-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 6px rgba(16,185,129,0.5);
+    }
+    .agent-card__name {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+      margin-bottom: 6px;
+    }
+    .agent-card__address {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+    .agent-card__meta {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+    .agent-card__meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+    }
+
+    /* Agent card body — the CTA area */
+    .agent-card__body {
+      padding: 32px 40px 40px;
+    }
+    .agent-card__label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+    .agent-card__body-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .agent-card__body-desc {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+    .agent-card__actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .agent-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: var(--radius-sm);
       font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 1rem;
+      font-weight: 600;
+      font-size: 0.9rem;
       cursor: pointer;
       border: none;
-      transition: all 0.25s;
+      transition: all 0.2s;
     }
-    .agent-chat__btn--voice {
-      background: linear-gradient(135deg, var(--accent-secondary), #9f67ff);
-      color: white;
-      box-shadow: 0 0 30px var(--accent-secondary-glow);
-    }
-    .agent-chat__btn--voice:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 50px var(--accent-secondary-glow);
-    }
-    .agent-chat__btn--chat {
-      background: linear-gradient(135deg, var(--accent), var(--accent-dim));
+    .agent-btn--voice {
+      background: var(--text-primary);
       color: var(--bg-primary);
-      box-shadow: 0 0 30px var(--accent-glow);
     }
-    .agent-chat__btn--chat:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 50px var(--accent-glow);
+    .agent-btn--voice:hover {
+      background: white;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(232,237,245,0.15);
+    }
+    .agent-btn--chat {
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+    }
+    .agent-btn--chat:hover {
+      border-color: var(--text-secondary);
+      transform: translateY(-1px);
     }
 
+    /* Build time badge under the card */
+    .agent-build-info {
+      text-align: center;
+      margin-top: 20px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+    .agent-build-info span { color: var(--success); }
+
+    /* GHL Widget area */
+    .agent-widget-area {
+      max-width: 640px;
+      margin: 24px auto 0;
+      padding-bottom: 60px;
+    }
+    #ghl-widget-container {
+      min-height: 100px;
+    }
+
+    /* Powered-by footer */
     .agent-powered-by {
       text-align: center;
-      padding: 40px 0;
+      padding: 32px 0;
       color: var(--text-muted);
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       margin-top: auto;
+      border-top: 1px solid var(--border-color);
     }
-    .agent-powered-by a { color: var(--accent); font-weight: 600; }
+    .agent-powered-by a { color: var(--text-secondary); font-weight: 600; }
 
-    #ghl-widget-container {
-      max-width: 700px;
-      margin: 0 auto;
-      min-height: 400px;
-    }
-
+    /* Error state */
     .agent-error {
       text-align: center;
       padding: 80px 20px;
     }
-    .agent-error__icon { font-size: 3rem; margin-bottom: 16px; }
-    .agent-error__title { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; }
+    .agent-error__icon { font-size: 2.5rem; margin-bottom: 16px; }
+    .agent-error__title { font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; }
     .agent-error__desc {
       color: var(--text-secondary);
-      font-size: 1rem;
+      font-size: 0.95rem;
       max-width: 400px;
       margin: 0 auto;
     }
@@ -731,8 +778,12 @@
       .section { padding: 60px 0; }
       .step { padding: 28px 22px; }
       .cta-section__box { padding: 40px 24px; }
-      .agent-chat__prompt-box { padding: 32px 20px; }
       .demo-input-wrap { flex-direction: column; }
+      .agent-card__header { padding: 28px 24px 22px; }
+      .agent-card__body { padding: 24px 24px 28px; }
+      .agent-card__name { font-size: 1.5rem; }
+      .agent-card__actions { flex-direction: column; }
+      .agent-btn { justify-content: center; }
     }
 
     .page { display: none; }
@@ -956,48 +1007,60 @@
             </div>
           </div>
 
-          <!-- Result State -->
-          <div class="agent-result" id="agent-result" style="display:none;">
-            <h1 class="agent-result__name" id="agent-biz-name"></h1>
-            <p class="agent-result__address" id="agent-biz-address"></p>
-            <div class="agent-result__meta" id="agent-biz-meta"></div>
+          <!-- Result: Unified Card -->
+          <div id="agent-result" style="display:none;">
+            <div class="agent-card">
+              <div class="agent-card__header">
+                <div class="agent-card__source" id="agent-source">
+                  <span class="agent-card__source-dot"></span>
+                  <span id="agent-source-url">Built from website data</span>
+                </div>
+                <h1 class="agent-card__name" id="agent-biz-name"></h1>
+                <p class="agent-card__address" id="agent-biz-address"></p>
+                <div class="agent-card__meta" id="agent-biz-meta"></div>
+              </div>
+              <div class="agent-card__body">
+                <div class="agent-card__label">AI Receptionist — Ready</div>
+                <h2 class="agent-card__body-title" id="agent-body-title">Your agent is live</h2>
+                <p class="agent-card__body-desc" id="agent-body-desc">
+                  This AI was trained on your business data. Ask it about services, hours, pricing — anything a customer would ask.
+                </p>
+                <div class="agent-card__actions">
+                  <button class="agent-btn agent-btn--voice" onclick="startVoiceDemo()">
+                    🎙 Voice Call
+                  </button>
+                  <button class="agent-btn agent-btn--chat" onclick="startChatDemo()">
+                    💬 Live Chat
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="agent-build-info" id="agent-build-info">
+              <span>●</span> Agent built in <span id="agent-build-time">5.1</span>s
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- Chat/Voice Area -->
-      <section class="agent-chat-area" id="agent-chat-area" style="display:none;">
-        <div class="agent-chat__prompt-box">
-          <h2 class="agent-chat__prompt-title">Meet your AI receptionist</h2>
-          <p class="agent-chat__prompt-desc" id="agent-chat-desc">
-            This agent was just trained on your business. Try asking it anything.
-          </p>
-          <div class="agent-chat__buttons">
-            <button class="agent-chat__btn agent-chat__btn--voice" onclick="startVoiceDemo()">
-              🎙️ Talk to AI
-            </button>
-            <button class="agent-chat__btn agent-chat__btn--chat" onclick="startChatDemo()">
-              💬 Chat with AI
-            </button>
-          </div>
-        </div>
-        <div id="ghl-widget-container" style="margin-top:32px;"></div>
-      </section>
+      <!-- GHL Widget injection point -->
+      <div class="agent-widget-area" id="agent-widget-area" style="display:none;">
+        <div id="ghl-widget-container"></div>
+      </div>
 
       <!-- Error State -->
       <div class="agent-error" id="agent-error" style="display:none;">
-        <div class="agent-error__icon">😕</div>
+        <div class="agent-error__icon">⚠</div>
         <h2 class="agent-error__title">Couldn't load this demo</h2>
         <p class="agent-error__desc" id="agent-error-desc">
-          We had trouble building the agent for this business. This could be a temporary issue — try refreshing.
+          We had trouble building the agent for this business. Try refreshing or check the URL.
         </p>
         <br/>
         <a href="/" class="btn btn--ghost">← Back to AgentCopyAI</a>
       </div>
 
-      <!-- Powered By -->
+      <!-- Footer -->
       <div class="agent-powered-by">
-        Powered by <a href="/">AgentCopyAI</a> — AI Receptionist Technology by ScaleLocal
+        Powered by <a href="/">AgentCopyAI</a> · ScaleLocal
       </div>
     </div>
   </div>
@@ -1122,45 +1185,48 @@
         setTimeout(() => input.style.borderColor = 'var(--border-color)', 1500);
         return;
       }
-      const slug = url
+      // Clean the URL into a slug — strip protocol, www, TLD, and trailing paths
+      var clean = url
         .replace(/^https?:\/\//, '')
         .replace(/^www\./, '')
-        .replace(/\/$/, '')
+        .replace(/\.(com|net|org|co|io|biz|us|info|dev|ai|app)(\/.*)?$/i, '')
+        .replace(/\/.*$/, '')
         .replace(/[^a-zA-Z0-9]+/g, '-')
+        .replace(/^-|-$/g, '')
         .toLowerCase();
-      window.location.href = '/agent/' + slug;
+      window.location.href = '/agent/' + clean;
     }
 
     /* ─────────────────────────────────────────
        AGENT DEMO PAGE
     ───────────────────────────────────────── */
     async function loadAgent(slug) {
-      const loading = document.getElementById('agent-loading');
-      const result = document.getElementById('agent-result');
-      const chatArea = document.getElementById('agent-chat-area');
-      const errorEl = document.getElementById('agent-error');
+      var loading = document.getElementById('agent-loading');
+      var result = document.getElementById('agent-result');
+      var widgetArea = document.getElementById('agent-widget-area');
+      var errorEl = document.getElementById('agent-error');
+      var buildStart = Date.now();
 
-      // Build display name from slug
-      const displayName = slug
+      // Strip TLDs for display name
+      var cleanSlug = slug.replace(/-(com|net|org|co|io|biz|us|info|dev|ai|app)$/i, '');
+      var displayName = cleanSlug
         .split('-')
-        .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+        .map(function(w) { return w.charAt(0).toUpperCase() + w.slice(1); })
         .join(' ');
 
       document.title = displayName + ' — AI Receptionist Demo | AgentCopyAI';
 
       try {
-        // Animated loading steps
         await animateStep('step-scrape', 1500);
         await animateStep('step-places', 1200);
 
-        // Call Cloudflare Worker (if configured)
-        let agentData;
+        var agentData;
         if (CONFIG.WORKER_URL) {
           try {
-            const res = await fetch(CONFIG.WORKER_URL + '/create-agent', {
+            var res = await fetch(CONFIG.WORKER_URL + '/create-agent', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ slug })
+              body: JSON.stringify({ slug: slug })
             });
             agentData = await res.json();
           } catch (e) {
@@ -1168,46 +1234,56 @@
             agentData = generateDemoData(slug);
           }
         } else {
-          // No worker configured yet — use slug-derived fallback
           agentData = generateDemoData(slug);
         }
 
         await animateStep('step-agent', 1800);
         await animateStep('step-ready', 600);
 
-        // Reveal result
+        var buildTime = ((Date.now() - buildStart) / 1000).toFixed(1);
+
+        // Show card
         loading.style.display = 'none';
         result.style.display = 'block';
         result.style.animation = 'fadeUp 0.5s ease-out both';
-        chatArea.style.display = 'block';
-        chatArea.style.animation = 'fadeUp 0.5s ease-out 0.15s both';
 
-        document.getElementById('agent-biz-name').textContent = agentData.name || displayName;
+        var bizName = agentData.name || displayName;
+        document.getElementById('agent-biz-name').textContent = bizName;
         document.getElementById('agent-biz-address').textContent = agentData.address || '';
 
-        const metaEl = document.getElementById('agent-biz-meta');
-        let metaHTML = '';
+        // Source badge
+        var sourceUrl = agentData.sourceUrl || (cleanSlug.replace(/-/g, '') !== cleanSlug ? cleanSlug + '.com' : slug + '.com');
+        document.getElementById('agent-source-url').textContent = 'Built from ' + sourceUrl;
+
+        // Meta
+        var metaEl = document.getElementById('agent-biz-meta');
+        var metaHTML = '';
         if (agentData.rating) {
-          metaHTML += '<div class="agent-result__meta-item"><span>⭐</span> '
-            + agentData.rating + ' (' + (agentData.reviewCount || 0) + ' reviews)</div>';
+          metaHTML += '<div class="agent-card__meta-item">⭐ ' + agentData.rating + ' (' + (agentData.reviewCount || 0) + ' reviews)</div>';
         }
         if (agentData.phone) {
-          metaHTML += '<div class="agent-result__meta-item"><span>📞</span> ' + agentData.phone + '</div>';
+          metaHTML += '<div class="agent-card__meta-item">📞 ' + agentData.phone + '</div>';
         }
         if (agentData.hours) {
-          metaHTML += '<div class="agent-result__meta-item"><span>🕐</span> ' + agentData.hours + '</div>';
+          metaHTML += '<div class="agent-card__meta-item">🕐 ' + agentData.hours + '</div>';
         }
         metaEl.innerHTML = metaHTML;
 
-        document.getElementById('agent-chat-desc').textContent =
-          'This agent was just trained on ' + (agentData.name || displayName) + '. Try asking it anything about the business.';
+        // Body copy
+        document.getElementById('agent-body-title').textContent = bizName + "'s AI receptionist is live";
+        document.getElementById('agent-body-desc').textContent =
+          'This AI was trained on ' + bizName + "'s website. Ask it about services, hours, pricing — anything a customer would.";
 
-        // Inject GHL widget if the worker returned embed code
+        // Build time
+        document.getElementById('agent-build-time').textContent = buildTime;
+
+        // GHL widget
         if (agentData.widgetEmbed) {
+          widgetArea.style.display = 'block';
           document.getElementById('ghl-widget-container').innerHTML = agentData.widgetEmbed;
         }
 
-        // Track demo open (non-blocking)
+        // Track (non-blocking)
         if (CONFIG.WORKER_URL) {
           fetch(CONFIG.WORKER_URL + '/track-demo-open', {
             method: 'POST',
@@ -1238,38 +1314,92 @@
     }
 
     /**
-     * Fallback: parse slug into presentable demo data
-     * when the Cloudflare Worker isn't connected yet
+     * Smart fallback: parse slug into presentable business data.
+     * Handles patterns like:
+     *   asahi-america        → "Asahi America"
+     *   joes-plumbing-lowell-ma → "Joe's Plumbing" in "Lowell, MA"
+     *   dr-smith-dental-care → "Dr Smith Dental Care"
      */
     function generateDemoData(slug) {
-      var parts = slug.split('-');
+      // Strip any remaining TLD fragments
+      var cleaned = slug.replace(/-(com|net|org|co|io|biz|us|info|dev|ai|app)$/i, '');
+      var parts = cleaned.split('-').filter(function(p) { return p.length > 0; });
+
       var states = ['al','ak','az','ar','ca','co','ct','de','fl','ga','hi','id','il','in',
         'ia','ks','ky','la','me','md','ma','mi','mn','ms','mo','mt','ne','nv','nh','nj',
         'nm','ny','nc','nd','oh','ok','or','pa','ri','sc','sd','tn','tx','ut','vt','va',
         'wa','wv','wi','wy'];
 
-      var lastPart = (parts[parts.length - 1] || '').toLowerCase();
       var name = '';
       var city = '';
       var state = '';
+      var sourceUrl = slug.replace(/-(com|net|org|co|io|biz|us|info|dev|ai|app)$/i, '');
+
+      // Reconstruct the most likely source domain
+      var domainGuess = cleaned.replace(/-/g, '') + '.com';
+      // Better guess: keep hyphens that were in the original domain
+      var betterDomain = cleaned + '.com';
+
+      var lastPart = (parts[parts.length - 1] || '').toLowerCase();
 
       if (states.indexOf(lastPart) !== -1 && parts.length > 2) {
         state = lastPart.toUpperCase();
-        // Walk backward to find city name vs business name
-        var cityStart = parts.length - 2;
-        // Heuristic: city is 1-2 words before state
-        city = parts.slice(Math.max(0, cityStart - 1), cityStart + 1)
-          .map(function(w) { return w.charAt(0).toUpperCase() + w.slice(1); })
-          .join(' ');
-        name = parts.slice(0, Math.max(0, cityStart - 1))
-          .map(function(w) { return w.charAt(0).toUpperCase() + w.slice(1); })
-          .join(' ');
-        if (!name) name = city;
+        // Try to find where city starts — usually 1-2 common city words before state
+        var cityEnd = parts.length - 1;
+        var cityStart = Math.max(0, cityEnd - 2);
+
+        // Heuristic: scan backward for likely city boundary
+        // Business names often contain keywords like plumbing, dental, law, etc.
+        var bizKeywords = ['plumbing','dental','law','legal','hvac','roofing','electric',
+          'landscaping','painting','cleaning','auto','repair','clinic','care','services',
+          'studio','salon','spa','fitness','gym','realty','insurance','accounting','media',
+          'design','consulting','group','solutions','tech','construction','contracting'];
+
+        var nameEnd = cityEnd;
+        for (var i = parts.length - 2; i >= 0; i--) {
+          var word = parts[i].toLowerCase();
+          var isBizWord = bizKeywords.indexOf(word) !== -1;
+          if (isBizWord && i < parts.length - 2) {
+            nameEnd = i + 1;
+            break;
+          }
+        }
+
+        if (nameEnd < cityEnd) {
+          name = parts.slice(0, nameEnd)
+            .map(function(w) { return w.charAt(0).toUpperCase() + w.slice(1); })
+            .join(' ');
+          city = parts.slice(nameEnd, cityEnd)
+            .map(function(w) { return w.charAt(0).toUpperCase() + w.slice(1); })
+            .join(' ');
+        } else {
+          // Fallback: assume last 1-2 words before state are city
+          var cStart = Math.max(0, cityEnd - 1);
+          city = parts.slice(cStart, cityEnd)
+            .map(function(w) { return w.charAt(0).toUpperCase() + w.slice(1); })
+            .join(' ');
+          name = parts.slice(0, cStart)
+            .map(function(w) { return w.charAt(0).toUpperCase() + w.slice(1); })
+            .join(' ');
+          if (!name) name = city;
+        }
       } else {
+        // No state detected — treat whole slug as business name
         name = parts.map(function(w) {
           return w.charAt(0).toUpperCase() + w.slice(1);
         }).join(' ');
       }
+
+      // Fix common patterns: "Joes" → "Joe's", "Drs" → "Dr's"
+      name = name.replace(/\b([A-Z][a-z]+)(s)\b/g, function(match, base, s) {
+        // Only add apostrophe for likely possessives (proper names ending in s)
+        var possessives = ['joe','mike','pete','al','bob','dan','sam','tom','jim','ben',
+          'jake','luke','mark','nick','pat','rick','steve','dave','chris','matt'];
+        if (possessives.indexOf(base.toLowerCase()) !== -1) {
+          return base + "'s";
+        }
+        return match;
+      });
 
       return {
         name: name || 'Local Business',
@@ -1278,48 +1408,44 @@
         rating: null,
         reviewCount: 0,
         hours: '',
+        sourceUrl: betterDomain,
         widgetEmbed: null,
       };
     }
 
     function startVoiceDemo() {
+      var widgetArea = document.getElementById('agent-widget-area');
       var container = document.getElementById('ghl-widget-container');
+      widgetArea.style.display = 'block';
       if (CONFIG.WORKER_URL && CONFIG.GHL_LOCATION_ID) {
-        // When fully configured, trigger GHL Voice widget here
-        container.innerHTML = '<div style="background:var(--bg-card);border:1px solid var(--accent);'
-          + 'border-radius:var(--radius-lg);padding:40px;text-align:center;margin-top:24px;">'
-          + '<div style="font-size:3rem;margin-bottom:16px;">🎙️</div>'
-          + '<h3 style="font-size:1.2rem;font-weight:700;margin-bottom:8px;">Voice AI Active</h3>'
-          + '<p style="color:var(--text-secondary);font-size:0.95rem;">Connecting to voice agent...</p></div>';
+        container.innerHTML = '<div style="background:var(--bg-secondary);border:1px solid var(--border-color);'
+          + 'border-radius:12px;padding:32px;text-align:center;">'
+          + '<p style="color:var(--text-secondary);font-size:0.9rem;">Connecting to voice agent…</p></div>';
       } else {
-        container.innerHTML = '<div style="background:var(--bg-card);border:1px solid var(--border-color);'
-          + 'border-radius:var(--radius-lg);padding:40px;text-align:center;margin-top:24px;">'
-          + '<div style="font-size:3rem;margin-bottom:16px;">🎙️</div>'
-          + '<h3 style="font-size:1.2rem;font-weight:700;margin-bottom:8px;">Voice AI Demo</h3>'
-          + '<p style="color:var(--text-secondary);font-size:0.95rem;">'
-          + 'Voice AI will activate here once the Cloudflare Worker + GHL integration is connected.</p>'
-          + '<p style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted);margin-top:12px;">'
-          + 'Set CONFIG.WORKER_URL and CONFIG.GHL_LOCATION_ID in index.html</p></div>';
+        container.innerHTML = '<div style="background:var(--bg-secondary);border:1px solid var(--border-color);'
+          + 'border-radius:12px;padding:32px;text-align:center;">'
+          + '<p style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:8px;">'
+          + 'Voice AI will activate once the backend is connected.</p>'
+          + '<p style="font-family:var(--font-mono);font-size:0.72rem;color:var(--text-muted);">'
+          + 'Configure WORKER_URL + GHL_LOCATION_ID in index.html</p></div>';
       }
     }
 
     function startChatDemo() {
+      var widgetArea = document.getElementById('agent-widget-area');
       var container = document.getElementById('ghl-widget-container');
+      widgetArea.style.display = 'block';
       if (CONFIG.WORKER_URL && CONFIG.GHL_LOCATION_ID) {
-        container.innerHTML = '<div style="background:var(--bg-card);border:1px solid var(--accent);'
-          + 'border-radius:var(--radius-lg);padding:40px;text-align:center;margin-top:24px;">'
-          + '<div style="font-size:3rem;margin-bottom:16px;">💬</div>'
-          + '<h3 style="font-size:1.2rem;font-weight:700;margin-bottom:8px;">Chat AI Active</h3>'
-          + '<p style="color:var(--text-secondary);font-size:0.95rem;">Loading chat widget...</p></div>';
+        container.innerHTML = '<div style="background:var(--bg-secondary);border:1px solid var(--border-color);'
+          + 'border-radius:12px;padding:32px;text-align:center;">'
+          + '<p style="color:var(--text-secondary);font-size:0.9rem;">Loading chat widget…</p></div>';
       } else {
-        container.innerHTML = '<div style="background:var(--bg-card);border:1px solid var(--border-color);'
-          + 'border-radius:var(--radius-lg);padding:40px;text-align:center;margin-top:24px;">'
-          + '<div style="font-size:3rem;margin-bottom:16px;">💬</div>'
-          + '<h3 style="font-size:1.2rem;font-weight:700;margin-bottom:8px;">Chat AI Demo</h3>'
-          + '<p style="color:var(--text-secondary);font-size:0.95rem;">'
-          + 'Chat widget will appear here once the Cloudflare Worker + GHL integration is connected.</p>'
-          + '<p style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted);margin-top:12px;">'
-          + 'Set CONFIG.WORKER_URL and CONFIG.GHL_LOCATION_ID in index.html</p></div>';
+        container.innerHTML = '<div style="background:var(--bg-secondary);border:1px solid var(--border-color);'
+          + 'border-radius:12px;padding:32px;text-align:center;">'
+          + '<p style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:8px;">'
+          + 'Chat widget will appear once the backend is connected.</p>'
+          + '<p style="font-family:var(--font-mono);font-size:0.72rem;color:var(--text-muted);">'
+          + 'Configure WORKER_URL + GHL_LOCATION_ID in index.html</p></div>';
       }
     }
 
