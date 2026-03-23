@@ -1,1 +1,1342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgentCopyAI — AI Receptionist Demo</title>
+  <meta name="description" content="See an AI receptionist trained on YOUR business — live in under 10 seconds. Voice + Chat, 24/7." />
+  <meta property="og:title" content="AgentCopyAI — Your AI Receptionist Demo" />
+  <meta property="og:description" content="An AI agent that already knows your business. Try it live." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://agentcopyai.com" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ═══════════════════════════════════════════
+       CSS VARIABLES & RESET
+    ═══════════════════════════════════════════ */
+    :root {
+      --bg-primary: #06080d;
+      --bg-secondary: #0c1017;
+      --bg-card: #111622;
+      --bg-card-hover: #161d2d;
+      --border-color: #1a2235;
+      --border-glow: #00e5ff22;
+      --text-primary: #e8edf5;
+      --text-secondary: #8892a8;
+      --text-muted: #5a6478;
+      --accent: #00e5ff;
+      --accent-dim: #00b8cc;
+      --accent-glow: #00e5ff33;
+      --accent-secondary: #7c3aed;
+      --accent-secondary-glow: #7c3aed33;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --radius-xl: 28px;
+      --font-display: 'Outfit', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
 
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-display);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a { color: var(--accent); text-decoration: none; transition: opacity 0.2s; }
+    a:hover { opacity: 0.85; }
+
+    /* ═══════════════════════════════════════════
+       BACKGROUND EFFECTS
+    ═══════════════════════════════════════════ */
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-image:
+        linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 70%);
+    }
+
+    .bg-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      z-index: 0;
+      pointer-events: none;
+    }
+    .bg-orb--cyan {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(0,229,255,0.12), transparent 70%);
+      top: -10%; left: 20%;
+      animation: orbFloat 20s ease-in-out infinite;
+    }
+    .bg-orb--purple {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(124,58,237,0.10), transparent 70%);
+      top: 30%; right: -5%;
+      animation: orbFloat 25s ease-in-out infinite reverse;
+    }
+    .bg-orb--green {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(16,185,129,0.06), transparent 70%);
+      bottom: 10%; left: 10%;
+      animation: orbFloat 22s ease-in-out infinite 5s;
+    }
+
+    @keyframes orbFloat {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -40px) scale(1.05); }
+      66% { transform: translate(-20px, 20px) scale(0.95); }
+    }
+
+    /* ═══════════════════════════════════════════
+       LAYOUT
+    ═══════════════════════════════════════════ */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ═══════════════════════════════════════════
+       NAV
+    ═══════════════════════════════════════════ */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 16px 0;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: rgba(6,8,13,0.75);
+      border-bottom: 1px solid var(--border-color);
+      transition: box-shadow 0.3s;
+    }
+    .nav.scrolled { box-shadow: 0 4px 30px rgba(0,0,0,0.4); }
+    .nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav__logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 1.35rem;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+    .nav__logo-icon {
+      width: 36px; height: 36px;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+    .nav__links { display: flex; gap: 32px; align-items: center; }
+    .nav__link {
+      color: var(--text-secondary);
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+    .nav__link:hover { color: var(--text-primary); opacity: 1; }
+    .nav__cta {
+      padding: 10px 24px;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(135deg, var(--accent), var(--accent-dim));
+      color: var(--bg-primary);
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.01em;
+      border: none; cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 20px var(--accent-glow);
+      font-family: var(--font-display);
+    }
+    .nav__cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 40px var(--accent-glow);
+      color: var(--bg-primary);
+    }
+
+    /* ═══════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════ */
+    .hero {
+      padding: 160px 0 100px;
+      text-align: center;
+    }
+    .hero__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px 6px 8px;
+      border-radius: 100px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      animation: fadeUp 0.6s ease-out both;
+    }
+    .hero__badge-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 8px rgba(16,185,129,0.6);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .hero__title {
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+      margin-bottom: 24px;
+      animation: fadeUp 0.6s ease-out 0.1s both;
+    }
+    .hero__title-accent {
+      background: linear-gradient(135deg, var(--accent) 0%, #7c3aed 50%, var(--accent) 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 4s linear infinite;
+    }
+    @keyframes shimmer {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+    .hero__sub {
+      font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+      color: var(--text-secondary);
+      max-width: 640px;
+      margin: 0 auto 48px;
+      font-weight: 400;
+      line-height: 1.6;
+      animation: fadeUp 0.6s ease-out 0.2s both;
+    }
+    .hero__actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeUp 0.6s ease-out 0.3s both;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: var(--radius-xl);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      border: none;
+      transition: all 0.25s;
+    }
+    .btn--primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-dim));
+      color: var(--bg-primary);
+      box-shadow: 0 0 30px var(--accent-glow), 0 4px 15px rgba(0,0,0,0.3);
+    }
+    .btn--primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 50px var(--accent-glow), 0 8px 25px rgba(0,0,0,0.4);
+      color: var(--bg-primary);
+    }
+    .btn--ghost {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+    }
+    .btn--ghost:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      color: var(--text-primary);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ═══════════════════════════════════════════
+       DEMO PREVIEW
+    ═══════════════════════════════════════════ */
+    .demo-preview {
+      margin: 0 auto 120px;
+      max-width: 900px;
+      animation: fadeUp 0.8s ease-out 0.5s both;
+    }
+    .demo-preview__window {
+      border-radius: var(--radius-lg);
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+      box-shadow:
+        0 0 60px rgba(0,229,255,0.05),
+        0 25px 80px rgba(0,0,0,0.5);
+    }
+    .demo-preview__titlebar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 20px;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .demo-preview__dot {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+    }
+    .demo-preview__dot--red { background: #ef4444; }
+    .demo-preview__dot--yellow { background: #f59e0b; }
+    .demo-preview__dot--green { background: #10b981; }
+    .demo-preview__url {
+      flex: 1;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .demo-preview__body {
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      min-height: 280px;
+    }
+    .demo-preview__biz-name {
+      font-size: 1.8rem;
+      font-weight: 800;
+      text-align: center;
+    }
+    .demo-preview__biz-info {
+      color: var(--text-secondary);
+      text-align: center;
+      font-size: 0.95rem;
+    }
+    .demo-preview__chat-bubble {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      max-width: 500px;
+      width: 100%;
+    }
+    .demo-preview__chat-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+    .demo-preview__chat-text {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    .demo-preview__typing {
+      display: inline-flex;
+      gap: 4px;
+      padding: 4px 0;
+    }
+    .demo-preview__typing span {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: typingBounce 1.2s infinite;
+    }
+    .demo-preview__typing span:nth-child(2) { animation-delay: 0.15s; }
+    .demo-preview__typing span:nth-child(3) { animation-delay: 0.3s; }
+    @keyframes typingBounce {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+      30% { transform: translateY(-6px); opacity: 1; }
+    }
+
+    /* ═══════════════════════════════════════════
+       SECTIONS
+    ═══════════════════════════════════════════ */
+    .section {
+      padding: 100px 0;
+    }
+    .section__label {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 16px;
+    }
+    .section__title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+      line-height: 1.15;
+    }
+    .section__desc {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin-bottom: 60px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+    .step {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 36px 28px;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .step::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .step:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    }
+    .step:hover::before { opacity: 1; }
+    .step__number {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .step__title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .step__desc {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* ═══════════════════════════════════════════
+       FEATURES
+    ═══════════════════════════════════════════ */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+    .feature {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      transition: all 0.3s;
+    }
+    .feature:hover {
+      border-color: var(--border-glow);
+      transform: translateY(-2px);
+    }
+    .feature__icon {
+      width: 48px; height: 48px;
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      margin-bottom: 20px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+    }
+    .feature__title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .feature__desc {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* ═══════════════════════════════════════════
+       CTA SECTION
+    ═══════════════════════════════════════════ */
+    .cta-section {
+      text-align: center;
+      padding: 120px 0;
+    }
+    .cta-section__box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      padding: 64px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section__box::before {
+      content: '';
+      position: absolute;
+      top: -1px; left: 20%; right: 20%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), var(--accent-secondary), transparent);
+    }
+    .cta-section__title {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 800;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+    .cta-section__desc {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      max-width: 500px;
+      margin: 0 auto 36px;
+    }
+
+    /* ═══════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════ */
+    .footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+    }
+    .footer__text {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* ═══════════════════════════════════════════
+       AGENT DEMO PAGE
+    ═══════════════════════════════════════════ */
+    .agent-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .agent-hero {
+      padding: 140px 0 60px;
+      text-align: center;
+    }
+    .agent-hero__loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      padding: 80px 0;
+    }
+    .spinner {
+      width: 48px; height: 48px;
+      border: 3px solid var(--border-color);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .agent-hero__loading-text {
+      color: var(--text-secondary);
+      font-size: 1rem;
+    }
+    .agent-hero__loading-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: left;
+    }
+    .agent-hero__loading-step {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.3s;
+    }
+    .agent-hero__loading-step.done { color: var(--success); }
+    .agent-hero__loading-step.active { color: var(--accent); }
+
+    .agent-result {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .agent-result__name {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+    .agent-result__address {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+    .agent-result__meta {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    .agent-result__meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+    .agent-result__meta-item span:first-child { font-size: 1.1rem; }
+
+    .agent-chat-area {
+      max-width: 700px;
+      margin: 0 auto;
+      padding-bottom: 80px;
+    }
+    .agent-chat__prompt-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      padding: 48px 36px;
+      text-align: center;
+    }
+    .agent-chat__prompt-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .agent-chat__prompt-desc {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      margin-bottom: 28px;
+    }
+    .agent-chat__buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .agent-chat__btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 32px;
+      border-radius: var(--radius-xl);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      border: none;
+      transition: all 0.25s;
+    }
+    .agent-chat__btn--voice {
+      background: linear-gradient(135deg, var(--accent-secondary), #9f67ff);
+      color: white;
+      box-shadow: 0 0 30px var(--accent-secondary-glow);
+    }
+    .agent-chat__btn--voice:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 50px var(--accent-secondary-glow);
+    }
+    .agent-chat__btn--chat {
+      background: linear-gradient(135deg, var(--accent), var(--accent-dim));
+      color: var(--bg-primary);
+      box-shadow: 0 0 30px var(--accent-glow);
+    }
+    .agent-chat__btn--chat:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 50px var(--accent-glow);
+    }
+
+    .agent-powered-by {
+      text-align: center;
+      padding: 40px 0;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      margin-top: auto;
+    }
+    .agent-powered-by a { color: var(--accent); font-weight: 600; }
+
+    #ghl-widget-container {
+      max-width: 700px;
+      margin: 0 auto;
+      min-height: 400px;
+    }
+
+    .agent-error {
+      text-align: center;
+      padding: 80px 20px;
+    }
+    .agent-error__icon { font-size: 3rem; margin-bottom: 16px; }
+    .agent-error__title { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; }
+    .agent-error__desc {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════ */
+    @media (max-width: 768px) {
+      .nav__links { display: none; }
+      .hero { padding: 120px 0 60px; }
+      .demo-preview__body { padding: 24px; }
+      .section { padding: 60px 0; }
+      .step { padding: 28px 22px; }
+      .cta-section__box { padding: 40px 24px; }
+      .agent-chat__prompt-box { padding: 32px 20px; }
+      .demo-input-wrap { flex-direction: column; }
+    }
+
+    .page { display: none; }
+    .page.active { display: block; }
+  </style>
+</head>
+<body>
+
+  <!-- Background Effects -->
+  <div class="bg-grid"></div>
+  <div class="bg-orb bg-orb--cyan"></div>
+  <div class="bg-orb bg-orb--purple"></div>
+  <div class="bg-orb bg-orb--green"></div>
+
+  <!-- ═══════════════════════════════════════════
+       NAVIGATION
+  ═══════════════════════════════════════════ -->
+  <nav class="nav" id="nav">
+    <div class="container">
+      <a href="/" class="nav__logo">
+        <div class="nav__logo-icon">⚡</div>
+        AgentCopyAI
+      </a>
+      <div class="nav__links" id="nav-links-landing">
+        <a href="#how-it-works" class="nav__link">How It Works</a>
+        <a href="#features" class="nav__link">Features</a>
+        <a href="#demo" class="nav__link">See a Demo</a>
+      </div>
+      <button class="nav__cta" id="nav-cta" onclick="scrollToDemo()">Get Your Demo</button>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════
+       LANDING PAGE
+  ═══════════════════════════════════════════ -->
+  <div class="page" id="landing-page">
+    <section class="hero">
+      <div class="container">
+        <div class="hero__badge">
+          <div class="hero__badge-dot"></div>
+          AI Agents for Local Business
+        </div>
+        <h1 class="hero__title">
+          Your Business.<br/>
+          <span class="hero__title-accent">An AI That Already Knows It.</span>
+        </h1>
+        <p class="hero__sub">
+          We build AI receptionists that answer calls, book appointments, and chat with customers — trained on <em>your</em> actual business, live in under 10 seconds.
+        </p>
+        <div class="hero__actions">
+          <button class="btn btn--primary" onclick="scrollToDemo()">
+            <span>⚡</span> See It Live
+          </button>
+          <a href="#how-it-works" class="btn btn--ghost">
+            How It Works <span>→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Demo Preview Browser Window -->
+    <div class="container">
+      <div class="demo-preview">
+        <div class="demo-preview__window">
+          <div class="demo-preview__titlebar">
+            <div class="demo-preview__dot demo-preview__dot--red"></div>
+            <div class="demo-preview__dot demo-preview__dot--yellow"></div>
+            <div class="demo-preview__dot demo-preview__dot--green"></div>
+            <div class="demo-preview__url">agentcopyai.com/agent/joes-plumbing-lowell-ma</div>
+          </div>
+          <div class="demo-preview__body">
+            <div class="demo-preview__biz-name">Joe's Plumbing</div>
+            <div class="demo-preview__biz-info">📍 Lowell, MA &nbsp;·&nbsp; ⭐ 4.8 (127 reviews) &nbsp;·&nbsp; 📞 (978) 555-0123</div>
+            <div class="demo-preview__chat-bubble">
+              <div class="demo-preview__chat-label">AI Receptionist</div>
+              <div class="demo-preview__chat-text">
+                Hi! Thanks for calling Joe's Plumbing. I can help you schedule a service, get a quote, or answer questions about our work. What can I do for you today?
+              </div>
+            </div>
+            <div class="demo-preview__chat-bubble">
+              <div class="demo-preview__chat-label">Visitor</div>
+              <div class="demo-preview__chat-text">Do you handle emergency drain repairs?</div>
+            </div>
+            <div class="demo-preview__chat-bubble">
+              <div class="demo-preview__chat-label">AI Receptionist</div>
+              <div class="demo-preview__typing">
+                <span></span><span></span><span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- How It Works -->
+    <section class="section" id="how-it-works">
+      <div class="container">
+        <div class="section__label">// How It Works</div>
+        <h2 class="section__title">From link click to live AI agent.<br/>Under 10 seconds.</h2>
+        <p class="section__desc">We send a personalized link. When they open it, the magic happens automatically.</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step__number">01</div>
+            <h3 class="step__title">We Send a Link</h3>
+            <p class="step__desc">Your prospect gets a personalized URL — like agentcopyai.com/agent/joes-plumbing-lowell-ma — via email, text, or DM.</p>
+          </div>
+          <div class="step">
+            <div class="step__number">02</div>
+            <h3 class="step__title">AI Scrapes Their Site</h3>
+            <p class="step__desc">In 2–4 seconds, we pull their services, hours, location, FAQs, and reviews. Everything an AI needs to sound like their front desk.</p>
+          </div>
+          <div class="step">
+            <div class="step__number">03</div>
+            <h3 class="step__title">Agent Goes Live</h3>
+            <p class="step__desc">A fully trained AI receptionist appears — voice and chat — ready to answer questions about <em>their</em> business. It's the "holy shit" moment.</p>
+          </div>
+          <div class="step">
+            <div class="step__number">04</div>
+            <h3 class="step__title">They Want It 24/7</h3>
+            <p class="step__desc">The demo sells itself. When they're ready to go live, we activate Momentum — their always-on AI receptionist.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section__label">// Features</div>
+        <h2 class="section__title">Everything a receptionist does.<br/>None of the overhead.</h2>
+        <p class="section__desc">AI that doesn't just chat — it converts callers into booked appointments.</p>
+        <div class="features">
+          <div class="feature">
+            <div class="feature__icon">🎙️</div>
+            <h3 class="feature__title">Voice AI</h3>
+            <p class="feature__desc">Real-time voice conversations that sound natural. Handles calls, answers questions, and books appointments 24/7.</p>
+          </div>
+          <div class="feature">
+            <div class="feature__icon">💬</div>
+            <h3 class="feature__title">Chat Widget</h3>
+            <p class="feature__desc">Embeddable chat that lives on their website. Trained on their services, pricing, and FAQs — not generic scripts.</p>
+          </div>
+          <div class="feature">
+            <div class="feature__icon">🧠</div>
+            <h3 class="feature__title">Business-Trained</h3>
+            <p class="feature__desc">Every agent is built from the business's actual website data — services, hours, location, specialties, and customer reviews.</p>
+          </div>
+          <div class="feature">
+            <div class="feature__icon">📊</div>
+            <h3 class="feature__title">CRM Pipeline</h3>
+            <p class="feature__desc">Every demo open, conversation, and appointment is tracked. You see exactly who's engaged and ready to close.</p>
+          </div>
+          <div class="feature">
+            <div class="feature__icon">🚀</div>
+            <h3 class="feature__title">Instant Demo</h3>
+            <p class="feature__desc">No setup calls. No proposals. Send a link, they see their AI agent live. The product demos itself.</p>
+          </div>
+          <div class="feature">
+            <div class="feature__icon">🔗</div>
+            <h3 class="feature__title">Auto Follow-Up</h3>
+            <p class="feature__desc">CoWork automation fires after every demo — emails, texts, and pipeline moves. No lead falls through the cracks.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section" id="demo">
+      <div class="container">
+        <div class="cta-section__box">
+          <h2 class="cta-section__title">Ready to see your AI receptionist?</h2>
+          <p class="cta-section__desc">Drop your website URL and we'll show you what your business sounds like with a 24/7 AI front desk.</p>
+          <div class="demo-input-wrap" style="max-width:480px;margin:0 auto;display:flex;gap:12px;">
+            <input type="text" id="demo-url-input" placeholder="yourwebsite.com"
+              style="flex:1;padding:14px 20px;border-radius:var(--radius-xl);
+              background:var(--bg-secondary);border:1px solid var(--border-color);
+              color:var(--text-primary);font-family:var(--font-display);font-size:1rem;
+              outline:none;transition:border-color 0.2s;"
+              onfocus="this.style.borderColor='var(--accent)'"
+              onblur="this.style.borderColor='var(--border-color)'" />
+            <button class="btn btn--primary" onclick="handleDemoRequest()" style="white-space:nowrap;">
+              Build My Demo ⚡
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p class="footer__text">© 2025 AgentCopyAI — Powered by ScaleLocal · AI Receptionist Technology</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       AGENT DEMO PAGE
+  ═══════════════════════════════════════════ -->
+  <div class="page" id="agent-page">
+    <div class="agent-page">
+      <section class="agent-hero">
+        <div class="container">
+          <!-- Loading State -->
+          <div class="agent-hero__loading" id="agent-loading">
+            <div class="spinner"></div>
+            <div class="agent-hero__loading-text">Building your AI receptionist…</div>
+            <div class="agent-hero__loading-steps">
+              <div class="agent-hero__loading-step" id="step-scrape">
+                <span>○</span> Scanning business website…
+              </div>
+              <div class="agent-hero__loading-step" id="step-places">
+                <span>○</span> Pulling business data…
+              </div>
+              <div class="agent-hero__loading-step" id="step-agent">
+                <span>○</span> Training AI agent…
+              </div>
+              <div class="agent-hero__loading-step" id="step-ready">
+                <span>○</span> Going live…
+              </div>
+            </div>
+          </div>
+
+          <!-- Result State -->
+          <div class="agent-result" id="agent-result" style="display:none;">
+            <h1 class="agent-result__name" id="agent-biz-name"></h1>
+            <p class="agent-result__address" id="agent-biz-address"></p>
+            <div class="agent-result__meta" id="agent-biz-meta"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Chat/Voice Area -->
+      <section class="agent-chat-area" id="agent-chat-area" style="display:none;">
+        <div class="agent-chat__prompt-box">
+          <h2 class="agent-chat__prompt-title">Meet your AI receptionist</h2>
+          <p class="agent-chat__prompt-desc" id="agent-chat-desc">
+            This agent was just trained on your business. Try asking it anything.
+          </p>
+          <div class="agent-chat__buttons">
+            <button class="agent-chat__btn agent-chat__btn--voice" onclick="startVoiceDemo()">
+              🎙️ Talk to AI
+            </button>
+            <button class="agent-chat__btn agent-chat__btn--chat" onclick="startChatDemo()">
+              💬 Chat with AI
+            </button>
+          </div>
+        </div>
+        <div id="ghl-widget-container" style="margin-top:32px;"></div>
+      </section>
+
+      <!-- Error State -->
+      <div class="agent-error" id="agent-error" style="display:none;">
+        <div class="agent-error__icon">😕</div>
+        <h2 class="agent-error__title">Couldn't load this demo</h2>
+        <p class="agent-error__desc" id="agent-error-desc">
+          We had trouble building the agent for this business. This could be a temporary issue — try refreshing.
+        </p>
+        <br/>
+        <a href="/" class="btn btn--ghost">← Back to AgentCopyAI</a>
+      </div>
+
+      <!-- Powered By -->
+      <div class="agent-powered-by">
+        Powered by <a href="/">AgentCopyAI</a> — AI Receptionist Technology by ScaleLocal
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       JAVASCRIPT
+  ═══════════════════════════════════════════ -->
+  <script>
+    /* ─────────────────────────────────────────
+       GITHUB PAGES SPA REDIRECT HANDLER
+       Restores the real URL after 404.html redirect
+    ───────────────────────────────────────── */
+    (function() {
+      var redirect = sessionStorage.redirect;
+      delete sessionStorage.redirect;
+      if (redirect && redirect !== location.href) {
+        history.replaceState(null, null, redirect);
+      } else {
+        // Handle the ?/ redirect from 404.html
+        var query = window.location.search;
+        if (query.indexOf('?/') === 0) {
+          var decoded = query.slice(2).split('&').map(function(s) {
+            return s.replace(/~and~/g, '&');
+          });
+          var path = '/' + decoded[0];
+          var search = decoded.length > 1 ? '?' + decoded.slice(1).join('&') : '';
+          history.replaceState(null, null, path + search + window.location.hash);
+        }
+      }
+    })();
+
+    /* ─────────────────────────────────────────
+       CONFIGURATION — Update these with your real values
+    ───────────────────────────────────────── */
+    const CONFIG = {
+      // Cloudflare Worker URL (the backend glue)
+      // Example: 'https://agentcopy-worker.yourname.workers.dev'
+      WORKER_URL: '',
+
+      // GHL Chat Widget embed script src (from GHL Agent Studio)
+      GHL_WIDGET_SRC: '',
+
+      // GHL Location ID
+      GHL_LOCATION_ID: '',
+    };
+
+    /* ─────────────────────────────────────────
+       ROUTER — SPA routing for GitHub Pages
+    ───────────────────────────────────────── */
+    function getRoute() {
+      const path = window.location.pathname;
+      const agentMatch = path.match(/^\/agent\/(.+)\/?$/);
+      if (agentMatch) {
+        return { page: 'agent', slug: decodeURIComponent(agentMatch[1]) };
+      }
+      return { page: 'landing' };
+    }
+
+    function init() {
+      const route = getRoute();
+      if (route.page === 'agent') {
+        document.getElementById('nav-links-landing').style.display = 'none';
+        document.getElementById('nav-cta').style.display = 'none';
+        showPage('agent-page');
+        loadAgent(route.slug);
+      } else {
+        showPage('landing-page');
+        initLandingAnimations();
+      }
+      initNav();
+    }
+
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    /* ─────────────────────────────────────────
+       NAV scroll shadow
+    ───────────────────────────────────────── */
+    function initNav() {
+      const nav = document.getElementById('nav');
+      window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 20);
+      });
+    }
+
+    /* ─────────────────────────────────────────
+       LANDING — scroll animations
+    ───────────────────────────────────────── */
+    function initLandingAnimations() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.step, .feature').forEach((el, i) => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(24px)';
+        el.style.transition = `opacity 0.5s ease-out ${i * 0.08}s, transform 0.5s ease-out ${i * 0.08}s`;
+        observer.observe(el);
+      });
+    }
+
+    function scrollToDemo() {
+      const el = document.getElementById('demo');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => document.getElementById('demo-url-input')?.focus(), 500);
+      }
+    }
+
+    function handleDemoRequest() {
+      const input = document.getElementById('demo-url-input');
+      const url = input.value.trim();
+      if (!url) {
+        input.style.borderColor = 'var(--danger)';
+        setTimeout(() => input.style.borderColor = 'var(--border-color)', 1500);
+        return;
+      }
+      const slug = url
+        .replace(/^https?:\/\//, '')
+        .replace(/^www\./, '')
+        .replace(/\/$/, '')
+        .replace(/[^a-zA-Z0-9]+/g, '-')
+        .toLowerCase();
+      window.location.href = '/agent/' + slug;
+    }
+
+    /* ─────────────────────────────────────────
+       AGENT DEMO PAGE
+    ───────────────────────────────────────── */
+    async function loadAgent(slug) {
+      const loading = document.getElementById('agent-loading');
+      const result = document.getElementById('agent-result');
+      const chatArea = document.getElementById('agent-chat-area');
+      const errorEl = document.getElementById('agent-error');
+
+      // Build display name from slug
+      const displayName = slug
+        .split('-')
+        .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(' ');
+
+      document.title = displayName + ' — AI Receptionist Demo | AgentCopyAI';
+
+      try {
+        // Animated loading steps
+        await animateStep('step-scrape', 1500);
+        await animateStep('step-places', 1200);
+
+        // Call Cloudflare Worker (if configured)
+        let agentData;
+        if (CONFIG.WORKER_URL) {
+          try {
+            const res = await fetch(CONFIG.WORKER_URL + '/create-agent', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ slug })
+            });
+            agentData = await res.json();
+          } catch (e) {
+            console.warn('Worker call failed, using fallback:', e);
+            agentData = generateDemoData(slug);
+          }
+        } else {
+          // No worker configured yet — use slug-derived fallback
+          agentData = generateDemoData(slug);
+        }
+
+        await animateStep('step-agent', 1800);
+        await animateStep('step-ready', 600);
+
+        // Reveal result
+        loading.style.display = 'none';
+        result.style.display = 'block';
+        result.style.animation = 'fadeUp 0.5s ease-out both';
+        chatArea.style.display = 'block';
+        chatArea.style.animation = 'fadeUp 0.5s ease-out 0.15s both';
+
+        document.getElementById('agent-biz-name').textContent = agentData.name || displayName;
+        document.getElementById('agent-biz-address').textContent = agentData.address || '';
+
+        const metaEl = document.getElementById('agent-biz-meta');
+        let metaHTML = '';
+        if (agentData.rating) {
+          metaHTML += '<div class="agent-result__meta-item"><span>⭐</span> '
+            + agentData.rating + ' (' + (agentData.reviewCount || 0) + ' reviews)</div>';
+        }
+        if (agentData.phone) {
+          metaHTML += '<div class="agent-result__meta-item"><span>📞</span> ' + agentData.phone + '</div>';
+        }
+        if (agentData.hours) {
+          metaHTML += '<div class="agent-result__meta-item"><span>🕐</span> ' + agentData.hours + '</div>';
+        }
+        metaEl.innerHTML = metaHTML;
+
+        document.getElementById('agent-chat-desc').textContent =
+          'This agent was just trained on ' + (agentData.name || displayName) + '. Try asking it anything about the business.';
+
+        // Inject GHL widget if the worker returned embed code
+        if (agentData.widgetEmbed) {
+          document.getElementById('ghl-widget-container').innerHTML = agentData.widgetEmbed;
+        }
+
+        // Track demo open (non-blocking)
+        if (CONFIG.WORKER_URL) {
+          fetch(CONFIG.WORKER_URL + '/track-demo-open', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ slug: slug, timestamp: new Date().toISOString() })
+          }).catch(function() {});
+        }
+
+      } catch (err) {
+        console.error('Agent load error:', err);
+        loading.style.display = 'none';
+        errorEl.style.display = 'block';
+      }
+    }
+
+    function animateStep(stepId, duration) {
+      return new Promise(function(resolve) {
+        var step = document.getElementById(stepId);
+        step.classList.add('active');
+        step.querySelector('span').textContent = '◉';
+        setTimeout(function() {
+          step.classList.remove('active');
+          step.classList.add('done');
+          step.querySelector('span').textContent = '✓';
+          resolve();
+        }, duration);
+      });
+    }
+
+    /**
+     * Fallback: parse slug into presentable demo data
+     * when the Cloudflare Worker isn't connected yet
+     */
+    function generateDemoData(slug) {
+      var parts = slug.split('-');
+      var states = ['al','ak','az','ar','ca','co','ct','de','fl','ga','hi','id','il','in',
+        'ia','ks','ky','la','me','md','ma','mi','mn','ms','mo','mt','ne','nv','nh','nj',
+        'nm','ny','nc','nd','oh','ok','or','pa','ri','sc','sd','tn','tx','ut','vt','va',
+        'wa','wv','wi','wy'];
+
+      var lastPart = (parts[parts.length - 1] || '').toLowerCase();
+      var name = '';
+      var city = '';
+      var state = '';
+
+      if (states.indexOf(lastPart) !== -1 && parts.length > 2) {
+        state = lastPart.toUpperCase();
+        // Walk backward to find city name vs business name
+        var cityStart = parts.length - 2;
+        // Heuristic: city is 1-2 words before state
+        city = parts.slice(Math.max(0, cityStart - 1), cityStart + 1)
+          .map(function(w) { return w.charAt(0).toUpperCase() + w.slice(1); })
+          .join(' ');
+        name = parts.slice(0, Math.max(0, cityStart - 1))
+          .map(function(w) { return w.charAt(0).toUpperCase() + w.slice(1); })
+          .join(' ');
+        if (!name) name = city;
+      } else {
+        name = parts.map(function(w) {
+          return w.charAt(0).toUpperCase() + w.slice(1);
+        }).join(' ');
+      }
+
+      return {
+        name: name || 'Local Business',
+        address: city && state ? city + ', ' + state : '',
+        phone: '',
+        rating: null,
+        reviewCount: 0,
+        hours: '',
+        widgetEmbed: null,
+      };
+    }
+
+    function startVoiceDemo() {
+      var container = document.getElementById('ghl-widget-container');
+      if (CONFIG.WORKER_URL && CONFIG.GHL_LOCATION_ID) {
+        // When fully configured, trigger GHL Voice widget here
+        container.innerHTML = '<div style="background:var(--bg-card);border:1px solid var(--accent);'
+          + 'border-radius:var(--radius-lg);padding:40px;text-align:center;margin-top:24px;">'
+          + '<div style="font-size:3rem;margin-bottom:16px;">🎙️</div>'
+          + '<h3 style="font-size:1.2rem;font-weight:700;margin-bottom:8px;">Voice AI Active</h3>'
+          + '<p style="color:var(--text-secondary);font-size:0.95rem;">Connecting to voice agent...</p></div>';
+      } else {
+        container.innerHTML = '<div style="background:var(--bg-card);border:1px solid var(--border-color);'
+          + 'border-radius:var(--radius-lg);padding:40px;text-align:center;margin-top:24px;">'
+          + '<div style="font-size:3rem;margin-bottom:16px;">🎙️</div>'
+          + '<h3 style="font-size:1.2rem;font-weight:700;margin-bottom:8px;">Voice AI Demo</h3>'
+          + '<p style="color:var(--text-secondary);font-size:0.95rem;">'
+          + 'Voice AI will activate here once the Cloudflare Worker + GHL integration is connected.</p>'
+          + '<p style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted);margin-top:12px;">'
+          + 'Set CONFIG.WORKER_URL and CONFIG.GHL_LOCATION_ID in index.html</p></div>';
+      }
+    }
+
+    function startChatDemo() {
+      var container = document.getElementById('ghl-widget-container');
+      if (CONFIG.WORKER_URL && CONFIG.GHL_LOCATION_ID) {
+        container.innerHTML = '<div style="background:var(--bg-card);border:1px solid var(--accent);'
+          + 'border-radius:var(--radius-lg);padding:40px;text-align:center;margin-top:24px;">'
+          + '<div style="font-size:3rem;margin-bottom:16px;">💬</div>'
+          + '<h3 style="font-size:1.2rem;font-weight:700;margin-bottom:8px;">Chat AI Active</h3>'
+          + '<p style="color:var(--text-secondary);font-size:0.95rem;">Loading chat widget...</p></div>';
+      } else {
+        container.innerHTML = '<div style="background:var(--bg-card);border:1px solid var(--border-color);'
+          + 'border-radius:var(--radius-lg);padding:40px;text-align:center;margin-top:24px;">'
+          + '<div style="font-size:3rem;margin-bottom:16px;">💬</div>'
+          + '<h3 style="font-size:1.2rem;font-weight:700;margin-bottom:8px;">Chat AI Demo</h3>'
+          + '<p style="color:var(--text-secondary);font-size:0.95rem;">'
+          + 'Chat widget will appear here once the Cloudflare Worker + GHL integration is connected.</p>'
+          + '<p style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted);margin-top:12px;">'
+          + 'Set CONFIG.WORKER_URL and CONFIG.GHL_LOCATION_ID in index.html</p></div>';
+      }
+    }
+
+    /* ─────────────────────────────────────────
+       EVENT LISTENERS
+    ───────────────────────────────────────── */
+    document.addEventListener('DOMContentLoaded', function() {
+      var input = document.getElementById('demo-url-input');
+      if (input) {
+        input.addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') handleDemoRequest();
+        });
+      }
+    });
+
+    /* ─── BOOT ─── */
+    init();
+  </script>
+</body>
+</html>
