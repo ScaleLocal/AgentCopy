@@ -885,26 +885,28 @@
       document.title = displayName + ' — AI Demo | AgentCopyAI';
 
       try {
+        // Run API call and first two animations concurrently
+        var apiPromise;
+        if (CONFIG.WORKER_URL) {
+          apiPromise = fetch(CONFIG.WORKER_URL + '/api/create-agent', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ slug: slug })
+          }).then(function(res) { return res.json(); }).catch(function() { return fallbackData(slug); });
+        } else {
+          apiPromise = Promise.resolve(fallbackData(slug));
+        }
+
+        // Animate while API is working
         await animateStep('step-scrape', 1400);
         await animateStep('step-places', 1100);
 
-        var data;
-        if (CONFIG.WORKER_URL) {
-          try {
-            var res = await fetch(CONFIG.WORKER_URL + '/create-agent', {
-              method: 'POST', headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ slug: slug })
-            });
-            data = await res.json();
-          } catch (e) { data = fallbackData(slug); }
-        } else {
-          data = fallbackData(slug);
-        }
+        // Wait for API to finish (may already be done)
+        var data = await apiPromise;
 
-        await animateStep('step-agent', 1600);
-        await animateStep('step-ready', 500);
+        await animateStep('step-agent', 1200);
+        await animateStep('step-ready', 400);
 
-        var buildTime = ((Date.now() - t0) / 1000).toFixed(1);
+        var buildTime = data.buildTime || ((Date.now() - t0) / 1000).toFixed(1);
         loading.style.display = 'none';
         result.style.display = 'block';
         result.style.animation = 'fadeIn 0.4s ease-out both';
@@ -918,11 +920,18 @@
         var mh = '';
         if (data.rating) mh += '<span>' + data.rating + ' stars (' + (data.reviewCount||0) + ' reviews)</span>';
         if (data.phone) mh += '<span>' + data.phone + '</span>';
-        if (data.hours) mh += '<span>' + data.hours + '</span>';
         meta.innerHTML = mh;
 
+        // Show agent phone number if available
+        if (data.agentPhone) {
+          document.getElementById('agent-body-desc').textContent =
+            'Call ' + data.agentPhone + ' to talk to the AI, or chat below. Trained on ' + name + '\'s website.';
+        } else {
+          document.getElementById('agent-body-desc').textContent =
+            'Trained on ' + name + '\'s website. Ask about services, hours, pricing — anything a customer would.';
+        }
+
         document.getElementById('agent-body-title').textContent = name + ' — agent is live';
-        document.getElementById('agent-body-desc').textContent = 'Trained on ' + name + '\'s website. Ask about services, hours, pricing — anything a customer would.';
         document.getElementById('agent-build-time').textContent = buildTime;
 
         if (data.widgetEmbed) {
@@ -930,12 +939,8 @@
           document.getElementById('ghl-widget-container').innerHTML = data.widgetEmbed;
         }
 
-        if (CONFIG.WORKER_URL) {
-          fetch(CONFIG.WORKER_URL + '/track-demo-open', {
-            method: 'POST', headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ slug: slug, ts: new Date().toISOString() })
-          }).catch(function(){});
-        }
+        // Tracking is handled automatically by the API
+
       } catch (err) {
         console.error(err);
         loading.style.display = 'none';
