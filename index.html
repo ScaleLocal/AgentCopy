@@ -174,8 +174,8 @@
     .demo-chat-zone__hint { font-size: 0.82rem; color: var(--text-muted); max-width: 260px; line-height: 1.5; }
     .demo-chat-zone__suggestions { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-top: 4px; }
     .demo-chat-zone__suggestion { padding: 5px 12px; border-radius: 100px; font-size: 0.75rem; background: var(--bg-warm); border: 1px solid var(--border); color: var(--text-secondary); font-weight: 500; }
-    .demo-chat-zone__arrow { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: var(--accent); color: white; font-size: 1.1rem; animation: bounceDown 1.5s ease-in-out infinite; margin-top: 8px; }
-    @keyframes bounceDown { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+    .demo-chat-zone__open-btn { padding: 12px 28px; border-radius: var(--radius); background: var(--accent); color: white; font-family: var(--font); font-weight: 600; font-size: 0.9rem; border: none; cursor: pointer; transition: background 0.15s; margin-top: 8px; }
+    .demo-chat-zone__open-btn:hover { background: var(--accent-hover); }
 
     /* ── PRICING ── */
     .pricing { margin-bottom: 48px; }
@@ -418,13 +418,13 @@
             </div>
             <div class="demo-chat-zone__body">
               <div class="demo-chat-zone__prompt" id="agent-prompt-text">Chat or talk with the AI agent</div>
-              <div class="demo-chat-zone__hint">Click the chat bubble in the bottom-right corner. Try asking about services, hours, or pricing.</div>
+              <div class="demo-chat-zone__hint">Your AI agent is ready. Start a conversation by chat or voice — ask it anything a customer would.</div>
               <div class="demo-chat-zone__suggestions">
-                <span class="demo-chat-zone__suggestion">What services do you offer?</span>
-                <span class="demo-chat-zone__suggestion">What are your hours?</span>
-                <span class="demo-chat-zone__suggestion">Can I get a quote?</span>
+                <span class="demo-chat-zone__suggestion">"What services do you offer?"</span>
+                <span class="demo-chat-zone__suggestion">"What are your hours?"</span>
+                <span class="demo-chat-zone__suggestion">"Can I get a quote?"</span>
               </div>
-              <div class="demo-chat-zone__arrow">↓</div>
+              <button class="demo-chat-zone__open-btn" onclick="openChatWidget()">Start Chatting</button>
             </div>
           </div>
         </div>
@@ -546,6 +546,8 @@
     function fallbackData(slug){var tldMatch=slug.match(/^(.+)-(net|org|co|io|biz|us|info|dev|ai|app)$/i);var cleaned=tldMatch?tldMatch[1]:slug;var tld=tldMatch?tldMatch[2]:'com';var parts=cleaned.split('-').filter(Boolean);var suffixes=['corp','inc','llc','group','tech','labs','works','systems','solutions','services','america','global','international','industries','enterprise','company','partners','associates','consulting','digital','media','design','studio','agency','pro','plus','hub','ai'];if(parts.length===1&&parts[0].length>6){for(var i=0;i<suffixes.length;i++){if(parts[0].toLowerCase().endsWith(suffixes[i])&&parts[0].length>suffixes[i].length+2){parts=[parts[0].slice(0,parts[0].length-suffixes[i].length),suffixes[i]];break}}}var name=parts.map(function(w){return w.charAt(0).toUpperCase()+w.slice(1)}).join(' ');return{name:name||'Local Business',address:'',phone:'',rating:null,reviewCount:0,hours:'',sourceUrl:cleaned+'.'+tld,widgetEmbed:null}}
 
     function injectChatWidget(){if(!CONFIG.GHL_WIDGET_ID||document.getElementById('ghl-chat-script'))return;var s=document.createElement('script');s.id='ghl-chat-script';s.src='https://beta.leadconnectorhq.com/loader.js';s.setAttribute('data-resources-url','https://beta.leadconnectorhq.com/chat-widget/loader.js');s.setAttribute('data-widget-id',CONFIG.GHL_WIDGET_ID);document.body.appendChild(s)}
+
+    function openChatWidget(){var allDivs=document.querySelectorAll('div');for(var i=allDivs.length-1;i>=0;i--){var el=allDivs[i];var style=window.getComputedStyle(el);if(style.position==='fixed'&&parseInt(style.bottom)<100&&parseInt(style.right)<100&&parseInt(style.zIndex)>1000){el.click();return}}/* If widget not found yet, try again shortly */setTimeout(openChatWidget,500)}
 
     function autoOpenWidget(){var attempts=0;var interval=setInterval(function(){var allDivs=document.querySelectorAll('div');for(var i=allDivs.length-1;i>=0;i--){var el=allDivs[i];var style=window.getComputedStyle(el);if(style.position==='fixed'&&parseInt(style.bottom)<100&&parseInt(style.right)<100&&parseInt(style.zIndex)>1000){el.click();clearInterval(interval);return}}attempts++;if(attempts>20)clearInterval(interval)},500)}
 
