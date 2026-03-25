@@ -865,10 +865,13 @@
       var input = document.getElementById('demo-url-input');
       var url = input.value.trim();
       if (!url) { input.style.borderColor = '#ef4444'; setTimeout(function() { input.style.borderColor = ''; }, 1200); return; }
-      var slug = url
-        .replace(/^https?:\/\//, '').replace(/^www\./, '')
-        .replace(/\.(com|net|org|co|io|biz|us|info|dev|ai|app)(\/.*)?$/i, '')
-        .replace(/\/.*$/, '').replace(/[^a-zA-Z0-9]+/g, '-').replace(/^-|-$/g, '').toLowerCase();
+      // Clean URL: strip protocol, www, trailing paths
+      var clean = url.replace(/^https?:\/\//, '').replace(/^www\./, '').replace(/\/.*$/, '').toLowerCase();
+      // For .com domains, strip the TLD (backend assumes .com by default)
+      // For all other TLDs (.net, .org, etc), convert dot to hyphen to preserve it
+      clean = clean.replace(/\.com$/, '').replace(/\.(net|org|co|io|biz|us|info|dev|ai|app)$/, '-$1');
+      // Convert remaining dots/special chars to hyphens
+      var slug = clean.replace(/[^a-zA-Z0-9-]+/g, '-').replace(/^-|-$/g, '');
       window.location.href = '/agent/' + slug;
     }
 
