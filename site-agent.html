@@ -149,7 +149,7 @@
     /* ══════════════════════════════════
        DEMO PAGE LAYOUT
     ══════════════════════════════════ */
-    .demo-page { min-height: calc(100vh - 56px); display: none; }
+    .demo-page { min-height: calc(100vh - 56px); }
 
     /* Three-column layout on desktop */
     .demo-layout {
@@ -568,6 +568,7 @@
     /* ── Pages ── */
     .page { display: none; }
     .page.active { display: block; }
+    #demo-page.active .demo-layout { display: grid; }
 
     @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
     @keyframes spin { to { transform: rotate(360deg); } }
@@ -687,7 +688,7 @@
           </div>
 
           <!-- Result state -->
-          <div id="sa-result" style="display:none; width:100%; display:none; flex-direction:column; align-items:center; padding: 0 20px;">
+          <div id="sa-result" style="display:none; width:100%; flex-direction:column; align-items:center; padding: 0 20px;">
 
             <!-- Business pill above phone -->
             <div class="phone-header" id="sa-phone-header">
