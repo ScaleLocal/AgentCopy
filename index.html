@@ -263,6 +263,7 @@
     .page { display: none; }
     .page.active { display: block; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes spin { to { transform: rotate(360deg); } }
     .fi { animation: fadeIn 0.4s ease-out both; }
     .fi-1 { animation-delay: 0.06s; }
     .fi-2 { animation-delay: 0.12s; }
@@ -407,6 +408,11 @@
             <div class="demo-info__detail" id="agent-info-address" style="display:none;"><span class="demo-info__detail-icon">📍</span> <span id="agent-address-text"></span></div>
             <div class="demo-info__detail" id="agent-info-phone" style="display:none;"><span class="demo-info__detail-icon">📞</span> <span id="agent-phone-text"></span></div>
             <div class="demo-info__detail" id="agent-info-hours" style="display:none;"><span class="demo-info__detail-icon">🕐</span> <span id="agent-hours-text"></span></div>
+            <div id="agent-info-learned" style="display:none;">
+              <div class="demo-info__divider"></div>
+              <div class="demo-info__label" style="margin-bottom:8px;">What the AI learned</div>
+              <div id="agent-learned-list" style="font-size:0.84rem;color:var(--text-secondary);line-height:1.6;"></div>
+            </div>
             <div class="demo-info__divider"></div>
             <div class="demo-info__built"><span class="g">●</span>&nbsp;Agent built in <strong id="agent-build-time" style="margin:0 3px;">—</strong> seconds</div>
           </div>
@@ -416,15 +422,32 @@
               <div class="demo-chat-zone__title">💬 Live Conversation</div>
               <div class="demo-chat-zone__live"><span class="demo-chat-zone__dot"></span> Agent online</div>
             </div>
-            <div class="demo-chat-zone__body">
-              <div class="demo-chat-zone__prompt" id="agent-prompt-text">Chat or talk with the AI agent</div>
-              <div class="demo-chat-zone__hint">Your AI agent is ready. Start a conversation by chat or voice — ask it anything a customer would.</div>
-              <div class="demo-chat-zone__suggestions">
-                <span class="demo-chat-zone__suggestion">"What services do you offer?"</span>
-                <span class="demo-chat-zone__suggestion">"What are your hours?"</span>
-                <span class="demo-chat-zone__suggestion">"Can I get a quote?"</span>
+            <div class="demo-chat-zone__body" id="chat-zone-body">
+              <div id="chat-zone-waiting">
+                <div class="demo-chat-zone__prompt" id="agent-prompt-text">Chat or talk with the AI agent</div>
+                <div class="demo-chat-zone__hint">The chat window is opening now — ask it anything a customer would. Try voice too.</div>
+                <div class="demo-chat-zone__suggestions">
+                  <span class="demo-chat-zone__suggestion">"What services do you offer?"</span>
+                  <span class="demo-chat-zone__suggestion">"What are your hours?"</span>
+                  <span class="demo-chat-zone__suggestion">"Can I get a quote?"</span>
+                </div>
+                <div id="chat-zone-spinner" style="margin-top:12px;width:24px;height:24px;border:2.5px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite;"></div>
               </div>
-              <button class="demo-chat-zone__open-btn" onclick="openChatWidget()">Start Chatting</button>
+              <div id="chat-zone-active" style="display:none;">
+                <div style="font-size:1.5rem;margin-bottom:8px;">💬</div>
+                <div class="demo-chat-zone__prompt">Your conversation is live</div>
+                <div class="demo-chat-zone__hint">The chat is open in the bottom-right corner. You can also click the phone icon to talk by voice.</div>
+              </div>
+              <div id="chat-zone-fallback" style="display:none;">
+                <div class="demo-chat-zone__prompt" id="agent-prompt-fallback">Chat or talk with the AI agent</div>
+                <div class="demo-chat-zone__hint">Click below or use the chat bubble in the bottom-right corner.</div>
+                <div class="demo-chat-zone__suggestions">
+                  <span class="demo-chat-zone__suggestion">"What services do you offer?"</span>
+                  <span class="demo-chat-zone__suggestion">"What are your hours?"</span>
+                  <span class="demo-chat-zone__suggestion">"Can I get a quote?"</span>
+                </div>
+                <button class="demo-chat-zone__open-btn" onclick="openChatWidget()">Open Chat</button>
+              </div>
             </div>
           </div>
         </div>
@@ -539,7 +562,7 @@
 
     function handleDemoRequest(source){var input=document.getElementById(source+'-url-input');var url=input.value.trim();if(!url){input.style.borderColor='#ef4444';setTimeout(function(){input.style.borderColor=''},1200);return}var clean=url.replace(/^https?:\/\//,'').replace(/^www\./,'').replace(/\/.*$/,'').toLowerCase();clean=clean.replace(/\.com$/,'').replace(/\.(net|org|co|io|biz|us|info|dev|ai|app)$/,'-$1');var slug=clean.replace(/[^a-zA-Z0-9-]+/g,'-').replace(/^-|-$/g,'');window.location.href='/agent/'+slug}
 
-    async function loadAgent(slug){var loading=document.getElementById('agent-loading');var result=document.getElementById('agent-result');var errorEl=document.getElementById('agent-error');var t0=Date.now();var tldMatch=slug.match(/^(.+)-(net|org|co|io|biz|us|info|dev|ai|app)$/i);var displaySlug=tldMatch?tldMatch[1]:slug;var displayName=displaySlug.split('-').map(function(w){return w.charAt(0).toUpperCase()+w.slice(1)}).join(' ');document.title=displayName+' — AI Demo | AgentCopyAI';try{var apiPromise;if(CONFIG.WORKER_URL){apiPromise=fetch(CONFIG.WORKER_URL+'/api/create-agent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({slug:slug})}).then(function(r){return r.json()}).catch(function(){return fallbackData(slug)})}else{apiPromise=Promise.resolve(fallbackData(slug))}await animateStep('step-scrape',1400);await animateStep('step-places',1100);var data=await apiPromise;await animateStep('step-agent',1200);await animateStep('step-ready',400);var buildTime=data.buildTime||((Date.now()-t0)/1000).toFixed(1);loading.style.display='none';result.style.display='block';result.style.animation='fadeIn 0.4s ease-out both';var name=data.name||displayName;var sourceUrl=data.sourceUrl||displaySlug+'.com';document.getElementById('agent-source-url').textContent=sourceUrl;document.getElementById('agent-biz-name').innerHTML='<em>'+name+'</em> — your AI agent is live';document.getElementById('agent-showcase-desc').innerHTML='This AI was just trained on <strong>'+name+'\'s</strong> website. It knows the services, hours, and more. Go ahead — ask it anything a customer would.';document.getElementById('agent-info-name').textContent=name;document.getElementById('agent-info-url').textContent=sourceUrl;document.getElementById('agent-build-time').textContent=buildTime;if(data.rating){document.getElementById('agent-info-rating').style.display='flex';document.getElementById('agent-rating-text').textContent=data.rating+(data.reviewCount?' ('+data.reviewCount+' reviews)':'')}if(data.address){document.getElementById('agent-info-address').style.display='flex';document.getElementById('agent-address-text').textContent=data.address}if(data.phone){document.getElementById('agent-info-phone').style.display='flex';document.getElementById('agent-phone-text').textContent=data.phone}if(data.hours){document.getElementById('agent-info-hours').style.display='flex';document.getElementById('agent-hours-text').textContent=data.hours}document.getElementById('agent-prompt-text').textContent='Talk to '+name+'\'s AI agent';window.__agentBizName=name;injectChatWidget();setTimeout(autoOpenWidget,1500)}catch(err){console.error(err);loading.style.display='none';errorEl.style.display='block'}}
+    async function loadAgent(slug){var loading=document.getElementById('agent-loading');var result=document.getElementById('agent-result');var errorEl=document.getElementById('agent-error');var t0=Date.now();var tldMatch=slug.match(/^(.+)-(net|org|co|io|biz|us|info|dev|ai|app)$/i);var displaySlug=tldMatch?tldMatch[1]:slug;var displayName=displaySlug.split('-').map(function(w){return w.charAt(0).toUpperCase()+w.slice(1)}).join(' ');document.title=displayName+' — AI Demo | AgentCopyAI';try{var apiPromise;if(CONFIG.WORKER_URL){apiPromise=fetch(CONFIG.WORKER_URL+'/api/create-agent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({slug:slug})}).then(function(r){return r.json()}).catch(function(){return fallbackData(slug)})}else{apiPromise=Promise.resolve(fallbackData(slug))}await animateStep('step-scrape',1400);await animateStep('step-places',1100);var data=await apiPromise;await animateStep('step-agent',1200);await animateStep('step-ready',400);var buildTime=data.buildTime||((Date.now()-t0)/1000).toFixed(1);loading.style.display='none';result.style.display='block';result.style.animation='fadeIn 0.4s ease-out both';var name=data.name||displayName;var sourceUrl=data.sourceUrl||displaySlug+'.com';document.getElementById('agent-source-url').textContent=sourceUrl;document.getElementById('agent-biz-name').innerHTML='<em>'+name+'</em> — your AI agent is live';document.getElementById('agent-showcase-desc').innerHTML='This AI was just trained on <strong>'+name+'\'s</strong> website. It knows the services, hours, and more. Go ahead — ask it anything a customer would.';document.getElementById('agent-info-name').textContent=name;document.getElementById('agent-info-url').textContent=sourceUrl;document.getElementById('agent-build-time').textContent=buildTime;var hasPlaces=false;if(data.rating){document.getElementById('agent-info-rating').style.display='flex';document.getElementById('agent-rating-text').textContent=data.rating+(data.reviewCount?' ('+data.reviewCount+' reviews)':'');hasPlaces=true}if(data.address){document.getElementById('agent-info-address').style.display='flex';document.getElementById('agent-address-text').textContent=data.address;hasPlaces=true}if(data.phone){document.getElementById('agent-info-phone').style.display='flex';document.getElementById('agent-phone-text').textContent=data.phone;hasPlaces=true}if(data.hours){document.getElementById('agent-info-hours').style.display='flex';document.getElementById('agent-hours-text').textContent=data.hours;hasPlaces=true}if(!hasPlaces){var learned=document.getElementById('agent-info-learned');var list=document.getElementById('agent-learned-list');var items=[];if(data.services){var svcText=data.services.replace(/#{1,4}\s*/g,'').replace(/\[.*?\]\(.*?\)/g,'').replace(/[_*]/g,'').split('\n').filter(function(l){return l.trim().length>3&&l.trim().length<80}).slice(0,5);if(svcText.length>0)items.push('<strong>Services:</strong> '+svcText.join(', '))}if(data.about){var aboutClean=data.about.replace(/#{1,4}\s*/g,'').replace(/\[.*?\]\(.*?\)/g,'').replace(/[_*]/g,'').split('\n').filter(function(l){return l.trim().length>10}).slice(0,2).join(' ').slice(0,200);if(aboutClean)items.push('<strong>About:</strong> '+aboutClean)}if(items.length>0){list.innerHTML=items.join('<br style="margin-bottom:6px;">');learned.style.display='block'}else{list.innerHTML='<span style="color:var(--text-muted);">Website scanned — services, capabilities, and company info extracted and loaded into the AI agent.</span>';learned.style.display='block'}}document.getElementById('agent-prompt-text').textContent='Talk to '+name+'\'s AI agent';if(document.getElementById('agent-prompt-fallback'))document.getElementById('agent-prompt-fallback').textContent='Talk to '+name+'\'s AI agent';window.__agentBizName=name;injectChatWidget();setTimeout(autoOpenWidget,1500)}catch(err){console.error(err);loading.style.display='none';errorEl.style.display='block'}}
 
     function animateStep(id,ms){return new Promise(function(resolve){var el=document.getElementById(id);el.classList.add('active');el.querySelector('span').textContent='\u25C9';setTimeout(function(){el.classList.remove('active');el.classList.add('done');el.querySelector('span').textContent='\u2713';resolve()},ms)})}
 
@@ -547,9 +570,11 @@
 
     function injectChatWidget(){if(!CONFIG.GHL_WIDGET_ID||document.getElementById('ghl-chat-script'))return;var s=document.createElement('script');s.id='ghl-chat-script';s.src='https://beta.leadconnectorhq.com/loader.js';s.setAttribute('data-resources-url','https://beta.leadconnectorhq.com/chat-widget/loader.js');s.setAttribute('data-widget-id',CONFIG.GHL_WIDGET_ID);document.body.appendChild(s)}
 
-    function openChatWidget(){var allDivs=document.querySelectorAll('div');for(var i=allDivs.length-1;i>=0;i--){var el=allDivs[i];var style=window.getComputedStyle(el);if(style.position==='fixed'&&parseInt(style.bottom)<100&&parseInt(style.right)<100&&parseInt(style.zIndex)>1000){el.click();return}}/* If widget not found yet, try again shortly */setTimeout(openChatWidget,500)}
+    function openChatWidget(){var allDivs=document.querySelectorAll('div');for(var i=allDivs.length-1;i>=0;i--){var el=allDivs[i];var style=window.getComputedStyle(el);if(style.position==='fixed'&&parseInt(style.bottom)<100&&parseInt(style.right)<100&&parseInt(style.zIndex)>1000){el.click();showChatState('active');return}}setTimeout(openChatWidget,500)}
 
-    function autoOpenWidget(){var attempts=0;var interval=setInterval(function(){var allDivs=document.querySelectorAll('div');for(var i=allDivs.length-1;i>=0;i--){var el=allDivs[i];var style=window.getComputedStyle(el);if(style.position==='fixed'&&parseInt(style.bottom)<100&&parseInt(style.right)<100&&parseInt(style.zIndex)>1000){el.click();clearInterval(interval);return}}attempts++;if(attempts>20)clearInterval(interval)},500)}
+    function autoOpenWidget(){var attempts=0;var interval=setInterval(function(){var allDivs=document.querySelectorAll('div');for(var i=allDivs.length-1;i>=0;i--){var el=allDivs[i];var style=window.getComputedStyle(el);if(style.position==='fixed'&&parseInt(style.bottom)<100&&parseInt(style.right)<100&&parseInt(style.zIndex)>1000){el.click();clearInterval(interval);showChatState('active');return}}attempts++;if(attempts>20){clearInterval(interval);showChatState('fallback')}},500)}
+
+    function showChatState(state){var w=document.getElementById('chat-zone-waiting');var a=document.getElementById('chat-zone-active');var f=document.getElementById('chat-zone-fallback');if(w)w.style.display=state==='waiting'?'block':'none';if(a)a.style.display=state==='active'?'block':'none';if(f)f.style.display=state==='fallback'?'block':'none'}
 
     var selectedPlan='';var planLabels={starter:'Starter — $249/mo + $249 setup',growth:'Growth — $249/mo · Free setup',scale:'Scale — $249/mo · Free setup + month 12 free'};
 
