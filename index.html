@@ -7,7 +7,7 @@
   <meta name="description" content="See an AI receptionist trained on your business — live in under 10 seconds." />
   <meta property="og:title" content="AgentCopyAI — AI Receptionist for Your Business" />
   <meta property="og:description" content="An AI agent trained on your actual business. Try it live." />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230F172A'/><text x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-size='16' font-family='system-ui' font-weight='bold' fill='white'>A</text></svg>" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%232563EB'/><stop offset='100%25' stop-color='%236366F1'/></linearGradient></defs><rect width='32' height='32' rx='8' fill='url(%23g)'/><text x='50%25' y='56%25' dominant-baseline='middle' text-anchor='middle' font-size='17' font-family='system-ui' font-weight='800' fill='white'>A</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400;1,9..40,500&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&display=swap" rel="stylesheet" />
@@ -53,7 +53,7 @@
     }
     .nav .container { display: flex; justify-content: space-between; align-items: center; height: 60px; }
     .nav__logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; color: var(--text); text-decoration: none; }
-    .nav__mark { width: 30px; height: 30px; border-radius: 8px; background: var(--bg-accent); color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; }
+    .nav__mark { width: 30px; height: 30px; border-radius: 8px; background: linear-gradient(135deg, var(--accent) 0%, #6366F1 100%); color: white; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; letter-spacing: -0.02em; box-shadow: 0 2px 8px rgba(37,99,235,0.25); }
     .nav__links { display: flex; gap: 28px; align-items: center; }
     .nav__link { font-size: 0.88rem; font-weight: 500; color: var(--text-secondary); text-decoration: none; }
     .nav__link:hover { color: var(--text); text-decoration: none; }
@@ -142,18 +142,38 @@
     /* ══════════════════════════════════════════
        AGENT DEMO PAGE
     ══════════════════════════════════════════ */
-    .demo-page { min-height: 100vh; background: white; }
+    .demo-page { min-height: 100vh; background: linear-gradient(180deg, #FAFBFC 0%, #FFFFFF 30%, #FFFFFF 70%, #F8FAFC 100%); }
 
     /* Loading state */
     .demo-loading {
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      min-height: 60vh; gap: 20px; text-align: center; padding: 40px 24px;
+      min-height: 70vh; gap: 24px; text-align: center; padding: 40px 24px;
     }
-    .demo-spinner { width: 32px; height: 32px; border: 2.5px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; }
+    .demo-loading__icon {
+      width: 72px; height: 72px; border-radius: 20px;
+      background: linear-gradient(135deg, var(--accent-bg) 0%, #EDE9FE 100%);
+      border: 1px solid var(--accent-border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px;
+      animation: breathe 2s ease-in-out infinite;
+    }
+    @keyframes breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+    .demo-loading__title {
+      font-family: var(--font-display); font-size: 1.4rem; font-weight: 700;
+      color: var(--text); margin-bottom: -8px;
+    }
+    .demo-loading__subtitle {
+      font-size: 0.95rem; color: var(--text-secondary); max-width: 340px;
+    }
+    .demo-spinner { width: 28px; height: 28px; border: 2.5px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .demo-loading__text { font-size: 0.92rem; color: var(--text-secondary); font-weight: 500; }
-    .demo-loading__steps { display: flex; flex-direction: column; gap: 4px; font-size: 0.75rem; color: var(--text-muted); font-family: 'SF Mono', monospace; text-align: left; }
-    .demo-loading__step { display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+    .demo-loading__steps {
+      display: flex; flex-direction: column; gap: 6px;
+      font-size: 0.82rem; color: var(--text-muted); text-align: left;
+      background: var(--bg-subtle); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 20px 24px;
+    }
+    .demo-loading__step { display: flex; align-items: center; gap: 8px; transition: color 0.2s; font-weight: 500; }
     .demo-loading__step.done { color: var(--green); }
     .demo-loading__step.active { color: var(--accent); }
 
@@ -212,6 +232,39 @@
       font-size: 0.72rem; color: var(--text-muted);
     }
     .demo-build-time .g { color: var(--green); font-weight: 600; }
+
+    /* Conversion CTA */
+    .demo-cta {
+      margin-top: 48px;
+      animation: fadeIn 0.5s ease-out 0.3s both;
+    }
+    .demo-cta__card {
+      background: linear-gradient(135deg, var(--accent-bg) 0%, #EDE9FE 100%);
+      border: 1px solid var(--accent-border);
+      border-radius: var(--radius-xl); padding: 44px 36px;
+      text-align: center;
+    }
+    .demo-cta__title {
+      font-family: var(--font-display);
+      font-size: 1.5rem; font-weight: 800;
+      letter-spacing: -0.02em; margin-bottom: 10px;
+      color: var(--text);
+    }
+    .demo-cta__desc {
+      font-size: 1rem; color: var(--text-secondary);
+      max-width: 420px; margin: 0 auto 24px;
+      line-height: 1.6;
+    }
+    .demo-cta__btn {
+      padding: 14px 32px; font-size: 1rem;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 14px rgba(37,99,235,0.25);
+    }
+    .demo-cta__btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(37,99,235,0.3); }
+    .demo-cta__note {
+      margin-top: 14px;
+      font-size: 0.8rem; color: var(--text-muted);
+    }
 
     .demo-footer {
       text-align: center; padding: 24px 0;
@@ -356,8 +409,9 @@
 
       <!-- Loading -->
       <div class="demo-loading" id="agent-loading">
-        <div class="demo-spinner"></div>
-        <div class="demo-loading__text">Building agent...</div>
+        <div class="demo-loading__icon">&#x1f9e0;</div>
+        <div class="demo-loading__title">Building your AI receptionist</div>
+        <div class="demo-loading__subtitle">We're reading the business website and training a custom AI agent. This takes just a few seconds.</div>
         <div class="demo-loading__steps">
           <div class="demo-loading__step" id="step-scrape"><span>○</span> Reading website</div>
           <div class="demo-loading__step" id="step-places"><span>○</span> Pulling business data</div>
@@ -378,12 +432,22 @@
         <div class="demo-prompt">
           <div class="demo-prompt__label">Instant Demo</div>
           <div class="demo-prompt__text" id="agent-prompt-text">Chat or talk with the AI receptionist now</div>
-          <div class="demo-prompt__hint">Ask about services, hours, pricing — anything a customer would.</div>
+          <div class="demo-prompt__hint">Try asking about services, hours, pricing — anything a real customer would ask.</div>
           <div class="demo-prompt__arrow">↓</div>
         </div>
 
         <div class="demo-build-time">
           <span class="g">●</span> Built in <span class="g" id="agent-build-time">5.1</span>s
+        </div>
+
+        <!-- Conversion CTA -->
+        <div class="demo-cta" id="demo-cta">
+          <div class="demo-cta__card">
+            <h2 class="demo-cta__title">Want this on your website?</h2>
+            <p class="demo-cta__desc" id="demo-cta-desc">This AI receptionist can answer calls, chat with visitors, and book appointments for your business — 24 hours a day, 7 days a week. No hiring. No training. No missed calls.</p>
+            <a href="https://scalelocal.net/contact" class="btn btn--primary demo-cta__btn" target="_blank">Get started — talk to our team</a>
+            <p class="demo-cta__note">Free consultation. No commitment. See it live on your own site in minutes.</p>
+          </div>
         </div>
       </div>
 
@@ -396,7 +460,7 @@
 
       <!-- Footer -->
       <div class="demo-footer">
-        <a href="/">AgentCopyAI</a> · ScaleLocal
+        Built by <a href="/">AgentCopyAI</a> &middot; AI receptionist technology by <a href="https://scalelocal.net" target="_blank">ScaleLocal</a>
       </div>
     </div>
   </div>
@@ -504,13 +568,17 @@
         result.style.animation = 'fadeIn 0.4s ease-out both';
 
         var name = data.name || displayName;
-        document.getElementById('agent-biz-name').textContent = 'Instant Demo for ' + name;
+        document.getElementById('agent-biz-name').innerHTML = 'Instant Demo for <span style="color:var(--accent)">' + name + '</span>';
         document.getElementById('agent-source-url').textContent = (data.sourceUrl || displaySlug + '.com');
         document.getElementById('agent-showcase-desc').innerHTML =
-          'This AI receptionist was just trained on <strong>' + name + "'s</strong> website. It can answer questions about their services, hours, and more — just like a real front desk.";
+          'This AI receptionist was just trained on <strong>' + name + '\'s</strong> website. It knows their services, hours, and more. Go ahead — ask it anything.';
         document.getElementById('agent-prompt-text').textContent =
-          'Talk to ' + name + "'s AI receptionist";
+          'Talk to ' + name + '\'s AI receptionist';
         document.getElementById('agent-build-time').textContent = buildTime;
+
+        // Personalize the conversion CTA
+        document.getElementById('demo-cta-desc').textContent =
+          'This AI receptionist can answer calls, chat with visitors, and book appointments for ' + name + ' — 24 hours a day, 7 days a week. No hiring. No training. No missed calls.';
 
         // Inject and auto-open the GHL chat widget
         injectChatWidget();
