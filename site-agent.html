@@ -105,7 +105,6 @@
     .demo__stats--r{align-items:flex-start;text-align:left;padding-left:44px;}
 
     .stat__num{font-family:var(--serif);font-size:2.4rem;line-height:1;color:var(--text);letter-spacing:-.03em;}
-    .stat__num em{color:var(--teal);font-style:normal;}
     .stat__lbl{font-size:.7rem;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.07em;margin-top:4px;max-width:150px;line-height:1.4;}
     .stat__divider{width:28px;height:2px;background:var(--border);margin:8px 0;}
     .demo__stats--l .stat__divider{margin-left:auto;}
@@ -267,7 +266,6 @@
     }
     .proof__item{}
     .proof__num{font-family:var(--serif);font-size:2rem;color:var(--text);letter-spacing:-.02em;}
-    .proof__num em{color:var(--teal);font-style:normal;}
     .proof__lbl{font-size:.72rem;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.07em;margin-top:4px;}
 
     /* ── FOOTER ── */
@@ -370,17 +368,17 @@
         <!-- Left stats -->
         <div class="demo__stats demo__stats--l">
           <div>
-            <div class="stat__num"><em>10</em>s</div>
+            <div class="stat__num">10s</div>
             <div class="stat__lbl">To build &amp; deploy</div>
             <div class="stat__divider"></div>
           </div>
           <div>
-            <div class="stat__num"><em>24</em>/7</div>
+            <div class="stat__num">24/7</div>
             <div class="stat__lbl">Always answering</div>
             <div class="stat__divider"></div>
           </div>
           <div>
-            <div class="stat__num">$<em>0</em></div>
+            <div class="stat__num">$0</div>
             <div class="stat__lbl">Setup fee this month</div>
           </div>
         </div>
@@ -427,12 +425,12 @@
         <!-- Right stats -->
         <div class="demo__stats demo__stats--r">
           <div>
-            <div class="stat__num"><em>68</em>%</div>
+            <div class="stat__num">68%</div>
             <div class="stat__lbl">Of visitors leave without asking a question</div>
             <div class="stat__divider"></div>
           </div>
           <div>
-            <div class="stat__num"><em>3x</em></div>
+            <div class="stat__num">3x</div>
             <div class="stat__lbl">More leads with instant AI response</div>
             <div class="stat__divider"></div>
           </div>
@@ -452,7 +450,7 @@
           Get This On My Website
           <span id="cta-plan-sub">Growth — $249/mo · Free setup</span>
         </button>
-        <p class="cta__urgency">⚡ Setup fee waived this month — save $249</p>
+        <p class="cta__urgency" id="cta-urgency"></p>
         <div class="cta__trust">
           <span class="cta__trust-item">⚡ Live in 24 hours</span>
           <span class="cta__trust-item">🔒 Cancel anytime</span>
@@ -498,15 +496,15 @@
       <div class="demo__proof">
         <div class="proof__inner">
           <div class="proof__item">
-            <div class="proof__num"><em>68</em>%</div>
+            <div class="proof__num">68%</div>
             <div class="proof__lbl">Leave without asking a question</div>
           </div>
           <div class="proof__item">
-            <div class="proof__num"><em>3x</em></div>
+            <div class="proof__num">3x</div>
             <div class="proof__lbl">More leads with instant AI response</div>
           </div>
           <div class="proof__item">
-            <div class="proof__num"><em>24</em>/7</div>
+            <div class="proof__num">24/7</div>
             <div class="proof__lbl">Always on, always answering</div>
           </div>
         </div>
@@ -542,9 +540,9 @@
 
     /* ── Plan selection ── */
     var planSubs={
-      starter:'Starter — $249/mo + $249 setup',
-      growth:'Growth — $249/mo · Free setup',
-      scale:'Scale — $249/mo · Free setup + month 12 free'
+      starter:'Starter — $249/mo + $249 setup fee',
+      growth:'Growth — $249/mo · No setup fee · 6-month commitment',
+      scale:'Scale — $249/mo · No setup fee · Month 12 free'
     };
     window.selectPlan=function(plan){
       document.querySelectorAll('.plan-row').forEach(function(r){
@@ -650,13 +648,57 @@
       iframe.src=src;
     }
 
-    /* ── CTA handler ── */
+    /* ── Plan urgency copy — updates when plan changes ── */
+    var planUrgency={
+      starter:'',  // No urgency on starter — setup fee still applies
+      growth: '⚡ Setup fee waived with 6-month commitment — save $249',
+      scale:  '⚡ Setup fee waived + month 12 free with 12-month commitment — save $498+'
+    };
+    function updateUrgency(plan){
+      var el=document.getElementById('cta-urgency');
+      if(el) el.textContent=planUrgency[plan]||'';
+    }
+    // Set initial urgency based on default plan (growth)
+    updateUrgency('growth');
+
+    // Patch selectPlan to also update urgency
+    var _origSelectPlan=window.selectPlan;
+    window.selectPlan=function(plan){
+      _origSelectPlan(plan);
+      updateUrgency(plan);
+    };
+
+    /* ── CTA handler — goes directly to Stripe Payment Link ── */
     window.handleCTA=function(){
+      var btn=document.getElementById('cta-main-btn');
       var sel=document.querySelector('.plan-row.selected,.plan-row.featured');
       var plan=sel?sel.dataset.plan:'growth';
-      var slug=window.__saSlug||'';
-      if(slug) window.location.href='/agent/'+slug+'?plan='+plan+'#signup';
-      else window.location.href='https://scalelocal.net';
+
+      // Show loading state on button
+      var origText=btn.querySelector('span').textContent;
+      btn.disabled=true;
+      btn.style.opacity='.7';
+      btn.firstChild.textContent='Taking you to checkout…';
+
+      fetch('https://agentcopy-api.vercel.app/api/checkout',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({plan:plan})
+      })
+      .then(function(r){return r.json();})
+      .then(function(d){
+        if(d.url) window.location.href=d.url;
+        else throw new Error('No URL');
+      })
+      .catch(function(){
+        // Fallback: direct links if API fails
+        var fallback={
+          starter:'https://buy.stripe.com/eVqeVedVFfYbbZiaol3Je01',
+          growth: 'https://buy.stripe.com/7sYdRabNx13hfbu6853Je02',
+          scale:  'https://buy.stripe.com/5kQ14og3NaDR4wQ5413Je03'
+        };
+        window.location.href=fallback[plan]||fallback.growth;
+      });
     };
 
   })();
