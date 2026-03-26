@@ -17,10 +17,14 @@
         (search ? '&' + search.slice(1).replace(/&/g, '~and~') : '') + hash
       );
     } else if (path === '/frame' || path === '/frame/') {
-      // frame.html is served directly — redirect with query string intact
       l.replace(
         l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
         '/frame.html' + search + hash
+      );
+    } else if (path === '/welcome' || path === '/welcome/') {
+      l.replace(
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        '/welcome.html' + search + hash
       );
     } else {
       var pathSegmentsToKeep = 0;

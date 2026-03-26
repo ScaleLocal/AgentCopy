@@ -448,7 +448,7 @@
 
         <button class="cta__btn" id="cta-main-btn" onclick="handleCTA()">
           Get This On My Website
-          <span id="cta-plan-sub">Growth — $249/mo · Free setup</span>
+          <span id="cta-plan-sub">6-Month Commitment — $249/mo · No setup fee · Save $249</span>
         </button>
         <p class="cta__urgency" id="cta-urgency"></p>
         <div class="cta__trust">
@@ -459,26 +459,26 @@
 
         <div class="cta__pricing-toggle" id="cta-pricing-toggle" onclick="togglePricing()">↕ See pricing options</div>
         <div class="cta__plans" id="cta-plans" style="display:none;">
-          <div class="plan-row" data-plan="starter" onclick="selectPlan('starter')">
+          <div class="plan-row" data-plan="m2m" onclick="selectPlan('m2m')">
             <div class="plan-row__left">
               <div class="plan-row__radio"></div>
-              <div><div class="plan-row__name">Starter</div><div class="plan-row__commit">Month-to-month</div></div>
+              <div><div class="plan-row__name">Month-to-Month</div><div class="plan-row__commit">Cancel anytime</div></div>
             </div>
-            <div class="plan-row__price"><div class="plan-row__mo">$249/mo</div><div class="plan-row__setup">+ $249 setup</div></div>
+            <div class="plan-row__price"><div class="plan-row__mo">$249/mo</div><div class="plan-row__setup">+ $249 setup fee</div></div>
           </div>
-          <div class="plan-row featured" data-plan="growth" onclick="selectPlan('growth')">
+          <div class="plan-row featured" data-plan="6mo" onclick="selectPlan('6mo')">
             <div class="plan-row__left">
               <div class="plan-row__radio"></div>
-              <div><div class="plan-row__name">Growth <span class="plan-row__tag">Best Value</span></div><div class="plan-row__commit">6-month commitment</div></div>
+              <div><div class="plan-row__name">6-Month Commitment <span class="plan-row__tag">No Setup Fee</span></div><div class="plan-row__commit">Save $249 · Billed monthly</div></div>
             </div>
             <div class="plan-row__price"><div class="plan-row__mo">$249/mo</div><div class="plan-row__setup"><s>$249 setup</s> <span class="free">Free</span></div></div>
           </div>
-          <div class="plan-row" data-plan="scale" onclick="selectPlan('scale')">
+          <div class="plan-row" data-plan="12mo" onclick="selectPlan('12mo')">
             <div class="plan-row__left">
               <div class="plan-row__radio"></div>
-              <div><div class="plan-row__name">Scale</div><div class="plan-row__commit">12-month commitment</div></div>
+              <div><div class="plan-row__name">12-Month Commitment <span class="plan-row__tag">Best Deal</span></div><div class="plan-row__commit">No setup fee · Month 12 free</div></div>
             </div>
-            <div class="plan-row__price"><div class="plan-row__mo">$249/mo</div><div class="plan-row__setup"><span class="free">Free setup + month 12 free</span></div></div>
+            <div class="plan-row__price"><div class="plan-row__mo">$249/mo</div><div class="plan-row__setup"><span class="free">Setup free + month 12 free</span></div></div>
           </div>
         </div>
 
@@ -540,9 +540,9 @@
 
     /* ── Plan selection ── */
     var planSubs={
-      starter:'Starter — $249/mo + $249 setup fee',
-      growth:'Growth — $249/mo · No setup fee · 6-month commitment',
-      scale:'Scale — $249/mo · No setup fee · Month 12 free'
+      'm2m':  'Month-to-Month — $249/mo + $249 setup fee',
+      '6mo':  '6-Month Commitment — $249/mo · No setup fee · Save $249',
+      '12mo': '12-Month Commitment — $249/mo · No setup fee · Month 12 free'
     };
     window.selectPlan=function(plan){
       document.querySelectorAll('.plan-row').forEach(function(r){
@@ -553,6 +553,8 @@
     };
     var defaultPlan=document.querySelector('.plan-row.featured');
     if(defaultPlan) document.getElementById('cta-plan-sub').textContent=planSubs[defaultPlan.dataset.plan]||'';
+    // Set initial urgency
+    updateUrgency(defaultPlan ? defaultPlan.dataset.plan : '6mo');
 
     /* ── Pricing toggle ── */
     window.togglePricing=function(){
@@ -650,16 +652,16 @@
 
     /* ── Plan urgency copy — updates when plan changes ── */
     var planUrgency={
-      starter:'',  // No urgency on starter — setup fee still applies
-      growth: '⚡ Setup fee waived with 6-month commitment — save $249',
-      scale:  '⚡ Setup fee waived + month 12 free with 12-month commitment — save $498+'
+      'm2m':  '',  // Setup fee applies on M2M — no urgency message
+      '6mo':  '⚡ Setup fee waived with 6-month commitment — save $249',
+      '12mo': '⚡ Setup fee waived + month 12 free — save $498 or more'
     };
     function updateUrgency(plan){
       var el=document.getElementById('cta-urgency');
       if(el) el.textContent=planUrgency[plan]||'';
     }
-    // Set initial urgency based on default plan (growth)
-    updateUrgency('growth');
+    // Set initial urgency based on default plan (6mo)
+    updateUrgency('6mo');
 
     // Patch selectPlan to also update urgency
     var _origSelectPlan=window.selectPlan;
@@ -672,7 +674,7 @@
     window.handleCTA=function(){
       var btn=document.getElementById('cta-main-btn');
       var sel=document.querySelector('.plan-row.selected,.plan-row.featured');
-      var plan=sel?sel.dataset.plan:'growth';
+      var plan=sel?sel.dataset.plan:'6mo';
 
       // Show loading state on button
       var origText=btn.querySelector('span').textContent;
@@ -693,11 +695,11 @@
       .catch(function(){
         // Fallback: direct links if API fails
         var fallback={
-          starter:'https://buy.stripe.com/eVqeVedVFfYbbZiaol3Je01',
-          growth: 'https://buy.stripe.com/7sYdRabNx13hfbu6853Je02',
-          scale:  'https://buy.stripe.com/5kQ14og3NaDR4wQ5413Je03'
+          'm2m':  'https://buy.stripe.com/aFadRa2cXdQ37J2aol3Je04',
+          '6mo':  'https://buy.stripe.com/eVq4gAg3N3bp4wQdAx3Je05',
+          '12mo': 'https://buy.stripe.com/fZu8wQ2cX7rF4wQaol3Je06'
         };
-        window.location.href=fallback[plan]||fallback.growth;
+        window.location.href=fallback[plan]||fallback['6mo'];
       });
     };
 
