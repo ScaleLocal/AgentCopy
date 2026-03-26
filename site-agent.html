@@ -73,10 +73,15 @@
     .dp__layout { display:grid; grid-template-columns:1fr auto 1fr; min-height:calc(100vh - 56px); }
 
     /* Dark side panels */
-    .dp__side { background:var(--bg-dark); display:flex; align-items:center; justify-content:center; padding:40px 28px; }
+    .dp__side { background:var(--bg-dark); display:flex; align-items:flex-start; justify-content:center; padding:0 28px; }
     .dp__side--l { justify-content:flex-end; }
     .dp__side--r { justify-content:flex-start; }
-    .side__inner { max-width:200px; opacity:0; transition:opacity .6s ease .5s; }
+    .side__inner { max-width:200px; opacity:0; transition:opacity .6s ease .5s;
+      /* Align vertically to match the phone's visual center.
+         Phone header (pill) ~58px + phone top half ~332px = ~390px from top of center col.
+         Center col has 40px top padding. So midpoint ≈ 40+58+332 = 430px.
+         Side inner height ≈ 220px, so top offset ≈ 430-(220/2) = 320px */
+      margin-top:326px; }
     body.state-result .side__inner { opacity:1; }
     .side__quote { font-family:var(--serif); font-size:.95rem; font-style:italic; color:rgba(255,255,255,.4); line-height:1.6; margin-bottom:24px; }
     .side__quote strong { font-style:normal; font-family:var(--font); font-size:.72rem; color:rgba(255,255,255,.65); }
@@ -204,6 +209,9 @@
     .cta__urgency { text-align:center; margin-top:9px; font-size:.72rem; color:var(--teal-h); font-weight:600; }
     .cta__trust { display:flex; justify-content:center; gap:16px; margin-top:14px; flex-wrap:wrap; }
     .cta__trust-item { font-size:.7rem; color:var(--text-3); font-weight:500; display:flex; align-items:center; gap:4px; }
+    .cta__pricing-toggle { text-align:center; margin-top:12px; font-size:.76rem; color:var(--text-3); cursor:pointer; font-weight:500; padding:6px; transition:color .15s; }
+    .cta__pricing-toggle:hover { color:var(--teal); }
+    .cta__plans { margin-top:10px; margin-bottom:4px; }
     .cta__escape { text-align:center; margin-top:16px; font-size:.74rem; color:var(--text-3); padding-bottom:8px; }
     .cta__escape a { color:var(--text-2); font-weight:500; }
     .cta__escape a:hover { color:var(--teal); }
@@ -362,8 +370,23 @@
             <p class="cta__moment">"That's not a demo. That's your actual business."</p>
             <p class="cta__frame">Your AI agent just handled a customer inquiry while you read this. <strong>It'll do that 24/7 — for less than one hour of employee time per month.</strong></p>
 
-            <!-- Plan selector -->
-            <div class="cta__plans" id="cta-plans">
+            <!-- PRIMARY CTA — shown first, no decision fatigue -->
+            <button class="cta__btn" id="cta-main-btn" onclick="handleCTA()">
+              Get This On My Website
+              <span id="cta-plan-sub">Growth — $249/mo · Free setup</span>
+            </button>
+            <p class="cta__urgency">⚡ Setup fee waived this month — save $249</p>
+            <div class="cta__trust">
+              <span class="cta__trust-item">⚡ Live in 24 hours</span>
+              <span class="cta__trust-item">🔒 Cancel anytime</span>
+              <span class="cta__trust-item">💬 Chat + Voice</span>
+            </div>
+
+            <!-- PRICING — collapsed by default, expands on click -->
+            <div class="cta__pricing-toggle" id="cta-pricing-toggle" onclick="togglePricing()">
+              ↕ See pricing options
+            </div>
+            <div class="cta__plans" id="cta-plans" style="display:none;">
               <div class="plan-row" data-plan="starter" onclick="selectPlan('starter')">
                 <div class="plan-row__left">
                   <div class="plan-row__radio"></div>
@@ -405,17 +428,7 @@
               </div>
             </div>
 
-            <button class="cta__btn" id="cta-main-btn" onclick="handleCTA()">
-              Get This On My Website
-              <span id="cta-plan-sub">Growth — $249/mo · Free setup</span>
-            </button>
-            <p class="cta__urgency">⚡ Setup fee waived this month — save $249</p>
-            <div class="cta__trust">
-              <span class="cta__trust-item">⚡ Live in 24 hours</span>
-              <span class="cta__trust-item">🔒 Cancel anytime</span>
-              <span class="cta__trust-item">💬 Chat + Voice</span>
-            </div>
-            <p class="cta__escape">Need phone answering too? <a href="https://scalelocal.net" target="_blank">See the full AI Receptionist →</a></p>
+            <p class="cta__escape">Want it answering your phone calls too? <a href="https://scalelocal.net" target="_blank">See the full AI Receptionist →</a></p>
           </div>
 
           <!-- Error state -->
@@ -592,6 +605,15 @@
       iframe.src = src;
       // frame.html handles its own loading/fallback internally
     }
+
+    /* ── Pricing toggle ── */
+    window.togglePricing = function(){
+      var plans = document.getElementById('cta-plans');
+      var toggle = document.getElementById('cta-pricing-toggle');
+      var open = plans.style.display !== 'none';
+      plans.style.display = open ? 'none' : 'flex';
+      toggle.textContent = open ? '↕ See pricing options' : '↑ Hide pricing options';
+    };
 
     /* ── CTA handler ── */
     window.handleCTA = function(){
