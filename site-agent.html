@@ -75,34 +75,34 @@
     #sa-result{width:100%;}
 
     /* ── HERO: 3-col grid, phone fits above fold ── */
-    /* Phone is 560px tall (scaled down from 664) + pill header 48px + padding 28px = 636px
-       which fits comfortably in a 700px viewport (768px screen - 56px nav - 76px breathing) */
     .demo__hero{
       display:grid;
       grid-template-columns:1fr auto 1fr;
-      /* Align grid rows to the phone column's midpoint, not the full column height.
-         We use align-items:center so the stat groups center on the phone body. */
-      align-items:center;
+      /* align-items:start so all 3 columns top-align to the same baseline.
+         Stats use margin-top to offset below the pill header. */
+      align-items:start;
       gap:0;
       max-width:1100px;
       margin:0 auto;
       padding:28px 32px 0;
     }
 
-    /* Side stat columns — centered on the phone */
+    /* Side stat columns ─────────────────────────────────────────────────────
+       The phone column has: pill header (32px) + margin-bottom (16px) = 48px
+       before the phone body starts. Both stat columns get the same margin-top
+       so their content starts at exactly the same vertical position as the
+       top of the phone body, making them visually even. */
     .demo__stats{
       display:flex;
       flex-direction:column;
       gap:24px;
       opacity:0;
       transition:opacity .7s ease .6s;
-      /* Push down by half the pill header height (48px/2=24px) so the stats
-         visually center on the phone body, not on phone+pill combined */
-      padding-top:48px;
+      margin-top:48px; /* matches pill header + margin = 32px + 16px */
     }
     body.state-result .demo__stats{opacity:1;}
-    .demo__stats--l{align-items:flex-end;text-align:right;padding-right:44px;padding-top:48px;}
-    .demo__stats--r{align-items:flex-start;text-align:left;padding-left:44px;padding-top:48px;}
+    .demo__stats--l{align-items:flex-end;text-align:right;padding-right:44px;}
+    .demo__stats--r{align-items:flex-start;text-align:left;padding-left:44px;}
 
     .stat__num{font-family:var(--serif);font-size:2.4rem;line-height:1;color:var(--text);letter-spacing:-.03em;}
     .stat__num em{color:var(--teal);font-style:normal;}
