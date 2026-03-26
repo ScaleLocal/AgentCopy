@@ -118,9 +118,10 @@
 
   iframe.onerror = function(){ clearTimeout(timer); showBlocked(); };
 
-  // Add cache-busting so we don't get a cached redirect
+  // Use server-side proxy to bypass X-Frame-Options/CSP on all sites
   var fullUrl = url.startsWith('http') ? url : 'https://' + url;
-  iframe.src = fullUrl;
+  var proxyUrl = 'https://agentcopy-api.vercel.app/api/proxy?url=' + encodeURIComponent(fullUrl);
+  iframe.src = proxyUrl;
 
   function hideLoader(){
     loader.classList.add('gone');
