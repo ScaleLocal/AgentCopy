@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Agent Frame</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html,body{width:100%;height:100%;overflow:hidden;background:#fff;}
+
+    /* Business site fills entire frame */
+    #biz-frame{
+      position:absolute;
+      top:0;left:0;right:0;bottom:0;
+      width:100%;height:100%;
+      border:none;
+      z-index:1;
+    }
+
+    /* Loading overlay */
+    #loader{
+      position:absolute;inset:0;
+      background:#f5f5f5;
+      display:flex;flex-direction:column;
+      align-items:center;justify-content:center;
+      gap:12px;z-index:50;
+      transition:opacity .3s ease;
+    }
+    #loader.gone{opacity:0;pointer-events:none;}
+    .loader-dot{
+      width:10px;height:10px;border-radius:50%;background:#0D9488;
+      animation:ldot 1.2s ease-in-out infinite;
+    }
+    .loader-dot:nth-child(2){animation-delay:.2s;}
+    .loader-dot:nth-child(3){animation-delay:.4s;}
+    .loader-dots{display:flex;gap:8px;}
+    .loader-text{font-family:system-ui,sans-serif;font-size:13px;color:#888;}
+    @keyframes ldot{0%,80%,100%{transform:scale(0.7);opacity:.5}40%{transform:scale(1);opacity:1}}
+
+    /* Blocked site fallback */
+    #blocked{
+      display:none;position:absolute;inset:0;
+      background:linear-gradient(135deg,#F5F3EF 0%,#fff 100%);
+      align-items:center;justify-content:center;flex-direction:column;
+      gap:16px;text-align:center;padding:32px;z-index:60;
+    }
+    #blocked.show{display:flex;}
+    #blocked .logo{width:60px;height:60px;border-radius:16px;background:linear-gradient(135deg,#0D9488,#2563EB);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:#fff;font-family:Georgia,serif;}
+    #blocked .bname{font-family:Georgia,serif;font-size:1.3rem;color:#0C0A09;}
+    #blocked .msg{font-size:.8rem;color:#A8A29E;max-width:220px;line-height:1.5;}
+    #blocked .badge{display:flex;align-items:center;gap:6px;padding:5px 14px;border-radius:100px;background:#F0FDF4;border:1px solid #BBF7D0;font-size:.72rem;font-weight:600;color:#16A34A;}
+    #blocked .badge span{width:5px;height:5px;border-radius:50%;background:#16A34A;animation:pulse 2s infinite;}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  </style>
+</head>
+<body>
+
+<div id="loader">
+  <div class="loader-dots">
+    <div class="loader-dot"></div>
+    <div class="loader-dot"></div>
+    <div class="loader-dot"></div>
+  </div>
+  <div class="loader-text" id="loader-text">Loading your website...</div>
+</div>
+
+<div id="blocked">
+  <div class="logo" id="bl-initial">?</div>
+  <div class="bname" id="bl-name">Your Business</div>
+  <div class="msg">Website preview restricted by browser security — but your AI agent is fully trained and ready to talk.</div>
+  <div class="badge"><span></span> AI agent active</div>
+</div>
+
+<iframe id="biz-frame" src="about:blank" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-top-navigation"></iframe>
+
+<!-- GHL Chat Widget — lives HERE inside the phone frame -->
+<script
+  src="https://beta.leadconnectorhq.com/loader.js"
+  data-resources-url="https://beta.leadconnectorhq.com/chat-widget/loader.js"
+  data-widget-id="69c34fd013ad14bdd250aace"
+></script>
+
+<script>
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  var url    = params.get('url') || '';
+  var name   = params.get('name') || 'Your Business';
+
+  // Populate fallback
+  document.getElementById('bl-initial').textContent = name.charAt(0).toUpperCase();
+  document.getElementById('bl-name').textContent = name;
+  document.getElementById('loader-text').textContent = 'Loading ' + name + '...';
+
+  var loader  = document.getElementById('loader');
+  var blocked = document.getElementById('blocked');
+  var iframe  = document.getElementById('biz-frame');
+
+  if(!url){ showBlocked(); return; }
+
+  // Timeout — if site doesn't load in 6s, show fallback
+  var timer = setTimeout(showBlocked, 6000);
+
+  iframe.onload = function(){
+    try {
+      // Try to read doc — throws if X-Frame blocked
+      var doc = iframe.contentDocument || iframe.contentWindow.document;
+      if(!doc || !doc.body || doc.body.innerHTML === ''){
+        clearTimeout(timer); showBlocked(); return;
+      }
+      // Scroll to top of loaded page
+      try{ iframe.contentWindow.scrollTo(0,0); }catch(e){}
+    } catch(e) {
+      // Cross-origin = actually loaded fine, not blocked
+    }
+    clearTimeout(timer);
+    hideLoader();
+  };
+
+  iframe.onerror = function(){ clearTimeout(timer); showBlocked(); };
+
+  // Add cache-busting so we don't get a cached redirect
+  var fullUrl = url.startsWith('http') ? url : 'https://' + url;
+  iframe.src = fullUrl;
+
+  function hideLoader(){
+    loader.classList.add('gone');
+    setTimeout(function(){ loader.style.display='none'; }, 350);
+    // Auto-open chat widget after site loads
+    autoOpenWidget();
+  }
+
+  function showBlocked(){
+    loader.style.display='none';
+    blocked.classList.add('show');
+    autoOpenWidget();
+  }
+
+  // Auto-open the GHL widget bubble after load
+  function autoOpenWidget(){
+    var attempts = 0;
+    var poll = setInterval(function(){
+      attempts++;
+      var chatEl = document.querySelector('chat-widget');
+      if(chatEl && chatEl.shadowRoot){
+        var btn = chatEl.shadowRoot.querySelector('button#lc_text-widget--btn, button[id*="btn"], button[class*="launcher"], button[class*="bubble"]');
+        if(btn && !btn.classList.contains('active')){
+          setTimeout(function(){ btn.click(); }, 1500);
+          clearInterval(poll);
+          return;
+        }
+      }
+      // Fallback: find any fixed launcher in DOM
+      var all = document.querySelectorAll('button,div[role="button"]');
+      for(var i=all.length-1;i>=0;i--){
+        var cs = window.getComputedStyle(all[i]);
+        if(cs.position==='fixed' && parseInt(cs.zIndex)>500){
+          setTimeout(function(el){ el.click(); }, 1500, all[i]);
+          clearInterval(poll);
+          return;
+        }
+      }
+      if(attempts > 30) clearInterval(poll);
+    }, 300);
+  }
+})();
+</script>
+</body>
+</html>

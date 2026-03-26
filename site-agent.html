@@ -571,8 +571,8 @@
         document.getElementById('sa-fb-initial').textContent = name.charAt(0).toUpperCase();
         document.getElementById('sa-fb-name').textContent = name;
 
-        loadIframe('https://'+domain);
-        injectWidget();
+        // Load frame.html with the business site + embedded widget inside
+        loadFrame(domain, name);
 
       } catch(err){
         console.error('[SA]', err);
@@ -581,124 +581,17 @@
       }
     }
 
-    /* ── Iframe ── */
-    function loadIframe(url){
-      var iframe  = document.getElementById('sa-iframe');
-      var fallback= document.getElementById('sa-fallback');
-      var fbTimer = setTimeout(function(){ showFallback(); }, 7000);
-
-      iframe.onload = function(){
-        try {
-          var doc=iframe.contentDocument||iframe.contentWindow.document;
-          if(!doc||doc.body===null||doc.body.innerHTML===''){
-            clearTimeout(fbTimer); showFallback();
-          } else {
-            clearTimeout(fbTimer); positionWidget();
-          }
-        } catch(e){
-          // Cross-origin = loaded successfully
-          clearTimeout(fbTimer); positionWidget();
-        }
-      };
-      iframe.onerror=function(){ clearTimeout(fbTimer); showFallback(); };
-      iframe.src = url;
+    /* ── Load frame.html inside the phone ──
+       frame.html contains the business site iframe + GHL widget.
+       The widget lives INSIDE the frame so it appears inside the phone naturally. */
+    function loadFrame(domain, bizName){
+      var iframe = document.getElementById('sa-iframe');
+      // frame.html is served from our own origin — no X-Frame issues
+      var src = '/frame.html?url=' + encodeURIComponent('https://'+domain)
+              + '&name=' + encodeURIComponent(bizName);
+      iframe.src = src;
+      // frame.html handles its own loading/fallback internally
     }
-
-    function showFallback(){
-      document.getElementById('sa-iframe').style.display='none';
-      document.getElementById('sa-fallback').classList.add('show');
-      positionWidget();
-    }
-
-    /* ── GHL Widget — load and position inside phone ── */
-    function injectWidget(){
-      if(!CONFIG.WIDGET||document.getElementById('ghl-sa-script')) return;
-      var s=document.createElement('script');
-      s.id='ghl-sa-script';
-      s.src='https://beta.leadconnectorhq.com/loader.js';
-      s.setAttribute('data-resources-url','https://beta.leadconnectorhq.com/chat-widget/loader.js');
-      s.setAttribute('data-widget-id',CONFIG.WIDGET);
-      document.body.appendChild(s);
-      // Poll to position
-      var tries=0;
-      var poll=setInterval(function(){
-        tries++;
-        if(positionWidget()||tries>40) clearInterval(poll);
-      },400);
-    }
-
-    function positionWidget(){
-      var phone = document.querySelector('.phone');
-      if(!phone) return false;
-      var r = phone.getBoundingClientRect();
-
-      // Strategy 1: GHL uses a <chat-widget> custom element with shadow DOM
-      // We pierce it to find and reposition the launcher bubble
-      var chatEl = document.querySelector('chat-widget');
-      if(chatEl && chatEl.shadowRoot){
-        var launcher = chatEl.shadowRoot.querySelector('[class*="launcher"],[class*="bubble"],[class*="trigger"],[id*="launcher"],[id*="bubble"]');
-        if(!launcher){
-          // Try any fixed-position element in the shadow root
-          var allShadow = chatEl.shadowRoot.querySelectorAll('*');
-          for(var i=0;i<allShadow.length;i++){
-            var cs=window.getComputedStyle(allShadow[i]);
-            if(cs.position==='fixed'||allShadow[i].tagName==='BUTTON'||allShadow[i].tagName==='A'){
-              launcher=allShadow[i]; break;
-            }
-          }
-        }
-        if(launcher){
-          // Move the entire chat-widget host element
-          chatEl.style.position='fixed';
-          chatEl.style.bottom=(window.innerHeight-r.bottom+16)+'px';
-          chatEl.style.right=(window.innerWidth-r.right+14)+'px';
-          chatEl.style.left='auto';
-          chatEl.style.top='auto';
-          chatEl.style.zIndex='9999';
-          return true;
-        }
-      }
-
-      // Strategy 2: Scan all fixed-position divs in regular DOM
-      var all=document.querySelectorAll('div,button,a');
-      var widget=null;
-      for(var i=all.length-1;i>=0;i--){
-        var el=all[i];
-        var cs=window.getComputedStyle(el);
-        if(cs.position==='fixed'&&parseInt(cs.zIndex)>500&&parseInt(cs.bottom)<120&&parseInt(cs.right)<120){
-          widget=el; break;
-        }
-      }
-      if(widget){
-        widget.style.position='fixed';
-        widget.style.bottom=(window.innerHeight-r.bottom+16)+'px';
-        widget.style.right=(window.innerWidth-r.right+14)+'px';
-        widget.style.left='auto';
-        widget.style.top='auto';
-        return true;
-      }
-
-      // Strategy 3: If nothing found yet, find the script's parent container
-      var ghlScript=document.getElementById('ghl-sa-script');
-      if(ghlScript){
-        // Look for sibling elements added after the script
-        var next=ghlScript.nextElementSibling;
-        while(next){
-          var cs=window.getComputedStyle(next);
-          if(cs.position==='fixed'){
-            next.style.bottom=(window.innerHeight-r.bottom+16)+'px';
-            next.style.right=(window.innerWidth-r.right+14)+'px';
-            next.style.left='auto'; next.style.top='auto';
-            return true;
-          }
-          next=next.nextElementSibling;
-        }
-      }
-      return false;
-    }
-
-    window.addEventListener('scroll',function(){setTimeout(positionWidget,16);},{passive:true});
-    window.addEventListener('resize',function(){setTimeout(positionWidget,100);});
 
     /* ── CTA handler ── */
     window.handleCTA = function(){
