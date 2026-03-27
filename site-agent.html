@@ -538,6 +538,17 @@
     }
     tick();setInterval(tick,30000);
 
+    /* ── Urgency copy — defined first, used everywhere below ── */
+    var planUrgency={
+      'm2m':  '',
+      '6mo':  '⚡ Setup fee waived with 6-month commitment — save $249',
+      '12mo': '⚡ Setup fee waived + month 12 free — save $498 or more'
+    };
+    function updateUrgency(plan){
+      var el=document.getElementById('cta-urgency');
+      if(el) el.textContent=planUrgency[plan]||'';
+    }
+
     /* ── Plan selection ── */
     var planSubs={
       'm2m':  'Month-to-Month — $249/mo + $249 setup fee',
@@ -550,10 +561,10 @@
         r.classList.remove('featured');
       });
       document.getElementById('cta-plan-sub').textContent=planSubs[plan]||'';
+      updateUrgency(plan);
     };
     var defaultPlan=document.querySelector('.plan-row.featured');
     if(defaultPlan) document.getElementById('cta-plan-sub').textContent=planSubs[defaultPlan.dataset.plan]||'';
-    // Set initial urgency
     updateUrgency(defaultPlan ? defaultPlan.dataset.plan : '6mo');
 
     /* ── Pricing toggle ── */
@@ -649,26 +660,6 @@
       var src='/frame.html?url='+encodeURIComponent('https://'+domain)+'&name='+encodeURIComponent(bizName);
       iframe.src=src;
     }
-
-    /* ── Plan urgency copy — updates when plan changes ── */
-    var planUrgency={
-      'm2m':  '',  // Setup fee applies on M2M — no urgency message
-      '6mo':  '⚡ Setup fee waived with 6-month commitment — save $249',
-      '12mo': '⚡ Setup fee waived + month 12 free — save $498 or more'
-    };
-    function updateUrgency(plan){
-      var el=document.getElementById('cta-urgency');
-      if(el) el.textContent=planUrgency[plan]||'';
-    }
-    // Set initial urgency based on default plan (6mo)
-    updateUrgency('6mo');
-
-    // Patch selectPlan to also update urgency
-    var _origSelectPlan=window.selectPlan;
-    window.selectPlan=function(plan){
-      _origSelectPlan(plan);
-      updateUrgency(plan);
-    };
 
     /* ── CTA handler — goes directly to Stripe Payment Link ── */
     window.handleCTA=function(){
