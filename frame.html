@@ -67,6 +67,7 @@
   <div class="badge"><span></span> AI agent active</div>
 </div>
 
+<!-- biz-frame: NO allow-top-navigation so the proxied site can never escape -->
 <iframe id="biz-frame" src="about:blank" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
 
 <!-- Clear stale GHL chat history so every visitor sees a fresh greeting -->
@@ -81,12 +82,6 @@
       }
     }
     keysToNuke.forEach(function(k){localStorage.removeItem(k);});
-    var sKeys=[];
-    for(var i=0;i<sessionStorage.length;i++){
-      var k=sessionStorage.key(i);
-      if(k&&(k.indexOf('lc_')===0||k.indexOf('leadconnector')!==-1||k.indexOf('chat')!==-1)) sKeys.push(k);
-    }
-    sKeys.forEach(function(k){sessionStorage.removeItem(k);});
   }catch(e){}
 })();
 </script>
@@ -98,41 +93,24 @@
   data-widget-id="69c34fd013ad14bdd250aace"
 ></script>
 
-<!-- Auto-open the chat widget once it's ready. Keep launcher visible so user can minimize/reopen. -->
+<!-- Auto-open the widget using the real Stencil component .open() method -->
 <script>
 (function(){
   var attempts = 0;
-  var max = 40; // try for up to 8 seconds (40 x 200ms)
   function tryOpen(){
-    attempts++;
-    var w = window.LeadConnector || window.GHL_CHAT || window.lc_chat_widget;
-    // GHL widget exposes its API on the window after load
-    // The launcher button also gets an id we can click as fallback
-    var opened = false;
-
-    // Method 1: official API
-    if(w && typeof w.open === 'function'){
-      try{ w.open(); opened = true; }catch(e){}
+    // The GHL widget is a <chat-widget> Stencil custom element.
+    // Its public API methods (open, close, toggle) are exposed directly
+    // on the DOM element once the component has hydrated.
+    var el = document.querySelector('chat-widget');
+    if(el && typeof el.open === 'function'){
+      el.open();
+      return;
     }
-    // Method 2: newer GHL API namespace
-    if(!opened && window.LC_API && typeof window.LC_API.open_chat_window === 'function'){
-      try{ window.LC_API.open_chat_window(); opened = true; }catch(e){}
-    }
-    // Method 3: click the launcher button directly
-    if(!opened){
-      var btn = document.querySelector('[data-widget-id="69c34fd013ad14bdd250aace"] button, .lc-launcher, #lc-launcher, [class*="launcher"], [id*="launcher"]');
-      if(btn){ try{ btn.click(); opened = true; }catch(e){} }
-    }
-
-    if(!opened && attempts < max){
-      setTimeout(tryOpen, 200);
-    }
+    // Not ready yet — keep polling (max 15s)
+    if(++attempts < 75) setTimeout(tryOpen, 200);
   }
-
-  // Start trying 1.5s after page load to give widget time to render
-  window.addEventListener('load', function(){
-    setTimeout(tryOpen, 1500);
-  });
+  // Give widget 1.5s head start to load, then start polling
+  window.addEventListener('load', function(){ setTimeout(tryOpen, 1500); });
 })();
 </script>
 
