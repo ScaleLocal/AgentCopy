@@ -139,7 +139,6 @@
       border-radius:40px;
       background:#111;
       overflow:hidden; /* CRITICAL: clips the iframe and widget inside the phone */
-      touch-action:none; /* prevent outer page scroll when touching inside phone */
       box-shadow:
         0 0 0 9px #1f1f1f,
         0 0 0 10px #0a0a0a,
@@ -187,6 +186,17 @@
        Height = (phone_screen_h - home_bar) / scale = (502-9) / 0.7125 = 692px → 690px
        This aligns the iframe bottom with the visible phone screen bottom,
        so GHL's position:fixed bottom:16px naturally lands within the visible area. */
+    /* Scale wrapper: layout box = phone screen size, visual = scaled-up iframe.
+       By scaling the WRAPPER (not the iframe), touch events hit the wrapper's
+       layout box which matches the visible phone area — no transform hit-test confusion. */
+    .phone__scale-wrap{
+      width:280px;   /* = phone width = 393 * 0.7125 */
+      height:493px;  /* = phone screen usable height */
+      transform-origin:top left;
+      transform:scale(1); /* wrapper stays at layout size */
+      overflow:hidden;
+      position:relative;
+    }
     .phone__iframe{
       width:393px;
       height:690px;
@@ -194,6 +204,8 @@
       transform-origin:top left;
       transform:scale(0.7125);
       display:block;
+      position:absolute;
+      top:0;left:0;
     }
     .phone__home{position:absolute;bottom:5px;left:50%;transform:translateX(-50%);width:88px;height:4px;border-radius:3px;background:rgba(0,0,0,.2);z-index:9;}
 
@@ -285,14 +297,14 @@
       .phone__island{width:78px;height:24px;}
       .phone__statusbar{height:46px;}
       .phone__addressbar{top:46px;height:32px;}
-      .phone__iframe{width:393px;height:698px;transform:scale(0.7532);}
+      .phone__scale-wrap{width:296px;height:527px;}.phone__iframe{width:393px;height:698px;transform-origin:top left;transform:scale(0.7532);display:block;position:absolute;top:0;left:0;border:none;}
       .demo__cta{padding:0 16px 40px;}
       .proof__inner{gap:12px;}
       .proof__num{font-size:1.6rem;}
     }
     @media(max-width:360px){
       .phone{width:272px;height:564px;border-radius:38px;}
-      .phone__iframe{width:393px;height:687px;transform:scale(0.6921);}
+      .phone__scale-wrap{width:272px;height:477px;}.phone__iframe{width:393px;height:687px;transform-origin:top left;transform:scale(0.6921);display:block;position:absolute;top:0;left:0;border:none;}
       .proof__inner{grid-template-columns:1fr;}
     }
 
@@ -403,9 +415,11 @@
                 <div class="phone__url">🔒 <span id="sa-domain-display">yourwebsite.com</span></div>
               </div>
               <div class="phone__screen">
-                <iframe id="sa-iframe" class="phone__iframe" src="about:blank"
-                  sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
-                  title="Business website preview"></iframe>
+                <div class="phone__scale-wrap">
+                  <iframe id="sa-iframe" class="phone__iframe" src="about:blank"
+                    sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+                    title="Business website preview"></iframe>
+                </div>
               </div>
               <div class="phone__home"></div>
             </div>
@@ -679,14 +693,5 @@
   })();
   </script>
 
-<script>
-// Prevent scroll events inside the phone frame from scrolling the outer page
-(function(){
-  var phone = document.querySelector('.phone');
-  if(!phone) return;
-  phone.addEventListener('wheel', function(e){ e.stopPropagation(); }, {passive:true});
-  phone.addEventListener('touchmove', function(e){ e.stopPropagation(); }, {passive:true});
-})();
-</script>
 </body>
 </html>
