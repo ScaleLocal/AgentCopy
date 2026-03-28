@@ -227,8 +227,6 @@
     .cta__trust-item{font-size:.72rem;color:var(--text-3);font-weight:500;display:flex;align-items:center;gap:4px;}
 
     /* Pricing — collapsed */
-    .cta__pricing-toggle{text-align:center;margin-top:14px;font-size:.78rem;color:var(--text-3);cursor:pointer;font-weight:500;padding:4px;transition:color .15s;user-select:none;}
-    .cta__pricing-toggle:hover{color:var(--teal);}
     .cta__plans{display:flex;flex-direction:column;gap:8px;margin-top:12px;margin-bottom:4px;}
     .plan-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:var(--r);border:1.5px solid var(--border-dark);background:#fff;cursor:pointer;transition:border-color .15s;}
     .plan-row:hover{border-color:var(--teal);}
@@ -368,7 +366,7 @@
         <!-- Left stats -->
         <div class="demo__stats demo__stats--l">
           <div>
-            <div class="stat__num">10s</div>
+            <div class="stat__num" id="stat-buildtime">—</div>
             <div class="stat__lbl">To build &amp; deploy</div>
             <div class="stat__divider"></div>
           </div>
@@ -451,14 +449,8 @@
           <span id="cta-plan-sub">6-Month Commitment — $249/mo · No setup fee · Save $249</span>
         </button>
         <p class="cta__urgency" id="cta-urgency"></p>
-        <div class="cta__trust">
-          <span class="cta__trust-item">⚡ Live in 24 hours</span>
-          <span class="cta__trust-item">🔒 Cancel anytime</span>
-          <span class="cta__trust-item">💬 Chat + Voice</span>
-        </div>
 
-        <div class="cta__pricing-toggle" id="cta-pricing-toggle" onclick="togglePricing()">↕ See pricing options</div>
-        <div class="cta__plans" id="cta-plans" style="display:none;">
+        <div class="cta__plans" id="cta-plans">
           <div class="plan-row" data-plan="m2m" onclick="selectPlan('m2m')">
             <div class="plan-row__left">
               <div class="plan-row__radio"></div>
@@ -480,6 +472,11 @@
             </div>
             <div class="plan-row__price"><div class="plan-row__mo">$249/mo</div><div class="plan-row__setup"><span class="free">Setup free + month 12 free</span></div></div>
           </div>
+        </div>
+
+        <div class="cta__trust">
+          <span class="cta__trust-item">⚡ Live in 24 hours</span>
+          <span class="cta__trust-item">💬 Website Voice + Chat</span>
         </div>
 
         <p class="cta__escape">Want it answering your phone calls too? <a href="https://scalelocal.net" target="_blank">See the full AI Receptionist →</a></p>
@@ -567,15 +564,6 @@
     if(defaultPlan) document.getElementById('cta-plan-sub').textContent=planSubs[defaultPlan.dataset.plan]||'';
     updateUrgency(defaultPlan ? defaultPlan.dataset.plan : '6mo');
 
-    /* ── Pricing toggle ── */
-    window.togglePricing=function(){
-      var plans=document.getElementById('cta-plans');
-      var toggle=document.getElementById('cta-pricing-toggle');
-      var open=plans.style.display!=='none';
-      plans.style.display=open?'none':'flex';
-      toggle.textContent=open?'↕ See pricing options':'↑ Hide pricing options';
-    };
-
     /* ── Route detection ── */
     function getSlug(){
       var p=window.location.pathname;
@@ -636,6 +624,10 @@
         await animStep('sa-s4',300);
 
         document.body.classList.add('state-result');
+
+        // Update real build time stat
+        var btEl=document.getElementById('stat-buildtime');
+        if(btEl && data.buildTime) btEl.textContent=data.buildTime+'s';
 
         var name=data.name||hint;
         var domain=data.sourceUrl||(dSlug+'.com');
