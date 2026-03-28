@@ -185,9 +185,13 @@
     .phone__screen{
       position:absolute;
       top:78px;left:0;right:0;bottom:0;
-      overflow:hidden;  /* this is what keeps the widget inside the phone */
+      overflow:hidden;  /* clips widget within phone bounds */
       background:#f5f5f5;
       border-radius:0 0 32px 32px;
+    }
+    /* Re-enable pointer events for iframe ONLY within the visible phone screen area */
+    .phone__screen .phone__iframe{
+      pointer-events:auto;
     }
 
     /* iframe renders at mobile viewport width (393px) scaled down to fit 280px phone screen.
@@ -199,6 +203,7 @@
       transform-origin:top left;
       transform:scale(0.7125);
       display:block;
+      pointer-events:none; /* prevent scaled overflow from blocking CTA clicks below */
     }
     .phone__home{position:absolute;bottom:5px;left:50%;transform:translateX(-50%);width:88px;height:4px;border-radius:3px;background:rgba(0,0,0,.2);z-index:9;}
 
@@ -290,14 +295,14 @@
       .phone__island{width:78px;height:24px;}
       .phone__statusbar{height:46px;}
       .phone__addressbar{top:46px;height:32px;}
-      .phone__iframe{width:393px;height:860px;transform:scale(0.753);}
+      .phone__iframe{width:393px;height:860px;transform:scale(0.753);pointer-events:none;}
       .demo__cta{padding:0 16px 40px;}
       .proof__inner{gap:12px;}
       .proof__num{font-size:1.6rem;}
     }
     @media(max-width:360px){
       .phone{width:272px;height:564px;border-radius:38px;}
-      .phone__iframe{width:393px;height:840px;transform:scale(0.692);}
+      .phone__iframe{width:393px;height:840px;transform:scale(0.692);pointer-events:none;}
       .proof__inner{grid-template-columns:1fr;}
     }
 

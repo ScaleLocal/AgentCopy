@@ -8,15 +8,12 @@
     *{margin:0;padding:0;box-sizing:border-box;}
     html,body{width:100%;height:100%;overflow:hidden;background:#fff;}
 
-    /* Business site fills entire frame — no border, no outline */
     #biz-frame{
       position:absolute;
       top:0;left:0;right:0;bottom:0;
       width:100%;height:100%;
-      border:none;
-      outline:none;
-      z-index:1;
-      background:#fff;
+      border:none;outline:none;
+      z-index:1;background:#fff;
     }
 
     /* Loading overlay */
@@ -29,10 +26,7 @@
       transition:opacity .3s ease;
     }
     #loader.gone{opacity:0;pointer-events:none;}
-    .loader-dot{
-      width:10px;height:10px;border-radius:50%;background:#0D9488;
-      animation:ldot 1.2s ease-in-out infinite;
-    }
+    .loader-dot{width:10px;height:10px;border-radius:50%;background:#0D9488;animation:ldot 1.2s ease-in-out infinite;}
     .loader-dot:nth-child(2){animation-delay:.2s;}
     .loader-dot:nth-child(3){animation-delay:.4s;}
     .loader-dots{display:flex;gap:8px;}
@@ -54,24 +48,16 @@
     #blocked .badge span{width:5px;height:5px;border-radius:50%;background:#16A34A;animation:pulse 2s infinite;}
     @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 
-    /* ── Keep GHL widget launcher visible within the phone screen ──
-       The iframe renders at 393×814px but the phone only shows ~500px of height.
-       GHL places its launcher at position:fixed bottom:16px which maps to
-       ~798px from the top — below the visible clipped area.
-       We override to keep it in the top ~460px of the iframe viewport,
-       which corresponds to the bottom of the visible phone screen. */
-    chat-widget {
-      position: fixed !important;
-      bottom: 16px !important;
-      right: 16px !important;
-      max-height: 460px !important;
-    }
-    /* Force the entire widget container to stay within visible bounds */
-    #lc_text-widget,
-    [id*="lc_text-widget"],
-    [class*="lc_text-widget"] {
-      bottom: 16px !important;
-      max-height: 440px !important;
+    /* Keep GHL widget launcher inside visible phone area.
+       The iframe renders at full mobile height but the phone shows only
+       the top portion. We position the widget near the bottom of the
+       visible zone (around 380px from top) using a fixed wrapper. */
+    #widget-anchor{
+      position:fixed;
+      bottom:20px;
+      right:14px;
+      z-index:9999;
+      pointer-events:none; /* anchor itself is invisible */
     }
   </style>
 </head>
@@ -95,43 +81,29 @@
 
 <iframe id="biz-frame" src="about:blank" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-top-navigation"></iframe>
 
-<!-- Clear any stale GHL chat history so every visitor sees a fresh greeting -->
+<!-- Clear stale GHL chat history so every visitor sees a fresh greeting -->
 <script>
 (function(){
   try {
-    // GHL stores conversation state in localStorage under these key patterns
     var keysToNuke = [];
-    for(var i=0; i<localStorage.length; i++){
-      var k = localStorage.key(i);
-      if(k && (
-        k.indexOf('lc_') === 0 ||
-        k.indexOf('leadconnector') !== -1 ||
-        k.indexOf('msgsndr') !== -1 ||
-        k.indexOf('chat_') === 0 ||
-        k.indexOf('widget_') === 0 ||
-        k.indexOf('conversation') !== -1 ||
-        k.indexOf('contact_id') !== -1 ||
-        k.indexOf('session') !== -1
-      )){
+    for(var i=0;i<localStorage.length;i++){
+      var k=localStorage.key(i);
+      if(k&&(k.indexOf('lc_')===0||k.indexOf('leadconnector')!==-1||k.indexOf('msgsndr')!==-1||k.indexOf('chat_')===0||k.indexOf('widget_')===0||k.indexOf('conversation')!==-1||k.indexOf('contact_id')!==-1||k.indexOf('session')!==-1)){
         keysToNuke.push(k);
       }
     }
-    keysToNuke.forEach(function(k){ localStorage.removeItem(k); });
-
-    // Also clear sessionStorage GHL keys
-    var sKeysToNuke = [];
-    for(var i=0; i<sessionStorage.length; i++){
-      var k = sessionStorage.key(i);
-      if(k && (k.indexOf('lc_') === 0 || k.indexOf('leadconnector') !== -1 || k.indexOf('chat') !== -1)){
-        sKeysToNuke.push(k);
-      }
+    keysToNuke.forEach(function(k){localStorage.removeItem(k);});
+    var sKeys=[];
+    for(var i=0;i<sessionStorage.length;i++){
+      var k=sessionStorage.key(i);
+      if(k&&(k.indexOf('lc_')===0||k.indexOf('leadconnector')!==-1||k.indexOf('chat')!==-1)) sKeys.push(k);
     }
-    sKeysToNuke.forEach(function(k){ sessionStorage.removeItem(k); });
-  } catch(e) {}
+    sKeys.forEach(function(k){sessionStorage.removeItem(k);});
+  }catch(e){}
 })();
 </script>
 
-<!-- GHL Chat Widget — lives HERE inside the phone frame -->
+<!-- GHL Chat Widget -->
 <script
   src="https://beta.leadconnectorhq.com/loader.js"
   data-resources-url="https://beta.leadconnectorhq.com/chat-widget/loader.js"
@@ -144,7 +116,6 @@
   var url    = params.get('url') || '';
   var name   = params.get('name') || 'Your Business';
 
-  // Populate fallback
   document.getElementById('bl-initial').textContent = name.charAt(0).toUpperCase();
   document.getElementById('bl-name').textContent = name;
   document.getElementById('loader-text').textContent = 'Loading ' + name + '...';
@@ -155,20 +126,17 @@
 
   if(!url){ showBlocked(); return; }
 
-  // Timeout — if site doesn't load in 6s, show fallback
   var timer = setTimeout(showBlocked, 6000);
 
   iframe.onload = function(){
     try {
-      // Try to read doc — throws if X-Frame blocked
       var doc = iframe.contentDocument || iframe.contentWindow.document;
-      if(!doc || !doc.body || doc.body.innerHTML === ''){
+      if(!doc||!doc.body||doc.body.innerHTML===''){
         clearTimeout(timer); showBlocked(); return;
       }
-      // Scroll to top of loaded page
       try{ iframe.contentWindow.scrollTo(0,0); }catch(e){}
     } catch(e) {
-      // Cross-origin = actually loaded fine, not blocked
+      // Cross-origin = loaded fine
     }
     clearTimeout(timer);
     hideLoader();
@@ -176,15 +144,12 @@
 
   iframe.onerror = function(){ clearTimeout(timer); showBlocked(); };
 
-  // Use server-side proxy to bypass X-Frame-Options/CSP on all sites
   var fullUrl = url.startsWith('http') ? url : 'https://' + url;
-  var proxyUrl = 'https://agentcopy-api.vercel.app/api/proxy?url=' + encodeURIComponent(fullUrl);
-  iframe.src = proxyUrl;
+  iframe.src = 'https://agentcopy-api.vercel.app/api/proxy?url=' + encodeURIComponent(fullUrl);
 
   function hideLoader(){
     loader.classList.add('gone');
     setTimeout(function(){ loader.style.display='none'; }, 350);
-    // Auto-open chat widget after site loads
     autoOpenWidget();
   }
 
@@ -194,61 +159,39 @@
     autoOpenWidget();
   }
 
-  // Auto-open the GHL widget bubble after load
+  // Auto-open the GHL widget after load.
+  // Simple one-shot poll — no MutationObserver, no cssText overrides.
+  // We just wait for the button to exist then click it once.
   function autoOpenWidget(){
     var attempts = 0;
     var poll = setInterval(function(){
       attempts++;
+      // Try shadow DOM first
       var chatEl = document.querySelector('chat-widget');
       if(chatEl && chatEl.shadowRoot){
-        var btn = chatEl.shadowRoot.querySelector('button#lc_text-widget--btn, button[id*="btn"], button[class*="launcher"], button[class*="bubble"]');
-        if(btn && !btn.classList.contains('active')){
-          setTimeout(function(){ btn.click(); }, 1500);
+        var btn = chatEl.shadowRoot.querySelector(
+          'button#lc_text-widget--btn, button[id*="btn"], button[class*="launcher"], button[class*="bubble"]'
+        );
+        if(btn){
+          setTimeout(function(){ btn.click(); }, 800);
           clearInterval(poll);
           return;
         }
       }
-      // Fallback: find any fixed launcher in DOM
+      // Fallback: any fixed high-z button
       var all = document.querySelectorAll('button,div[role="button"]');
       for(var i=all.length-1;i>=0;i--){
         var cs = window.getComputedStyle(all[i]);
         if(cs.position==='fixed' && parseInt(cs.zIndex)>500){
-          setTimeout(function(el){ el.click(); }, 1500, all[i]);
+          setTimeout(function(el){ el.click(); },800,all[i]);
           clearInterval(poll);
           return;
         }
       }
-      if(attempts > 30) clearInterval(poll);
-    }, 300);
+      if(attempts > 40) clearInterval(poll);
+    }, 250);
   }
 
-  // Keep widget launcher anchored within visible phone screen area.
-  // GHL uses position:fixed which is relative to the iframe viewport (814px tall).
-  // The phone only shows ~500px. We watch for the minimized state and
-  // reposition the launcher to stay within the visible zone.
-  function watchWidgetPosition(){
-    var watchAttempts = 0;
-    var watcher = setInterval(function(){
-      watchAttempts++;
-      var chatEl = document.querySelector('chat-widget');
-      if(!chatEl || !chatEl.shadowRoot){ if(watchAttempts>60) clearInterval(watcher); return; }
-      clearInterval(watcher);
-
-      // Override widget container position via style attribute
-      // so the bubble stays in the bottom-right of the VISIBLE screen
-      chatEl.style.cssText = 'position:fixed!important;bottom:16px!important;right:16px!important;z-index:9999!important;';
-
-      // Watch for collapse/expand to keep repositioned
-      var observer = new MutationObserver(function(){
-        chatEl.style.cssText = 'position:fixed!important;bottom:16px!important;right:16px!important;z-index:9999!important;';
-        // Also try to constrain inner widget box height so it doesn't overflow
-        var box = chatEl.shadowRoot.querySelector('#lc_text-widget, [id*="lc_text-widget"]');
-        if(box) box.style.cssText = (box.getAttribute('style')||'') + ';max-height:440px!important;bottom:16px!important;';
-      });
-      observer.observe(chatEl, {attributes:true, childList:true, subtree:true});
-    }, 200);
-  }
-  watchWidgetPosition();
 })();
 </script>
 </body>
