@@ -66,13 +66,15 @@
     .hero__sub { font-size: 1.1rem; color: var(--text-secondary); max-width: 520px; margin: 0 auto 36px; line-height: 1.65; }
 
     /* ── URL INPUT ── */
-    .url-bar { max-width: 520px; margin: 0 auto; display: flex; gap: 8px; background: white; border: 2px solid var(--border-dark); border-radius: 12px; padding: 6px; transition: border-color 0.2s, box-shadow 0.2s; }
+    .url-bar { max-width: 520px; margin: 0 auto; background: white; border: 2px solid var(--border-dark); border-radius: 14px; padding: 10px; transition: border-color 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; gap: 8px; }
     .url-bar:focus-within { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(13,148,136,0.1); }
-    .url-bar__input { flex: 1; padding: 10px 14px; border: none; background: none; font-family: var(--font); font-size: 0.95rem; color: var(--text); outline: none; }
+    .url-bar__row { display: flex; gap: 8px; }
+    .url-bar__input { flex: 1; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 8px; background: var(--bg); font-family: var(--font); font-size: 0.92rem; color: var(--text); outline: none; transition: border-color 0.15s; }
+    .url-bar__input:focus { border-color: var(--accent); background: white; }
     .url-bar__input::placeholder { color: var(--text-muted); }
-    .url-bar__btn { padding: 10px 22px; border-radius: 8px; background: var(--text); color: white; font-family: var(--font); font-weight: 600; font-size: 0.9rem; border: none; cursor: pointer; white-space: nowrap; transition: background 0.15s; }
+    .url-bar__btn { width: 100%; padding: 11px 22px; border-radius: 8px; background: var(--text); color: white; font-family: var(--font); font-weight: 600; font-size: 0.92rem; border: none; cursor: pointer; white-space: nowrap; transition: background 0.15s; }
     .url-bar__btn:hover { background: #292524; }
-    .url-bar__note { text-align: center; margin-top: 12px; font-size: 0.78rem; color: var(--text-muted); }
+    .url-bar__note { text-align: center; margin-top: 10px; font-size: 0.78rem; color: var(--text-muted); }
 
     /* ── SOCIAL PROOF ── */
     .proof { padding: 48px 0 0; text-align: center; }
@@ -255,7 +257,7 @@
     @media (max-width: 768px) {
       .nav__links { display: none; }
       .hero { padding: 64px 0 36px; }
-      .url-bar { flex-direction: column; }
+      .url-bar__row { flex-direction: column; }
       .url-bar__btn { text-align: center; }
       .steps { grid-template-columns: 1fr; }
       .features { grid-template-columns: 1fr; }
@@ -301,8 +303,11 @@
         <p class="hero__sub fi-2">Enter your website. In under 10 seconds, you'll be talking to an AI that already knows your services, your hours, and your pricing. It's the employee that never calls in sick.</p>
         <div class="fi-3">
           <div class="url-bar" id="hero-url-bar">
-            <input type="text" class="url-bar__input" id="hero-url-input" placeholder="yourwebsite.com" onkeypress="if(event.key==='Enter')handleDemoRequest('hero')" />
-            <button class="url-bar__btn" onclick="handleDemoRequest('hero')">Build My AI Agent</button>
+            <input type="text" class="url-bar__input" id="hero-company-input" placeholder="Business Name (e.g. Wooster Roofing)" autocomplete="organization" />
+            <div class="url-bar__row">
+              <input type="text" class="url-bar__input" id="hero-url-input" placeholder="yourwebsite.com" autocomplete="url" onkeypress="if(event.key==='Enter')handleDemoRequest('hero')" />
+            </div>
+            <button class="url-bar__btn" onclick="handleDemoRequest('hero')">Build My AI Agent →</button>
           </div>
           <div class="url-bar__note">No signup. No credit card. See it in 10 seconds.</div>
         </div>
@@ -373,8 +378,11 @@
         <h2 class="bottom-cta__title">Still skeptical? Good. Try it.</h2>
         <p class="bottom-cta__desc">10 seconds. No signup. No credit card. Just your website URL and a little curiosity.</p>
         <div class="url-bar" id="bottom-url-bar">
-          <input type="text" class="url-bar__input" id="bottom-url-input" placeholder="yourwebsite.com" onkeypress="if(event.key==='Enter')handleDemoRequest('bottom')" />
-          <button class="url-bar__btn" onclick="handleDemoRequest('bottom')">Build My AI Agent</button>
+          <input type="text" class="url-bar__input" id="bottom-company-input" placeholder="Business Name (e.g. Wooster Roofing)" autocomplete="organization" />
+          <div class="url-bar__row">
+            <input type="text" class="url-bar__input" id="bottom-url-input" placeholder="yourwebsite.com" autocomplete="url" onkeypress="if(event.key==='Enter')handleDemoRequest('bottom')" />
+          </div>
+          <button class="url-bar__btn" onclick="handleDemoRequest('bottom')">Build My AI Agent →</button>
         </div>
       </div>
     </section>
@@ -553,11 +561,11 @@
 
     function showPage(id){document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});document.getElementById(id).classList.add('active')}
 
-    function scrollToDemo(){var el=document.getElementById('try');if(el){el.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(function(){var inp=document.getElementById('bottom-url-input');if(inp)inp.focus()},400)}}
+    function scrollToDemo(){var el=document.getElementById('try');if(el){el.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(function(){var inp=document.getElementById('bottom-company-input')||document.getElementById('bottom-url-input');if(inp)inp.focus()},400)}}
 
     function initObserver(){var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)'}})},{threshold:0.1});document.querySelectorAll('.step,.feat').forEach(function(el,i){el.style.opacity='0';el.style.transform='translateY(8px)';el.style.transition='opacity 0.3s ease '+(i*0.04)+'s, transform 0.3s ease '+(i*0.04)+'s';obs.observe(el)})}
 
-    function handleDemoRequest(source){var input=document.getElementById(source+'-url-input');var url=input.value.trim();if(!url){input.style.borderColor='#ef4444';setTimeout(function(){input.style.borderColor=''},1200);return}var clean=url.replace(/^https?:\/\//,'').replace(/^www\./,'').replace(/\/.*$/,'').toLowerCase();clean=clean.replace(/\.com$/,'').replace(/\.(net|org|co|io|biz|us|info|dev|ai|app)$/,'-$1');var slug=clean.replace(/[^a-zA-Z0-9-]+/g,'-').replace(/^-|-$/g,'');window.location.href='/site-agent/'+slug}
+    function handleDemoRequest(source){var urlInput=document.getElementById(source+'-url-input');var companyInput=document.getElementById(source+'-company-input');var url=urlInput.value.trim();var company=(companyInput?companyInput.value.trim():'');if(!url){urlInput.style.borderColor='#ef4444';urlInput.focus();setTimeout(function(){urlInput.style.borderColor=''},1400);return}var clean=url.replace(/^https?:\/\//,'').replace(/^www\./,'').replace(/\/.*$/,'').toLowerCase();clean=clean.replace(/\.com$/,'').replace(/\.(net|org|co|io|biz|us|info|dev|ai|app)$/,'-$1');var slug=clean.replace(/[^a-zA-Z0-9-]+/g,'-').replace(/^-|-$/g,'');if(company)sessionStorage.setItem('sa-hint-'+slug,company);window.location.href='/site-agent/'+slug}
 
     async function loadAgent(slug){var loading=document.getElementById('agent-loading');var result=document.getElementById('agent-result');var errorEl=document.getElementById('agent-error');var t0=Date.now();var tldMatch=slug.match(/^(.+)-(net|org|co|io|biz|us|info|dev|ai|app)$/i);var displaySlug=tldMatch?tldMatch[1]:slug;var displayName=displaySlug.split('-').map(function(w){return w.charAt(0).toUpperCase()+w.slice(1)}).join(' ');document.title=displayName+' — AI Demo | AgentCopyAI';try{var apiPromise;if(CONFIG.WORKER_URL){apiPromise=fetch(CONFIG.WORKER_URL+'/api/create-agent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({slug:slug})}).then(function(r){return r.json()}).catch(function(){return fallbackData(slug)})}else{apiPromise=Promise.resolve(fallbackData(slug))}await animateStep('step-scrape',1400);await animateStep('step-places',1100);await animateStep('step-agent',1200);// Hold on "Going live" until the API actually resolves
 var data=await apiPromise;await animateStep('step-ready',300);var buildTime=data.buildTime||((Date.now()-t0)/1000).toFixed(1);loading.style.display='none';result.style.display='block';result.style.animation='fadeIn 0.4s ease-out both';var name=data.name||displayName;var sourceUrl=data.sourceUrl||displaySlug+'.com';document.getElementById('agent-source-url').textContent=sourceUrl;document.getElementById('agent-biz-name').innerHTML='<em>'+name+'</em> — your AI agent is live';document.getElementById('agent-showcase-desc').innerHTML='This AI was just trained on <strong>'+name+'\'s</strong> website. It knows the services, hours, and everything in between. Go ahead — ask it anything a customer would.';document.getElementById('agent-info-name').textContent=name;document.getElementById('agent-info-url').textContent=sourceUrl;document.getElementById('agent-build-time').textContent=buildTime;var hasPlaces=false;if(data.rating){document.getElementById('agent-info-rating').style.display='flex';document.getElementById('agent-rating-text').textContent='\u2605 '+data.rating+(data.reviewCount?' ('+data.reviewCount+' reviews)':'');hasPlaces=true}if(data.address){document.getElementById('agent-info-address').style.display='flex';document.getElementById('agent-address-text').textContent=data.address;hasPlaces=true}if(data.phone){document.getElementById('agent-info-phone').style.display='flex';document.getElementById('agent-phone-text').textContent=data.phone;hasPlaces=true}if(data.hours){document.getElementById('agent-info-hours').style.display='flex';document.getElementById('agent-hours-text').textContent=data.hours;hasPlaces=true}if(!hasPlaces){var learned=document.getElementById('agent-info-learned');var list=document.getElementById('agent-learned-list');var items=[];if(data.services){var svcLines=data.services.replace(/#{1,4}\s*/g,'').replace(/\[([^\]]+)\]\([^)]+\)/g,'$1').replace(/[_*`]/g,'').replace(/^\s*[-•]\s*/gm,'').split('\n').map(function(l){return l.trim()}).filter(function(l){return l.length>3&&l.length<100&&!/^https?:/i.test(l)}).slice(0,6);if(svcLines.length>0)items.push('<strong>Services:</strong> '+svcLines.join(', '))}if(data.about){var aboutClean=data.about.replace(/#{1,4}\s*/g,'').replace(/\[([^\]]+)\]\([^)]+\)/g,'$1').replace(/[_*`]/g,'').replace(/\n+/g,' ').trim().slice(0,220);if(aboutClean.length>20)items.push('<strong>About:</strong> '+aboutClean)}if(items.length>0){list.innerHTML=items.join('<br style="margin-bottom:8px;">');learned.style.display='block'}else{list.innerHTML='<span style="color:var(--text-muted);">Website scanned — services, capabilities, and company info loaded into the AI agent.</span>';learned.style.display='block'}}document.getElementById('agent-prompt-text').textContent='Talk to '+name+'\u2019s AI agent';window.__agentBizName=name;injectChatWidget()}catch(err){console.error(err);loading.style.display='none';errorEl.style.display='block'}}
