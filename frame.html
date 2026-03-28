@@ -53,6 +53,26 @@
     #blocked .badge{display:flex;align-items:center;gap:6px;padding:5px 14px;border-radius:100px;background:#F0FDF4;border:1px solid #BBF7D0;font-size:.72rem;font-weight:600;color:#16A34A;}
     #blocked .badge span{width:5px;height:5px;border-radius:50%;background:#16A34A;animation:pulse 2s infinite;}
     @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+    /* ── Keep GHL widget launcher visible within the phone screen ──
+       The iframe renders at 393×814px but the phone only shows ~500px of height.
+       GHL places its launcher at position:fixed bottom:16px which maps to
+       ~798px from the top — below the visible clipped area.
+       We override to keep it in the top ~460px of the iframe viewport,
+       which corresponds to the bottom of the visible phone screen. */
+    chat-widget {
+      position: fixed !important;
+      bottom: 16px !important;
+      right: 16px !important;
+      max-height: 460px !important;
+    }
+    /* Force the entire widget container to stay within visible bounds */
+    #lc_text-widget,
+    [id*="lc_text-widget"],
+    [class*="lc_text-widget"] {
+      bottom: 16px !important;
+      max-height: 440px !important;
+    }
   </style>
 </head>
 <body>
@@ -201,6 +221,34 @@
       if(attempts > 30) clearInterval(poll);
     }, 300);
   }
+
+  // Keep widget launcher anchored within visible phone screen area.
+  // GHL uses position:fixed which is relative to the iframe viewport (814px tall).
+  // The phone only shows ~500px. We watch for the minimized state and
+  // reposition the launcher to stay within the visible zone.
+  function watchWidgetPosition(){
+    var watchAttempts = 0;
+    var watcher = setInterval(function(){
+      watchAttempts++;
+      var chatEl = document.querySelector('chat-widget');
+      if(!chatEl || !chatEl.shadowRoot){ if(watchAttempts>60) clearInterval(watcher); return; }
+      clearInterval(watcher);
+
+      // Override widget container position via style attribute
+      // so the bubble stays in the bottom-right of the VISIBLE screen
+      chatEl.style.cssText = 'position:fixed!important;bottom:16px!important;right:16px!important;z-index:9999!important;';
+
+      // Watch for collapse/expand to keep repositioned
+      var observer = new MutationObserver(function(){
+        chatEl.style.cssText = 'position:fixed!important;bottom:16px!important;right:16px!important;z-index:9999!important;';
+        // Also try to constrain inner widget box height so it doesn't overflow
+        var box = chatEl.shadowRoot.querySelector('#lc_text-widget, [id*="lc_text-widget"]');
+        if(box) box.style.cssText = (box.getAttribute('style')||'') + ';max-height:440px!important;bottom:16px!important;';
+      });
+      observer.observe(chatEl, {attributes:true, childList:true, subtree:true});
+    }, 200);
+  }
+  watchWidgetPosition();
 })();
 </script>
 </body>
