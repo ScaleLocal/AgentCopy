@@ -649,7 +649,14 @@
 
     function loadFrame(domain,bizName){
       var iframe=document.getElementById('sa-iframe');
-      var src='/frame.html?url='+encodeURIComponent('https://'+domain)+'&name='+encodeURIComponent(bizName);
+      // Calculate how many pixels of the iframe are visible inside the phone screen
+      // so frame.html can cap its viewport height and keep position:fixed elements visible
+      var w=window.innerWidth;
+      var vh;
+      if(w<=360)      vh=702;
+      else if(w<=480) vh=711;
+      else            vh=727;
+      var src='/frame.html?url='+encodeURIComponent('https://'+domain)+'&name='+encodeURIComponent(bizName)+'&vh='+vh;
       iframe.src=src;
     }
 
