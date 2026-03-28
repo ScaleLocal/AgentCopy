@@ -139,6 +139,7 @@
       border-radius:40px;
       background:#111;
       overflow:hidden; /* CRITICAL: clips the iframe and widget inside the phone */
+      touch-action:none; /* prevent outer page scroll when touching inside phone */
       box-shadow:
         0 0 0 9px #1f1f1f,
         0 0 0 10px #0a0a0a,
@@ -181,11 +182,6 @@
       background:#f5f5f5;
       border-radius:0 0 32px 32px;
     }
-    /* Re-enable pointer events for iframe ONLY within the visible phone screen area */
-    .phone__screen .phone__iframe{
-      pointer-events:auto;
-    }
-
     /* iframe renders at mobile viewport width (393px) scaled down to fit 280px phone screen.
        Scale = 280/393 = 0.7125.
        Height = (phone_screen_h - home_bar) / scale = (502-9) / 0.7125 = 692px → 690px
@@ -198,7 +194,6 @@
       transform-origin:top left;
       transform:scale(0.7125);
       display:block;
-      pointer-events:none;
     }
     .phone__home{position:absolute;bottom:5px;left:50%;transform:translateX(-50%);width:88px;height:4px;border-radius:3px;background:rgba(0,0,0,.2);z-index:9;}
 
@@ -290,14 +285,14 @@
       .phone__island{width:78px;height:24px;}
       .phone__statusbar{height:46px;}
       .phone__addressbar{top:46px;height:32px;}
-      .phone__iframe{width:393px;height:698px;transform:scale(0.7532);pointer-events:none;}
+      .phone__iframe{width:393px;height:698px;transform:scale(0.7532);}
       .demo__cta{padding:0 16px 40px;}
       .proof__inner{gap:12px;}
       .proof__num{font-size:1.6rem;}
     }
     @media(max-width:360px){
       .phone{width:272px;height:564px;border-radius:38px;}
-      .phone__iframe{width:393px;height:687px;transform:scale(0.6921);pointer-events:none;}
+      .phone__iframe{width:393px;height:687px;transform:scale(0.6921);}
       .proof__inner{grid-template-columns:1fr;}
     }
 
@@ -684,5 +679,14 @@
   })();
   </script>
 
+<script>
+// Prevent scroll events inside the phone frame from scrolling the outer page
+(function(){
+  var phone = document.querySelector('.phone');
+  if(!phone) return;
+  phone.addEventListener('wheel', function(e){ e.stopPropagation(); }, {passive:true});
+  phone.addEventListener('touchmove', function(e){ e.stopPropagation(); }, {passive:true});
+})();
+</script>
 </body>
 </html>
