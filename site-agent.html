@@ -366,6 +366,7 @@
         <label class="ip__label" for="ip-url">Website URL</label>
         <input class="ip__input" id="ip-url" type="text" placeholder="scalelocal.net" autocomplete="url"
           onkeypress="if(event.key==='Enter')startDemo()" />
+        <p id="ip-url-error" style="display:none;color:#ef4444;font-size:.75rem;margin-top:6px;text-align:left;line-height:1.4;">Please enter a valid website URL — must include a domain extension like .com, .net, .org, etc.</p>
       </div>
       <button class="ip__btn" onclick="startDemo()">Build My AI Agent →</button>
       <p class="ip__note">No signup. No credit card. Takes about 10 seconds.</p>
@@ -632,14 +633,30 @@
     window.startDemo=function(){
       var company=document.getElementById('ip-company').value.trim();
       var url=document.getElementById('ip-url').value.trim();
-      if(!url){
-        var el=document.getElementById('ip-url');
-        el.style.borderColor='#ef4444';el.focus();
-        setTimeout(function(){el.style.borderColor='';},1400);
-        return;
+      var urlEl=document.getElementById('ip-url');
+      var errEl=document.getElementById('ip-url-error');
+
+      function showError(){
+        urlEl.style.borderColor='#ef4444';
+        errEl.style.display='block';
+        urlEl.focus();
+        setTimeout(function(){urlEl.style.borderColor='';},2000);
       }
-      var clean=url.replace(/^https?:\/\//,'').replace(/^www\./,'').replace(/\/.*$/,'').toLowerCase();
-      clean=clean.replace(/\.com$/,'').replace(/\.(net|org|co|io|biz|us|info|dev|ai|app)$/,'-$1');
+
+      if(!url){ showError(); return; }
+
+      // Strip protocol and www, isolate the domain only
+      var clean=url.replace(/^https?:\/\//,'').replace(/^www\./,'').replace(/\/.*$/,'').toLowerCase().trim();
+
+      // Must contain a recognised TLD — if someone types just a name, reject it
+      var validTld=/\.(com|net|org|co|io|biz|us|info|dev|ai|app|edu|gov|me|tv|ca|uk|au|co\.uk)$/i;
+      if(!validTld.test(clean)){ showError(); return; }
+
+      // Clear any previous error
+      errEl.style.display='none';
+
+      // Build slug — .com strips cleanly, all other TLDs become a suffix (-net, -org etc)
+      clean=clean.replace(/\.com$/,'').replace(/\.(net|org|co|io|biz|us|info|dev|ai|app|edu|gov|me|tv|ca|uk|au)$/,'-$1');
       var s=clean.replace(/[^a-zA-Z0-9-]+/g,'-').replace(/^-|-$/g,'');
       if(company) sessionStorage.setItem('sa-hint-'+s,company);
       window.location.href='/site-agent/'+s;
