@@ -195,15 +195,18 @@
     }
 
     /* iframe renders at mobile viewport width (393px) scaled down to fit 280px phone screen.
-       Scale = 280/393 = 0.7125. Height scales proportionally. */
+       Scale = 280/393 = 0.7125.
+       Height = phone_screen_height / scale = 502 / 0.7125 = 704px
+       This aligns the iframe bottom with the visible phone screen bottom,
+       so GHL's position:fixed bottom:16px naturally lands within the visible area. */
     .phone__iframe{
       width:393px;
-      height:814px; /* 580px screen height / 0.7125 scale = 814px */
+      height:704px;
       border:none;
       transform-origin:top left;
       transform:scale(0.7125);
       display:block;
-      pointer-events:none; /* prevent scaled overflow from blocking CTA clicks below */
+      pointer-events:none;
     }
     .phone__home{position:absolute;bottom:5px;left:50%;transform:translateX(-50%);width:88px;height:4px;border-radius:3px;background:rgba(0,0,0,.2);z-index:9;}
 
@@ -295,14 +298,14 @@
       .phone__island{width:78px;height:24px;}
       .phone__statusbar{height:46px;}
       .phone__addressbar{top:46px;height:32px;}
-      .phone__iframe{width:393px;height:860px;transform:scale(0.753);pointer-events:none;}
+      .phone__iframe{width:393px;height:711px;transform:scale(0.7532);pointer-events:none;}
       .demo__cta{padding:0 16px 40px;}
       .proof__inner{gap:12px;}
       .proof__num{font-size:1.6rem;}
     }
     @media(max-width:360px){
       .phone{width:272px;height:564px;border-radius:38px;}
-      .phone__iframe{width:393px;height:840px;transform:scale(0.692);pointer-events:none;}
+      .phone__iframe{width:393px;height:702px;transform:scale(0.6921);pointer-events:none;}
       .proof__inner{grid-template-columns:1fr;}
     }
 
@@ -649,14 +652,7 @@
 
     function loadFrame(domain,bizName){
       var iframe=document.getElementById('sa-iframe');
-      // vh = visible iframe pixels = (phone_screen_height - home_bar) / scale
-      // Calculated from actual CSS: phone height, screen top offset, scale per breakpoint
-      var w=window.innerWidth;
-      var vh;
-      if(w<=360)      vh=689;  // phone 272px wide, scale=0.6921, screen=564-78-9=477, vh=477/0.6921
-      else if(w<=480) vh=699;  // phone 296px wide, scale=0.7532, screen=614-78-9=527, vh=527/0.7532
-      else            vh=691;  // phone 280px wide, scale=0.7125, screen=580-78-9=493, vh=493/0.7125
-      var src='/frame.html?url='+encodeURIComponent('https://'+domain)+'&name='+encodeURIComponent(bizName)+'&vh='+vh;
+      var src='/frame.html?url='+encodeURIComponent('https://'+domain)+'&name='+encodeURIComponent(bizName);
       iframe.src=src;
     }
 

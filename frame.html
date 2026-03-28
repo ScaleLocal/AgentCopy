@@ -7,10 +7,6 @@
   <style>
     *{margin:0;padding:0;box-sizing:border-box;}
     html,body{width:100%;height:100%;overflow:hidden;background:#fff;}
-    /* .vh-capped is added by JS when vh param is present —
-       caps the viewport height so position:fixed bottom:16px
-       lands within the visible phone screen area */
-    html.vh-capped{height:var(--vh,100%);overflow:hidden;}
 
     #biz-frame{
       position:absolute;
@@ -51,18 +47,6 @@
     #blocked .badge{display:flex;align-items:center;gap:6px;padding:5px 14px;border-radius:100px;background:#F0FDF4;border:1px solid #BBF7D0;font-size:.72rem;font-weight:600;color:#16A34A;}
     #blocked .badge span{width:5px;height:5px;border-radius:50%;background:#16A34A;animation:pulse 2s infinite;}
     @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-
-    /* Keep GHL widget launcher inside visible phone area.
-       The iframe renders at full mobile height but the phone shows only
-       the top portion. We position the widget near the bottom of the
-       visible zone (around 380px from top) using a fixed wrapper. */
-    #widget-anchor{
-      position:fixed;
-      bottom:20px;
-      right:14px;
-      z-index:9999;
-      pointer-events:none; /* anchor itself is invisible */
-    }
   </style>
 </head>
 <body>
@@ -107,25 +91,9 @@
 })();
 </script>
 
-<!-- Cap viewport height so GHL widget stays within visible phone area -->
-<script>
-(function(){
-  var params = new URLSearchParams(window.location.search);
-  var vh = parseInt(params.get('vh') || '0', 10);
-  if(vh > 0){
-    // Setting html height caps the containing block for position:fixed elements
-    // GHL's launcher at bottom:16px will now be 16px from the bottom of vh px
-    // rather than 16px from the bottom of the full 814px iframe
-    document.documentElement.style.setProperty('--vh', vh + 'px');
-    document.documentElement.style.height = vh + 'px';
-    document.documentElement.classList.add('vh-capped');
-    // body must also be capped so fixed elements use this as their reference
-    document.body && (document.body.style.height = vh + 'px');
-  }
-})();
-</script>
-
-<!-- GHL Chat Widget -->
+<!-- GHL Chat Widget — loads at native position:fixed bottom:16px
+     The iframe height is set to exactly match the visible phone screen area,
+     so the widget naturally sits 16px from the visible bottom. No JS hacks needed. -->
 <script
   src="https://beta.leadconnectorhq.com/loader.js"
   data-resources-url="https://beta.leadconnectorhq.com/chat-widget/loader.js"
@@ -141,14 +109,6 @@
   document.getElementById('bl-initial').textContent = name.charAt(0).toUpperCase();
   document.getElementById('bl-name').textContent = name;
   document.getElementById('loader-text').textContent = 'Loading ' + name + '...';
-
-  // Re-apply vh cap now that body exists (in case script ran before body)
-  var vhParam = parseInt(params.get('vh') || '0', 10);
-  if(vhParam > 0){
-    document.documentElement.style.height = vhParam + 'px';
-    document.body.style.height = vhParam + 'px';
-    document.body.style.overflow = 'hidden';
-  }
 
   var loader  = document.getElementById('loader');
   var blocked = document.getElementById('blocked');
@@ -180,46 +140,11 @@
   function hideLoader(){
     loader.classList.add('gone');
     setTimeout(function(){ loader.style.display='none'; }, 350);
-    autoOpenWidget();
   }
 
   function showBlocked(){
     loader.style.display='none';
     blocked.classList.add('show');
-    autoOpenWidget();
-  }
-
-  // Auto-open the GHL widget after load.
-  // Simple one-shot poll — no MutationObserver, no cssText overrides.
-  // We just wait for the button to exist then click it once.
-  function autoOpenWidget(){
-    var attempts = 0;
-    var poll = setInterval(function(){
-      attempts++;
-      // Try shadow DOM first
-      var chatEl = document.querySelector('chat-widget');
-      if(chatEl && chatEl.shadowRoot){
-        var btn = chatEl.shadowRoot.querySelector(
-          'button#lc_text-widget--btn, button[id*="btn"], button[class*="launcher"], button[class*="bubble"]'
-        );
-        if(btn){
-          setTimeout(function(){ btn.click(); }, 800);
-          clearInterval(poll);
-          return;
-        }
-      }
-      // Fallback: any fixed high-z button
-      var all = document.querySelectorAll('button,div[role="button"]');
-      for(var i=all.length-1;i>=0;i--){
-        var cs = window.getComputedStyle(all[i]);
-        if(cs.position==='fixed' && parseInt(cs.zIndex)>500){
-          setTimeout(function(el){ el.click(); },800,all[i]);
-          clearInterval(poll);
-          return;
-        }
-      }
-      if(attempts > 40) clearInterval(poll);
-    }, 250);
   }
 
 })();
