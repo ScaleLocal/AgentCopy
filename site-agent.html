@@ -649,13 +649,13 @@
 
     function loadFrame(domain,bizName){
       var iframe=document.getElementById('sa-iframe');
-      // Calculate how many pixels of the iframe are visible inside the phone screen
-      // so frame.html can cap its viewport height and keep position:fixed elements visible
+      // vh = visible iframe pixels = (phone_screen_height - home_bar) / scale
+      // Calculated from actual CSS: phone height, screen top offset, scale per breakpoint
       var w=window.innerWidth;
       var vh;
-      if(w<=360)      vh=702;
-      else if(w<=480) vh=711;
-      else            vh=727;
+      if(w<=360)      vh=689;  // phone 272px wide, scale=0.6921, screen=564-78-9=477, vh=477/0.6921
+      else if(w<=480) vh=699;  // phone 296px wide, scale=0.7532, screen=614-78-9=527, vh=527/0.7532
+      else            vh=691;  // phone 280px wide, scale=0.7125, screen=580-78-9=493, vh=493/0.7125
       var src='/frame.html?url='+encodeURIComponent('https://'+domain)+'&name='+encodeURIComponent(bizName)+'&vh='+vh;
       iframe.src=src;
     }
