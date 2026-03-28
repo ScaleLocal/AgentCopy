@@ -278,6 +278,20 @@
     .fi-4 { animation-delay: 0.24s; }
     .fi-5 { animation-delay: 0.30s; }
     [class*="chat-widget"] iframe { border-radius: 14px !important; }
+
+    /* ── INPUT CARD — matches site-agent.html exactly ── */
+    .ip__eyebrow{display:inline-flex;align-items:center;gap:8px;padding:5px 14px 5px 10px;border-radius:100px;background:#CCFBF1;border:1px solid #99F6E4;font-size:.78rem;font-weight:600;color:#0F766E;margin-bottom:24px;}
+    .ip__dot{width:6px;height:6px;border-radius:50%;background:#0D9488;animation:pulse 2s infinite;}
+    .ip__card{background:#fff;border:1px solid var(--border-dark);border-radius:20px;padding:36px 32px;width:100%;max-width:440px;box-shadow:0 8px 32px rgba(12,10,9,.06);margin:0 auto;}
+    .ip__field{margin-bottom:14px;}
+    .ip__label{display:block;font-size:.78rem;font-weight:600;color:#57534E;margin-bottom:5px;}
+    .ip__input{width:100%;padding:11px 14px;border:1.5px solid var(--border-dark);border-radius:8px;font-family:var(--font);font-size:.95rem;color:var(--text);outline:none;transition:border-color .15s,box-shadow .15s;background:#fff;}
+    .ip__input:focus{border-color:#0D9488;box-shadow:0 0 0 3px rgba(13,148,136,.1);}
+    .ip__input::placeholder{color:#A8A29E;}
+    .ip__btn{width:100%;padding:13px;border-radius:8px;margin-top:8px;background:var(--text);color:#fff;font-family:var(--font);font-weight:600;font-size:.95rem;border:none;cursor:pointer;transition:background .15s;}
+    .ip__btn:hover{background:#292524;}
+    .ip__note{text-align:center;margin-top:14px;font-size:.75rem;color:#A8A29E;}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
   </style>
 </head>
 <body>
@@ -302,14 +316,18 @@
         <h1 class="hero__title fi-1">An AI employee trained on<br/><em>your business</em> — right now</h1>
         <p class="hero__sub fi-2">Enter your website. In under 10 seconds, you'll be talking to an AI that already knows your services, your hours, and your pricing. It's the employee that never calls in sick.</p>
         <div class="fi-3">
-          <div class="url-bar" id="hero-url-bar">
-            <input type="text" class="url-bar__input" id="hero-company-input" placeholder="Business Name (e.g. ScaleLocal)" autocomplete="organization" />
-            <div class="url-bar__row">
-              <input type="text" class="url-bar__input" id="hero-url-input" placeholder="scalelocal.net" autocomplete="url" onkeypress="if(event.key==='Enter')handleDemoRequest('hero')" />
+          <div class="ip__card">
+            <div class="ip__field">
+              <label class="ip__label" for="hero-company-input">Business Name</label>
+              <input class="ip__input" id="hero-company-input" type="text" placeholder="ScaleLocal" autocomplete="organization" />
             </div>
-            <button class="url-bar__btn" onclick="handleDemoRequest('hero')">Build My AI Agent →</button>
+            <div class="ip__field">
+              <label class="ip__label" for="hero-url-input">Website URL</label>
+              <input class="ip__input" id="hero-url-input" type="text" placeholder="scalelocal.net" autocomplete="url" onkeypress="if(event.key==='Enter')handleDemoRequest('hero')" />
+            </div>
+            <button class="ip__btn" onclick="handleDemoRequest('hero')">Build My AI Agent →</button>
+            <p class="ip__note">No signup. No credit card. See it in 10 seconds.</p>
           </div>
-          <div class="url-bar__note">No signup. No credit card. See it in 10 seconds.</div>
         </div>
       </div>
     </section>
@@ -377,12 +395,17 @@
       <div class="container">
         <h2 class="bottom-cta__title">Still skeptical? Good. Try it.</h2>
         <p class="bottom-cta__desc">10 seconds. No signup. No credit card. Just your website URL and a little curiosity.</p>
-        <div class="url-bar" id="bottom-url-bar">
-          <input type="text" class="url-bar__input" id="bottom-company-input" placeholder="Business Name (e.g. ScaleLocal)" autocomplete="organization" />
-          <div class="url-bar__row">
-            <input type="text" class="url-bar__input" id="bottom-url-input" placeholder="scalelocal.net" autocomplete="url" onkeypress="if(event.key==='Enter')handleDemoRequest('bottom')" />
+        <div class="ip__card">
+          <div class="ip__field">
+            <label class="ip__label" for="bottom-company-input">Business Name</label>
+            <input class="ip__input" id="bottom-company-input" type="text" placeholder="ScaleLocal" autocomplete="organization" />
           </div>
-          <button class="url-bar__btn" onclick="handleDemoRequest('bottom')">Build My AI Agent →</button>
+          <div class="ip__field">
+            <label class="ip__label" for="bottom-url-input">Website URL</label>
+            <input class="ip__input" id="bottom-url-input" type="text" placeholder="scalelocal.net" autocomplete="url" onkeypress="if(event.key==='Enter')handleDemoRequest('bottom')" />
+          </div>
+          <button class="ip__btn" onclick="handleDemoRequest('bottom')">Build My AI Agent →</button>
+          <p class="ip__note">No signup. No credit card. See it in 10 seconds.</p>
         </div>
       </div>
     </section>
