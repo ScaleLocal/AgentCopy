@@ -341,6 +341,7 @@
   </style>
 </head>
 <body>
+<a href="#main-content" class="skip-nav" style="position:absolute;left:-9999px;top:0;background:#0D9488;color:#fff;padding:8px 16px;z-index:9999;border-radius:0 0 4px 0;font-family:sans-serif;font-weight:600;text-decoration:none;">Skip to main content</a>
 
   <!-- NAV -->
   <nav class="nav">
@@ -360,11 +361,11 @@
     <div class="ip__card">
       <div class="ip__field">
         <label class="ip__label" for="ip-company">Business Name</label>
-        <input class="ip__input" id="ip-company" type="text" placeholder="ScaleLocal" autocomplete="organization" />
+        <input class="ip__input" id="ip-company" type="text" aria-label="Business Name" placeholder="ScaleLocal" autocomplete="organization" />
       </div>
       <div class="ip__field">
         <label class="ip__label" for="ip-url">Website URL</label>
-        <input class="ip__input" id="ip-url" type="text" placeholder="scalelocal.net" autocomplete="url"
+        <input class="ip__input" id="ip-url" type="text" aria-label="Website URL" placeholder="scalelocal.net" autocomplete="url"
           onkeypress="if(event.key==='Enter')startDemo()" />
         <p id="ip-url-error" style="display:none;color:#ef4444;font-size:.75rem;margin-top:6px;text-align:left;line-height:1.4;">Please enter a valid website URL — must include a domain extension like .com, .net, .org, etc.</p>
       </div>
