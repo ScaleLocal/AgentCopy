@@ -91,14 +91,50 @@
 })();
 </script>
 
-<!-- GHL Chat Widget — loads at native position:fixed bottom:16px
-     The iframe height is set to exactly match the visible phone screen area,
-     so the widget naturally sits 16px from the visible bottom. No JS hacks needed. -->
+<!-- GHL Chat Widget -->
 <script
   src="https://beta.leadconnectorhq.com/loader.js"
   data-resources-url="https://beta.leadconnectorhq.com/chat-widget/loader.js"
   data-widget-id="69c34fd013ad14bdd250aace"
 ></script>
+
+<!-- Auto-open the chat widget once it's ready. Keep launcher visible so user can minimize/reopen. -->
+<script>
+(function(){
+  var attempts = 0;
+  var max = 40; // try for up to 8 seconds (40 x 200ms)
+  function tryOpen(){
+    attempts++;
+    var w = window.LeadConnector || window.GHL_CHAT || window.lc_chat_widget;
+    // GHL widget exposes its API on the window after load
+    // The launcher button also gets an id we can click as fallback
+    var opened = false;
+
+    // Method 1: official API
+    if(w && typeof w.open === 'function'){
+      try{ w.open(); opened = true; }catch(e){}
+    }
+    // Method 2: newer GHL API namespace
+    if(!opened && window.LC_API && typeof window.LC_API.open_chat_window === 'function'){
+      try{ window.LC_API.open_chat_window(); opened = true; }catch(e){}
+    }
+    // Method 3: click the launcher button directly
+    if(!opened){
+      var btn = document.querySelector('[data-widget-id="69c34fd013ad14bdd250aace"] button, .lc-launcher, #lc-launcher, [class*="launcher"], [id*="launcher"]');
+      if(btn){ try{ btn.click(); opened = true; }catch(e){} }
+    }
+
+    if(!opened && attempts < max){
+      setTimeout(tryOpen, 200);
+    }
+  }
+
+  // Start trying 1.5s after page load to give widget time to render
+  window.addEventListener('load', function(){
+    setTimeout(tryOpen, 1500);
+  });
+})();
+</script>
 
 <script>
 (function(){
