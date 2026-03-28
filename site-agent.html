@@ -254,6 +254,31 @@
     .cta__escape a{color:var(--text-2);font-weight:500;text-decoration:none;}
     .cta__escape a:hover{color:var(--teal);}
 
+    /* ── TRANSPARENCY CARD ── */
+    .demo__transparency{
+      max-width:480px;
+      margin:0 auto;
+      padding:0 24px 32px;
+      opacity:0;
+      transform:translateY(8px);
+      transition:opacity .5s ease .7s,transform .5s ease .7s;
+    }
+    body.state-result .demo__transparency{opacity:1;transform:translateY(0);}
+    .trans__card{
+      background:#fff;
+      border:1.5px solid var(--border-dark);
+      border-radius:var(--rl);
+      padding:18px 20px;
+    }
+    .trans__label{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;}
+    .trans__cols{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    .trans__col-head{font-size:.72rem;font-weight:700;color:var(--text-2);margin-bottom:8px;padding-bottom:5px;border-bottom:1.5px solid var(--border);}
+    .trans__col-head--full{color:var(--teal);}
+    .trans__item{font-size:.72rem;color:var(--text-3);padding:3px 0;display:flex;align-items:baseline;gap:5px;line-height:1.4;}
+    .trans__item::before{content:'✓';font-size:.65rem;color:var(--teal);flex-shrink:0;font-weight:700;}
+    .trans__item--dim::before{color:var(--text-3);opacity:.4;}
+    .trans__note{font-size:.68rem;color:var(--text-3);text-align:center;margin-top:12px;line-height:1.5;padding-top:12px;border-top:1px solid var(--border);}
+
     /* ── SOCIAL PROOF BAND (below CTA) ── */
     .demo__proof{
       background:var(--bg-warm);
@@ -484,6 +509,32 @@
         </div>
 
         <p class="cta__escape">Want it answering your phone calls too? <a href="https://scalelocal.net" target="_blank">See the full AI Receptionist →</a></p>
+      </div>
+
+      <!-- Transparency card — what the demo knows vs what the full product knows -->
+      <div class="demo__transparency">
+        <div class="trans__card">
+          <div class="trans__label">What your agent knows right now</div>
+          <div class="trans__cols">
+            <div>
+              <div class="trans__col-head">This demo</div>
+              <div class="trans__item">Homepage content &amp; copy</div>
+              <div class="trans__item">Services &amp; about section</div>
+              <div class="trans__item">Google Business data</div>
+              <div class="trans__item">Phone, hours &amp; address</div>
+              <div class="trans__item">Star rating &amp; review count</div>
+            </div>
+            <div>
+              <div class="trans__col-head trans__col-head--full">Full product</div>
+              <div class="trans__item">Every page of your site</div>
+              <div class="trans__item">Your FAQs &amp; pricing</div>
+              <div class="trans__item">Staff, bios &amp; custom answers</div>
+              <div class="trans__item">Booking &amp; CRM integration</div>
+              <div class="trans__item">Your brand voice &amp; tone</div>
+            </div>
+          </div>
+          <div class="trans__note">The demo learns your homepage in seconds. The full agent learns your entire business — and keeps learning as you grow.</div>
+        </div>
       </div>
 
       <!-- Error state -->
