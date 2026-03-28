@@ -663,6 +663,7 @@
     async function runDemo(slug){
       var tldM=slug.match(/^(.+)-(net|org|co|io|biz|us|info|dev|ai|app)$/i);
       var dSlug=tldM?tldM[1]:slug;
+      var dTld=tldM?('.'+tldM[2].toLowerCase()):'.com';
       var guessName=dSlug.split('-').map(function(w){return w[0].toUpperCase()+w.slice(1);}).join(' ');
       var hint=sessionStorage.getItem('sa-hint-'+slug)||guessName;
 
@@ -685,7 +686,7 @@
         if(btEl && data.buildTime) btEl.textContent=data.buildTime+'s';
 
         var name=data.name||hint;
-        var domain=data.sourceUrl||(dSlug+'.com');
+        var domain=data.sourceUrl||(dSlug+dTld);
 
         window.__saName=name;
         window.__saSlug=slug;
