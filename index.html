@@ -491,8 +491,8 @@
             <div class="plan">
               <div class="plan__name">Starter</div>
               <div class="plan__commitment">Month-to-month</div>
-              <div class="plan__price-row"><span class="plan__price">$249</span><span class="plan__period">/mo</span></div>
-              <div class="plan__setup">+ $249 one-time setup</div>
+              <div class="plan__price-row"><span class="plan__price">$149</span><span class="plan__period">/mo</span></div>
+              <div class="plan__setup">+ $149 one-time setup</div>
               <div class="plan__divider"></div>
               <ul class="plan__perks">
                 <li class="plan__perk">AI chat + voice on your website</li>
@@ -505,12 +505,12 @@
               <div class="plan__badge">Most Popular</div>
               <div class="plan__name">Growth</div>
               <div class="plan__commitment">6-month commitment</div>
-              <div class="plan__price-row"><span class="plan__price">$249</span><span class="plan__period">/mo</span></div>
-              <div class="plan__setup"><s>$249 setup</s> &nbsp;Free setup</div>
+              <div class="plan__price-row"><span class="plan__price">$149</span><span class="plan__period">/mo</span></div>
+              <div class="plan__setup"><s>$149 setup</s> &nbsp;Free setup</div>
               <div class="plan__divider"></div>
               <ul class="plan__perks">
                 <li class="plan__perk">Everything in Starter</li>
-                <li class="plan__perk">$0 setup — save $249</li>
+                <li class="plan__perk">$0 setup — save $149</li>
                 <li class="plan__perk">Priority support</li>
               </ul>
               <button class="plan__btn plan__btn--primary" onclick="openModal('growth')">Get Started</button>
@@ -518,18 +518,18 @@
             <div class="plan">
               <div class="plan__name">Scale</div>
               <div class="plan__commitment">12-month commitment</div>
-              <div class="plan__price-row"><span class="plan__price">$249</span><span class="plan__period">/mo</span></div>
-              <div class="plan__setup"><s>$249 setup</s> &nbsp;Free setup + 12th month free</div>
+              <div class="plan__price-row"><span class="plan__price">$149</span><span class="plan__period">/mo</span></div>
+              <div class="plan__setup"><s>$149 setup</s> &nbsp;Free setup + 12th month free</div>
               <div class="plan__divider"></div>
               <ul class="plan__perks">
                 <li class="plan__perk">Everything in Growth</li>
-                <li class="plan__perk">Month 12 is on us — save $498</li>
+                <li class="plan__perk">Month 12 is on us — save $298</li>
                 <li class="plan__perk">Dedicated onboarding</li>
               </ul>
               <button class="plan__btn plan__btn--outline" onclick="openModal('scale')">Get Started</button>
             </div>
           </div>
-          <p class="pricing__note"><strong>Launch offer:</strong> Your first payment becomes a credit toward any ScaleLocal growth package if you upgrade within 30 days.</p>
+          <p class="pricing__note"><strong>Launch offer:</strong> Your first payment becomes a credit toward any ScaleLocal Starter plan if you upgrade within 30 days.</p>
         </div>
 
         <div class="upsell">
@@ -557,7 +557,7 @@
       <div id="modal-form-view">
         <h2 class="modal__title">Activate your AI agent</h2>
         <p class="modal__sub">Fill this out and we'll have your agent live on your website within 24 hours.</p>
-        <div class="modal__plan-tag" id="modal-plan-tag">Growth — $249/mo</div>
+        <div class="modal__plan-tag" id="modal-plan-tag">Growth — $149/mo</div>
         <div class="modal__field"><label class="modal__label" for="modal-biz">Business Name</label><input class="modal__input" id="modal-biz" aria-label="Business Name" type="text" placeholder="Joe's Plumbing" /></div>
         <div class="modal__field"><label class="modal__label" for="modal-name">Your Name</label><input class="modal__input" id="modal-name" aria-label="Your Name" type="text" placeholder="Joe Smith" /></div>
         <div class="modal__field"><label class="modal__label" for="modal-email">Email Address</label><input class="modal__input" id="modal-email" aria-label="Email Address" type="email" placeholder="joe@joesplumbing.com" /></div>
@@ -628,7 +628,7 @@ var data=await apiPromise;await animateStep('step-ready',300);var buildTime=data
 
     function injectChatWidget(){if(!CONFIG.GHL_WIDGET_ID||document.getElementById('ghl-chat-script'))return;var s=document.createElement('script');s.id='ghl-chat-script';s.src='https://beta.leadconnectorhq.com/loader.js';s.setAttribute('data-resources-url','https://beta.leadconnectorhq.com/chat-widget/loader.js');s.setAttribute('data-widget-id',CONFIG.GHL_WIDGET_ID);document.body.appendChild(s)}
 
-    var selectedPlan='';var planLabels={starter:'Starter — $249/mo + $249 setup',growth:'Growth — $249/mo · Free setup',scale:'Scale — $249/mo · Free setup + month 12 free'};
+    var selectedPlan='';var planLabels={starter:'Starter — $149/mo + $149 setup',growth:'Growth — $149/mo · Free setup',scale:'Scale — $149/mo · Free setup + month 12 free'};
 
     function openModal(plan){selectedPlan=plan;document.getElementById('modal-plan-tag').textContent=planLabels[plan]||plan;document.getElementById('modal-form-view').style.display='block';document.getElementById('modal-success-view').style.display='none';if(window.__agentBizName)document.getElementById('modal-biz').value=window.__agentBizName;document.getElementById('signup-modal').classList.add('active');document.body.style.overflow='hidden'}
 
