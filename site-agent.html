@@ -477,7 +477,7 @@
 
         <button class="cta__btn" id="cta-main-btn" onclick="handleCTA()">
           Get This On My Website
-          <span id="cta-plan-sub">6-Month Commitment — $249/mo · No setup fee · Save $249</span>
+          <span id="cta-plan-sub">6-Month Commitment — $149/mo · No setup fee · Save $149</span>
         </button>
         <p class="cta__urgency" id="cta-urgency"></p>
 
@@ -487,21 +487,21 @@
               <div class="plan-row__radio"></div>
               <div><div class="plan-row__name">Month-to-Month</div><div class="plan-row__commit">Cancel anytime</div></div>
             </div>
-            <div class="plan-row__price"><div class="plan-row__mo">$249/mo</div><div class="plan-row__setup">+ $249 setup fee</div></div>
+            <div class="plan-row__price"><div class="plan-row__mo">$149/mo</div><div class="plan-row__setup">+ $149 setup fee</div></div>
           </div>
           <div class="plan-row featured" data-plan="6mo" onclick="selectPlan('6mo')">
             <div class="plan-row__left">
               <div class="plan-row__radio"></div>
-              <div><div class="plan-row__name">6-Month Commitment <span class="plan-row__tag">No Setup Fee</span></div><div class="plan-row__commit">Save $249 · Billed monthly</div></div>
+              <div><div class="plan-row__name">6-Month Commitment <span class="plan-row__tag">No Setup Fee</span></div><div class="plan-row__commit">Save $149 · Billed monthly</div></div>
             </div>
-            <div class="plan-row__price"><div class="plan-row__mo">$249/mo</div><div class="plan-row__setup"><s>$249 setup</s> <span class="free">Free</span></div></div>
+            <div class="plan-row__price"><div class="plan-row__mo">$149/mo</div><div class="plan-row__setup"><s>$149 setup</s> <span class="free">Free</span></div></div>
           </div>
           <div class="plan-row" data-plan="12mo" onclick="selectPlan('12mo')">
             <div class="plan-row__left">
               <div class="plan-row__radio"></div>
               <div><div class="plan-row__name">12-Month Commitment <span class="plan-row__tag">Best Deal</span></div><div class="plan-row__commit">No setup fee · Month 12 free</div></div>
             </div>
-            <div class="plan-row__price"><div class="plan-row__mo">$249/mo</div><div class="plan-row__setup"><span class="free">Setup free + month 12 free</span></div></div>
+            <div class="plan-row__price"><div class="plan-row__mo">$149/mo</div><div class="plan-row__setup"><span class="free">Setup free + month 12 free</span></div></div>
           </div>
         </div>
 
@@ -595,8 +595,8 @@
     /* ── Urgency copy — defined first, used everywhere below ── */
     var planUrgency={
       'm2m':  '',
-      '6mo':  '⚡ Setup fee waived with 6-month commitment — save $249',
-      '12mo': '⚡ Setup fee waived + month 12 free — save $498 or more'
+      '6mo':  '⚡ Setup fee waived with 6-month commitment — save $149',
+      '12mo': '⚡ Setup fee waived + month 12 free — save $298 or more'
     };
     function updateUrgency(plan){
       var el=document.getElementById('cta-urgency');
@@ -605,9 +605,9 @@
 
     /* ── Plan selection ── */
     var planSubs={
-      'm2m':  'Month-to-Month — $249/mo + $249 setup fee',
-      '6mo':  '6-Month Commitment — $249/mo · No setup fee · Save $249',
-      '12mo': '12-Month Commitment — $249/mo · No setup fee · Month 12 free'
+      'm2m':  'Month-to-Month — $149/mo + $149 setup fee',
+      '6mo':  '6-Month Commitment — $149/mo · No setup fee · Save $149',
+      '12mo': '12-Month Commitment — $149/mo · No setup fee · Month 12 free'
     };
     window.selectPlan=function(plan){
       document.querySelectorAll('.plan-row').forEach(function(r){
@@ -752,9 +752,9 @@
       .catch(function(){
         // Fallback: direct links if API fails
         var fallback={
-          'm2m':  'https://buy.stripe.com/8x2bJ25p9dQ38N69kh3Je07',
-          '6mo':  'https://buy.stripe.com/eVq4gAg3N3bp4wQdAx3Je05',
-          '12mo': 'https://buy.stripe.com/fZu8wQ2cX7rF4wQaol3Je06'
+          'm2m':  'https://buy.stripe.com/dRmeVe18TeU78N6aol3Je0B',
+          '6mo':  'https://buy.stripe.com/cNi9AU8Bl6nB1kEfIF3Je0C',
+          '12mo': 'https://buy.stripe.com/9B63cwbNx6nBd3m9kh3Je0D'
         };
         window.location.href=fallback[plan]||fallback['6mo'];
       });
