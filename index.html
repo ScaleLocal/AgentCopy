@@ -3,10 +3,54 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AgentCopyAI — AI Website Agent for Your Business</title>
-  <meta name="description" content="An AI agent trained on your business that chats and talks with every website visitor. Live in 10 seconds. No code. No setup calls." />
-  <meta property="og:title" content="AgentCopyAI — At Your Service in Under 10 Seconds" />
-  <meta property="og:description" content="See an AI website agent trained on your actual business — live in 10 seconds." />
+  <title>AgentCopyAI — Turn Your Website Into One That Talks. $19/mo.</title>
+  <meta name="description" content="Turn your existing website into a 24/7 AI agent that answers every customer — in chat or by voice — trained on your own site. See it in 10 seconds, then keep it for $19/mo. Cancel anytime." />
+  <link rel="canonical" href="https://agentcopyai.com/" />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://agentcopyai.com/" />
+  <meta property="og:site_name" content="AgentCopyAI" />
+  <meta property="og:title" content="Turn your website into one that talks back — $19/mo" />
+  <meta property="og:description" content="Drop in your URL and watch your own site answer customers out loud in 10 seconds. Go live for $19/mo. No rebuild, no contract." />
+  <meta property="og:image" content="https://agentcopyai.com/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Turn your website into one that talks back — $19/mo" />
+  <meta name="twitter:description" content="Watch your own site answer customers in 10 seconds. Go live for $19/mo. No rebuild, no contract." />
+  <meta name="twitter:image" content="https://agentcopyai.com/og-image.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://agentcopyai.com/#org",
+        "name": "AgentCopyAI",
+        "url": "https://agentcopyai.com/",
+        "description": "AgentCopyAI turns a business's existing website into a 24/7 AI chat and voice agent trained on its own content."
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "AgentCopyAI",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "description": "An AI chat and voice agent that trains on your existing website and answers every visitor 24/7. No rebuild required.",
+        "offers": [
+          { "@type": "Offer", "name": "Talking Website", "price": "19.00", "priceCurrency": "USD", "description": "24/7 AI chat + voice trained on your website. Cancel anytime." },
+          { "@type": "Offer", "name": "Talking Website + Scheduling", "price": "29.00", "priceCurrency": "USD", "description": "Everything in Talking Website, plus visitors can book appointments and request estimates in chat." }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "Will this work with my current website?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — Wix, Squarespace, WordPress, GoDaddy, anything. One line of code, or we add it for you. You keep your site exactly as it is. No rebuild." } },
+          { "@type": "Question", "name": "Can it make things up?", "acceptedAnswer": { "@type": "Answer", "text": "No. It only answers from what is on your website — no invented prices, no false promises." } },
+          { "@type": "Question", "name": "What does it cost to keep running?", "acceptedAnswer": { "@type": "Answer", "text": "$19/mo for the talking website, or $29/mo to add appointment and estimate scheduling. Cancel anytime, no contract, no setup fee." } },
+          { "@type": "Question", "name": "Do I have to do anything technical?", "acceptedAnswer": { "@type": "Answer", "text": "No. Pay in one click, and we send your code snippet the same day to paste in yourself, or give us registrar access and we install it within 24 hours." } }
+        ]
+      }
+    ]
+  }
+  </script>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%230D9488'/><stop offset='100%25' stop-color='%232563EB'/></linearGradient></defs><rect width='32' height='32' rx='8' fill='url(%23g)'/><text x='50%25' y='56%25' dominant-baseline='middle' text-anchor='middle' font-size='17' font-family='system-ui' font-weight='800' fill='white'>A</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -21,7 +65,10 @@
       --border-dark: #D6D3D1;
       --text: #0C0A09;
       --text-secondary: #57534E;
-      --text-muted: #A8A29E;
+      --text-muted: #78716C;
+      --text-faint: #A8A29E;
+      --error: #DC2626;
+      --grad: linear-gradient(135deg, #0D9488 0%, #2563EB 100%);
       --accent: #0D9488;
       --accent-hover: #0F766E;
       --accent-light: #CCFBF1;
@@ -41,9 +88,17 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
     body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
-    a { color: var(--accent); text-decoration: none; }
+    a { color: var(--accent-hover); text-decoration: none; }
     a:hover { text-decoration: underline; }
     .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── ACCESSIBILITY ── */
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+    .skip-link { position: absolute; left: -9999px; top: 0; z-index: 2000; padding: 10px 16px; background: var(--text); color: #fff; border-radius: 0 0 8px 0; font-weight: 600; font-size: 0.85rem; }
+    .skip-link:focus { left: 0; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+    }
 
     /* ── NAV ── */
     .nav { position: sticky; top: 0; z-index: 100; background: rgba(250,250,249,0.9); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
@@ -53,8 +108,8 @@
     .nav__links { display: flex; gap: 24px; align-items: center; }
     .nav__link { font-size: 0.84rem; font-weight: 500; color: var(--text-secondary); text-decoration: none; transition: color 0.15s; }
     .nav__link:hover { color: var(--text); text-decoration: none; }
-    .nav__cta { padding: 7px 16px; border-radius: 7px; background: var(--text); color: white; font-weight: 600; font-size: 0.82rem; border: none; cursor: pointer; font-family: var(--font); transition: background 0.15s; }
-    .nav__cta:hover { background: #292524; }
+    .nav__cta { padding: 7px 16px; border-radius: 7px; background: var(--grad); color: white; font-weight: 600; font-size: 0.82rem; border: none; cursor: pointer; font-family: var(--font); transition: transform 0.15s, box-shadow 0.15s, filter 0.15s; }
+    .nav__cta:hover { filter: brightness(1.06); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(37,99,235,0.25); }
 
     /* ── HERO ── */
     .hero { padding: 80px 0 48px; text-align: center; }
@@ -82,23 +137,56 @@
     .proof__logos { display: flex; gap: 32px; justify-content: center; align-items: center; margin-top: 16px; flex-wrap: wrap; font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
     .proof__item { padding: 6px 16px; border-radius: 100px; background: var(--bg-warm); border: 1px solid var(--border); }
 
-    /* ── PREVIEW ── */
-    .preview { max-width: 680px; margin: 56px auto 0; padding: 0 24px; }
-    .preview__window { background: white; border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 8px 32px rgba(12,10,9,0.06), 0 1px 3px rgba(12,10,9,0.04); }
-    .preview__bar { display: flex; align-items: center; padding: 10px 14px; background: var(--bg-warm); border-bottom: 1px solid var(--border); gap: 7px; }
-    .preview__dots { display: flex; gap: 5px; }
-    .preview__dot { width: 9px; height: 9px; border-radius: 50%; }
-    .preview__dot:nth-child(1) { background: #FCA5A5; }
-    .preview__dot:nth-child(2) { background: #FCD34D; }
-    .preview__dot:nth-child(3) { background: #86EFAC; }
-    .preview__url { flex: 1; text-align: center; font-size: 0.7rem; color: var(--text-muted); font-family: 'SF Mono', 'Fira Code', monospace; }
-    .preview__body { padding: 24px; }
-    .preview__biz { font-family: var(--font-display); font-size: 1.15rem; font-weight: 400; margin-bottom: 2px; }
-    .preview__meta { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 18px; }
-    .preview__msg { padding: 10px 13px; background: var(--bg-warm); border-radius: var(--radius); margin-bottom: 6px; }
-    .preview__label { font-size: 0.65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 3px; }
-    .preview__label--ai { color: var(--accent); }
-    .preview__text { font-size: 0.87rem; color: var(--text-secondary); line-height: 1.5; }
+    /* ── PREVIEW (iPhone frame showing the real site + live widget) ── */
+    .preview { max-width: 880px; margin: 50px auto 0; padding: 0 24px; }
+    .preview__head { text-align:center; margin-bottom: 22px; }
+    .preview__pill { display:inline-flex; align-items:center; gap:7px; font-family: var(--font-display); font-size: 1.05rem; color: var(--text); }
+    .preview__pill .live { display:inline-flex; align-items:center; gap:6px; font-family: var(--font); font-size:0.7rem; font-weight:700; color: var(--green); background: var(--green-bg); border:1px solid var(--green-border); padding:3px 10px; border-radius:100px; }
+    .preview__pill .live::before { content:''; width:6px; height:6px; border-radius:50%; background: var(--green); animation: pulse 2s infinite; }
+    .preview__pill em { font-style:normal; color: var(--text-muted); }
+    .preview__grid { display:grid; grid-template-columns: 1fr auto 1fr; align-items:center; gap: 28px; }
+    .preview__stats { display:flex; flex-direction:column; gap: 32px; }
+    .preview__stats--r { text-align:left; }
+    .preview__stats--l { text-align:right; align-items:flex-end; }
+    .pstat__num { font-family: var(--font-display); font-size: 2.6rem; font-weight:400; line-height:1; color: var(--text); letter-spacing:-0.02em; }
+    .pstat__lbl { margin-top:8px; font-size:0.68rem; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; color: var(--text-muted); max-width: 150px; line-height:1.4; }
+    .preview__stats--r .pstat__lbl { margin-left:0; }
+    .preview__stats--l .pstat__lbl { margin-left:auto; }
+    .pstat::after { content:''; display:block; width:30px; height:2px; background: var(--border-dark); margin-top:12px; }
+    .preview__stats--l .pstat::after { margin-left:auto; }
+
+    /* iPhone frame */
+    .iphone { position:relative; width: 290px; justify-self:center; }
+    .iphone__frame { position:relative; background:#0C0A09; border-radius: 44px; padding: 11px; box-shadow: 0 24px 60px rgba(12,10,9,0.28), 0 4px 12px rgba(12,10,9,0.16); }
+    .iphone__screen { position:relative; border-radius: 34px; overflow:hidden; background:#0E2034; aspect-ratio: 9 / 19.3; }
+    .iphone__notch { position:absolute; top:9px; left:50%; transform:translateX(-50%); width: 90px; height: 22px; background:#0C0A09; border-radius: 0 0 14px 14px; z-index:5; }
+    .iphone__status { position:absolute; top:0; left:0; right:0; height:34px; display:flex; align-items:center; justify-content:space-between; padding: 9px 22px 0; font-size:0.62rem; font-weight:700; color:#fff; z-index:4; }
+    .iphone__urlbar { position:absolute; top:34px; left:14px; right:14px; height:24px; background:rgba(255,255,255,0.92); border-radius:7px; display:flex; align-items:center; justify-content:center; gap:5px; font-size:0.6rem; color:#57534E; z-index:4; }
+    .site { position:absolute; inset:0; padding: 70px 18px 0; color:#fff; background:
+      radial-gradient(circle at 80% 8%, rgba(37,99,235,0.18), transparent 45%), #0E2034; }
+    .site__logo { font-weight:800; font-size:0.95rem; letter-spacing:-0.01em; }
+    .site__logo span { color:#60A5FA; }
+    .site__menu { float:right; color:#fff; font-size:1rem; }
+    .site__eyebrow { margin-top:30px; font-size:0.5rem; font-weight:800; letter-spacing:0.08em; color:#34D399; text-transform:uppercase; }
+    .site__h1 { margin-top:8px; font-family: var(--font); font-weight:800; font-size:1.5rem; line-height:1.04; letter-spacing:-0.02em; }
+    .site__h1 b { color:#3B82F6; font-weight:800; }
+    .site__p { margin-top:12px; font-size:0.66rem; line-height:1.5; color:#CBD5E1; }
+    .site__cta { margin-top:14px; background:#2563EB; color:#fff; text-align:center; font-size:0.7rem; font-weight:700; padding:9px; border-radius:7px; }
+    /* live widget bubble on the site */
+    .site__widget { position:absolute; right:14px; bottom:16px; z-index:6; }
+    .site__widget-card { background:#fff; color:#1C1917; border-radius:12px; padding:11px 13px; font-size:0.62rem; line-height:1.4; box-shadow:0 10px 24px rgba(0,0,0,0.28); width:150px; margin-bottom:9px; position:relative; }
+    .site__widget-card .x { position:absolute; top:7px; right:9px; color:#A8A29E; font-size:0.7rem; }
+    .site__widget-btn { width:42px; height:42px; border-radius:50%; background:#2563EB; display:flex; align-items:center; justify-content:center; margin-left:auto; box-shadow:0 6px 16px rgba(37,99,235,0.4); }
+    .preview__caption { text-align:center; margin-top:24px; font-family: var(--font-display); font-style:italic; font-size:1.15rem; color: var(--text); }
+
+    @media (max-width: 760px) {
+      .preview__grid { grid-template-columns: 1fr; gap: 24px; }
+      .preview__stats { flex-direction:row; flex-wrap:wrap; justify-content:center; gap:24px 36px; text-align:center; }
+      .preview__stats--l { align-items:center; }
+      .preview__stats--l .pstat__lbl, .preview__stats--r .pstat__lbl { margin:8px auto 0; }
+      .preview__stats--l .pstat::after, .pstat::after { margin:12px auto 0; }
+      .iphone { order:-1; }
+    }
 
     /* ── SECTIONS ── */
     .section { padding: 80px 0; }
@@ -207,8 +295,8 @@
     .plan__perk { font-size: 0.82rem; color: var(--text-secondary); padding: 3px 0; display: flex; align-items: flex-start; gap: 6px; }
     .plan__perk::before { content: '\2713'; color: var(--accent); font-weight: 700; font-size: 0.78rem; margin-top: 1px; }
     .plan__btn { display: block; width: 100%; padding: 11px; border-radius: var(--radius); font-family: var(--font); font-weight: 600; font-size: 0.88rem; text-align: center; cursor: pointer; border: none; transition: all 0.15s; text-decoration: none; }
-    .plan__btn--primary { background: var(--text); color: white; }
-    .plan__btn--primary:hover { background: #292524; text-decoration: none; color: white; }
+    .plan__btn--primary { background: var(--grad); color: white; }
+    .plan__btn--primary:hover { filter: brightness(1.06); transform: translateY(-1px); box-shadow: 0 6px 16px rgba(37,99,235,0.25); text-decoration: none; color: white; }
     .plan__btn--outline { background: white; color: var(--text); border: 1px solid var(--border-dark); }
     .plan__btn--outline:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
 
@@ -236,8 +324,8 @@
     .modal__label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px; }
     .modal__input { width: 100%; padding: 10px 13px; border: 1px solid var(--border-dark); border-radius: var(--radius); font-family: var(--font); font-size: 0.9rem; color: var(--text); outline: none; transition: border-color 0.15s; }
     .modal__input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(13,148,136,0.1); }
-    .modal__submit { width: 100%; padding: 12px; border-radius: var(--radius); margin-top: 16px; background: var(--text); color: white; font-family: var(--font); font-weight: 600; font-size: 0.9rem; border: none; cursor: pointer; transition: background 0.15s; }
-    .modal__submit:hover { background: #292524; }
+    .modal__submit { width: 100%; padding: 12px; border-radius: var(--radius); margin-top: 16px; background: var(--grad); color: white; font-family: var(--font); font-weight: 600; font-size: 0.9rem; border: none; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s, filter 0.15s; }
+    .modal__submit:hover { filter: brightness(1.06); transform: translateY(-1px); box-shadow: 0 6px 16px rgba(37,99,235,0.25); }
     .modal__submit:disabled { opacity: 0.5; cursor: not-allowed; }
     .modal__disclaimer { font-size: 0.72rem; color: var(--text-muted); margin-top: 12px; text-align: center; line-height: 1.5; }
     .modal__success { text-align: center; padding: 20px 0; }
@@ -253,8 +341,63 @@
     .demo-error__desc { color: var(--text-secondary); font-size: 0.88rem; max-width: 340px; margin: 0 auto; }
     .demo-error .btn { margin-top: 16px; display: inline-flex; padding: 10px 20px; border-radius: var(--radius); background: white; color: var(--text); border: 1px solid var(--border-dark); font-weight: 600; font-size: 0.88rem; text-decoration: none; font-family: var(--font); }
 
+    /* ── NEW: bigger secondary text for readability ── */
+    .step__desc, .feat__desc { font-size: 0.9rem; }
+    .nav__link { font-size: 0.875rem; }
+
+    /* ── NEW: value-strip under hero (the "no-brainer" math) ── */
+    .valuestrip { max-width: 640px; margin: 28px auto 0; display: flex; flex-wrap: wrap; gap: 10px 28px; justify-content: center; align-items: center; }
+    .valuestrip__item { display: inline-flex; align-items: center; gap: 7px; font-size: 0.86rem; color: var(--text-secondary); font-weight: 500; }
+    .valuestrip__item b { color: var(--text); font-weight: 700; }
+    .valuestrip__check { color: var(--accent); font-weight: 800; }
+
+    /* ── NEW: trust strip ── */
+    .trust { padding: 40px 0 0; text-align: center; }
+    .trust__quote { max-width: 600px; margin: 0 auto; font-family: var(--font-display); font-size: clamp(1.25rem, 3vw, 1.6rem); font-weight: 400; line-height: 1.35; color: var(--text); letter-spacing: -0.01em; }
+    .trust__quote em { font-style: italic; color: var(--accent-hover); }
+    .trust__attr { margin-top: 14px; font-size: 0.82rem; color: var(--text-muted); font-weight: 500; }
+    .trust__demoline { margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary); }
+
+    /* ── NEW: differentiator band ── */
+    .diffband { text-align: center; padding: 12px 0 0; }
+    .diffband__text { max-width: 620px; margin: 0 auto; font-size: 1.02rem; color: var(--text-secondary); line-height: 1.6; }
+    .diffband__text strong { color: var(--text); font-weight: 700; }
+
+    /* ── NEW: FAQ ── */
+    .faq { max-width: 720px; margin: 0 auto; }
+    .faq__item { border: 1px solid var(--border); border-radius: var(--radius-lg); background: white; padding: 18px 22px; margin-bottom: 12px; }
+    .faq__q { font-weight: 700; font-size: 0.95rem; margin-bottom: 6px; color: var(--text); }
+    .faq__a { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
+
+    /* ── NEW: 4-step flow ── */
+    .flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .flow__step { background: white; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 22px 18px; text-align: left; }
+    .flow__num { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; background: var(--grad); color: #fff; font-size: 0.72rem; font-weight: 700; margin-bottom: 12px; }
+    .flow__title { font-weight: 700; font-size: 0.92rem; margin-bottom: 4px; }
+    .flow__desc { font-size: 0.84rem; color: var(--text-secondary); line-height: 1.5; }
+
+    /* ── NEW: peak CTA inside the demo reveal ── */
+    .peakcta { margin: 24px auto 0; max-width: 620px; background: var(--grad); border-radius: var(--radius-xl); padding: 26px 28px; text-align: center; color: #fff; }
+    .peakcta__title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 400; margin-bottom: 6px; color: #fff; }
+    .peakcta__sub { font-size: 0.92rem; opacity: 0.92; margin-bottom: 16px; line-height: 1.55; }
+    .peakcta__btn { display: inline-block; padding: 13px 28px; border-radius: 8px; background: #fff; color: #0F766E; font-weight: 700; font-size: 0.98rem; border: none; cursor: pointer; font-family: var(--font); transition: transform 0.15s, box-shadow 0.15s; }
+    .peakcta__btn:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(0,0,0,0.18); text-decoration: none; color: #0F766E; }
+    .peakcta__note { margin-top: 12px; font-size: 0.78rem; opacity: 0.9; }
+
+    /* ── NEW: pricing two-up + price reframe ── */
+    .pricing__grid--two { grid-template-columns: repeat(2, 1fr); max-width: 660px; margin: 0 auto; }
+    .plan__daily { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 14px; }
+    .plan__addon { font-size: 0.82rem; color: var(--accent-hover); font-weight: 600; margin-bottom: 4px; }
+    .pricing__anchor { text-align: center; max-width: 560px; margin: 0 auto 24px; font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; }
+    .pricing__anchor b { color: var(--text); font-weight: 700; }
+    .pricing__guarantee { text-align: center; margin-top: 18px; font-size: 0.84rem; color: var(--text-muted); }
+    .pricing__guarantee strong { color: var(--accent-hover); font-weight: 700; }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
+      .flow { grid-template-columns: 1fr 1fr; }
+      .pricing__grid--two { grid-template-columns: 1fr; }
+      .ip__card { padding: 24px 20px; }
       .nav__links { display: none; }
       .hero { padding: 64px 0 36px; }
       .url-bar__row { flex-direction: column; }
@@ -288,50 +431,62 @@
     .ip__input{width:100%;padding:11px 14px;border:1.5px solid var(--border-dark);border-radius:8px;font-family:var(--font);font-size:.95rem;color:var(--text);outline:none;transition:border-color .15s,box-shadow .15s;background:#fff;}
     .ip__input:focus{border-color:#0D9488;box-shadow:0 0 0 3px rgba(13,148,136,.1);}
     .ip__input::placeholder{color:#A8A29E;}
-    .ip__btn{width:100%;padding:13px;border-radius:8px;margin-top:8px;background:var(--text);color:#fff;font-family:var(--font);font-weight:600;font-size:.95rem;border:none;cursor:pointer;transition:background .15s;}
-    .ip__btn:hover{background:#292524;}
-    .ip__note{text-align:center;margin-top:14px;font-size:.75rem;color:#A8A29E;}
+    .ip__btn{width:100%;padding:14px;border-radius:8px;margin-top:8px;background:var(--grad);color:#fff;font-family:var(--font);font-weight:700;font-size:1rem;border:none;cursor:pointer;transition:transform .15s,box-shadow .15s,filter .15s;}
+    .ip__btn:hover{filter:brightness(1.06);transform:translateY(-1px);box-shadow:0 6px 18px rgba(37,99,235,0.28);}
+    .ip__note{text-align:center;margin-top:14px;font-size:.78rem;color:var(--text-muted);}
+    .ip__reassure{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;margin-top:12px;font-size:.74rem;color:var(--text-muted);font-weight:500;}
+    .ip__reassure span{display:inline-flex;align-items:center;gap:4px;}
     @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
   </style>
 </head>
 <body>
+  <a href="#main" class="skip-link">Skip to content</a>
 
   <nav class="nav">
     <div class="container">
       <a href="/" class="nav__logo"><div class="nav__mark">A</div> AgentCopyAI</a>
       <div class="nav__links" id="nav-links-landing">
         <a href="#how" class="nav__link">How It Works</a>
-        <a href="#what" class="nav__link">What You Get</a>
-        <a href="#try" class="nav__link">Try It</a>
+        <a href="#pricing-lp" class="nav__link">Pricing</a>
+        <a href="#faq" class="nav__link">FAQ</a>
       </div>
-      <button class="nav__cta" id="nav-cta" onclick="scrollToDemo()">Try It Free</button>
+      <button class="nav__cta" id="nav-cta" onclick="scrollToDemo()">Try it out now →</button>
     </div>
   </nav>
 
   <!-- LANDING PAGE -->
-  <div class="page" id="landing-page">
+  <div class="page active" id="landing-page">
+    <noscript><div style="max-width:680px;margin:40px auto;padding:0 24px;text-align:center;font-family:'DM Sans',sans-serif;"><h1 style="font-size:2rem;">Turn your website into one that talks back — $19/mo</h1><p>AgentCopyAI turns your existing website into a 24/7 AI agent that answers every customer, trained on your own site. No rebuild. Please enable JavaScript to try the live demo.</p></div></noscript>
+    <main id="main">
     <section class="hero">
       <div class="container">
-        <div class="hero__eyebrow fi"><span class="hero__eyebrow-dot"></span> At Your Service in Under 10 Seconds</div>
-        <h1 class="hero__title fi-1">An AI employee trained on<br/><em>your business</em> — right now</h1>
-        <p class="hero__sub fi-2">Enter your website. In under 10 seconds, you'll be talking to an AI that already knows your services, your hours, and your pricing. It's the employee that never calls in sick.</p>
+        <div class="hero__eyebrow fi"><span class="hero__eyebrow-dot"></span> No rebuild. Works with the website you already have.</div>
+        <h1 class="hero__title fi-1">Your website can't talk.<br/><em>Your competitor's can.</em></h1>
+        <p class="hero__sub fi-2">Turn your existing site into a 24/7 AI agent trained on your business.<br/>See it live in 10 seconds. Only <strong>$19/mo</strong>.</p>
         <div class="fi-3">
           <div class="ip__card">
             <div class="ip__field">
-              <label class="ip__label" for="hero-company-input">Business Name</label>
-              <input class="ip__input" id="hero-company-input" type="text" placeholder="ScaleLocal" autocomplete="organization" />
+              <label class="ip__label" for="hero-url-input">Enter your website — watch it learn your business in 10 seconds</label>
+              <input class="ip__input" id="hero-url-input" type="text" placeholder="yourbusiness.com" autocomplete="url" aria-describedby="hero-url-error" onkeypress="if(event.key==='Enter')handleDemoRequest('hero')" />
+              <p id="hero-url-error" role="alert" aria-live="assertive" style="display:none;color:var(--error);font-size:.78rem;margin-top:6px;line-height:1.4;">Please enter a valid website URL — include a domain extension like .com, .net, or .org.</p>
             </div>
-            <div class="ip__field">
-              <label class="ip__label" for="hero-url-input">Website URL</label>
-              <input class="ip__input" id="hero-url-input" type="text" placeholder="scalelocal.net" autocomplete="url" onkeypress="if(event.key==='Enter')handleDemoRequest('hero')" />
-              <p id="hero-url-error" style="display:none;color:#ef4444;font-size:.75rem;margin-top:6px;line-height:1.4;">Please enter a valid website URL — must include a domain extension like .com, .net, .org, etc.</p>
-            </div>
-            <button class="ip__btn" onclick="handleDemoRequest('hero')">Build My AI Agent →</button>
-            <p class="ip__note">No signup. No credit card. See it in 10 seconds.</p>
+            <button class="ip__btn" onclick="handleDemoRequest('hero')">Try it out now →</button>
+            <p class="ip__note">Free demo. No signup, no card to try it. Watch it learn your business in 10 seconds.</p>
+          </div>
+          <div class="valuestrip">
+            <span class="valuestrip__item"><span class="valuestrip__check">✓</span> Code <b>same day</b> — or we install it</span>
+            <span class="valuestrip__item"><span class="valuestrip__check">✓</span> <b>No rebuild</b> — keep your site</span>
+            <span class="valuestrip__item"><span class="valuestrip__check">✓</span> Cancel anytime, <b>one click</b></span>
           </div>
         </div>
       </div>
     </section>
+
+    <div class="diffband fi-4">
+      <div class="container">
+        <p class="diffband__text">Other chat widgets make <strong>you</strong> write the answers. This one <strong>already read your website</strong> — so it answers like you would, from day one.</p>
+      </div>
+    </div>
 
     <div class="proof fi-4">
       <div class="container">
@@ -341,7 +496,6 @@
           <span class="proof__item">Dentists</span>
           <span class="proof__item">Contractors</span>
           <span class="proof__item">Salons</span>
-          <span class="proof__item">Manufacturers</span>
           <span class="proof__item">Restaurants</span>
           <span class="proof__item">Law Firms</span>
         </div>
@@ -349,31 +503,54 @@
     </div>
 
     <div class="preview fi-5">
-      <div class="preview__window">
-        <div class="preview__bar">
-          <div class="preview__dots"><div class="preview__dot"></div><div class="preview__dot"></div><div class="preview__dot"></div></div>
-          <div class="preview__url">agentcopyai.com/agent/joes-plumbing</div>
-          <div style="width:42px;"></div>
+      <div class="preview__head">
+        <span class="preview__pill"><span class="live">Agent live</span> &nbsp;ScaleLocal <em>— AI agent live</em></span>
+      </div>
+      <div class="preview__grid">
+        <div class="preview__stats preview__stats--l">
+          <div class="pstat"><div class="pstat__num">3.3s</div><div class="pstat__lbl">To build &amp; deploy</div></div>
+          <div class="pstat"><div class="pstat__num">24/7</div><div class="pstat__lbl">Always answering</div></div>
         </div>
-        <div class="preview__body">
-          <div class="preview__biz">Joe's Plumbing &amp; Drain</div>
-          <div class="preview__meta">Lowell, MA · ★ 4.8 (127 reviews) · (978) 555-0123</div>
-          <div class="preview__msg"><div class="preview__label preview__label--ai">AI Website Agent</div><div class="preview__text">Hey! Thanks for visiting Joe's Plumbing. I can help you schedule a service, get a quote, or answer any questions about what we do. What can I help with?</div></div>
-          <div class="preview__msg"><div class="preview__label">Website Visitor</div><div class="preview__text">Do you handle emergency drain repairs on weekends?</div></div>
-          <div class="preview__msg"><div class="preview__label preview__label--ai">AI Website Agent</div><div class="preview__text">Absolutely — Joe's offers 24/7 emergency service including weekends and holidays. For urgent drain issues, you can call (978) 555-0123 or I can get you scheduled right now.</div></div>
+
+        <div class="iphone">
+          <div class="iphone__frame">
+            <div class="iphone__screen">
+              <div class="iphone__notch"></div>
+              <div class="iphone__status"><span>1:06</span><span>&#9646;&#9646;&#9646; &#128246; &#128267;</span></div>
+              <div class="iphone__urlbar">&#128274; scalelocal.net</div>
+              <div class="site">
+                <div><span class="site__logo">Scale<span>Local</span></span><span class="site__menu">&#9776;</span></div>
+                <div class="site__eyebrow">Local Search · Web Design · AI Growth Solutions</div>
+                <div class="site__h1">Your business is ready to climb. <b>We're the team that gets you to the top.</b></div>
+                <div class="site__p">ScaleLocal is a web design, SEO, and AI growth agency serving Massachusetts, Rhode Island, and New Hampshire.</div>
+                <div class="site__cta">See how the climb works</div>
+                <div class="site__widget">
+                  <div class="site__widget-card"><span class="x">&#10005;</span>Have a question? Chat with us here.</div>
+                  <div class="site__widget-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 6.5C5 5.67 5.67 5 6.5 5h11C18.33 5 19 5.67 19 6.5v8C19 15.33 18.33 16 17.5 16H11l-4 3v-3H6.5C5.67 16 5 15.33 5 14.5v-8z" fill="#fff"/></svg></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="preview__stats preview__stats--r">
+          <div class="pstat"><div class="pstat__num">78%</div><div class="pstat__lbl">Of website visitors will interact with your agent</div></div>
+          <div class="pstat"><div class="pstat__num">3x</div><div class="pstat__lbl">More leads with instant AI response</div></div>
         </div>
       </div>
+      <p class="preview__caption">"That's not a demo. That's your actual business."</p>
     </div>
 
     <section class="section section--alt" id="how">
       <div class="container">
         <div class="section__eyebrow">How It Works</div>
-        <h2 class="section__title">Three steps. Ten seconds. Done.</h2>
-        <p class="section__desc">No setup calls. No onboarding forms. No waiting.</p>
-        <div class="steps">
-          <div class="step"><div class="step__num">1</div><h3 class="step__title">Enter your website</h3><p class="step__desc">Type your URL above. That's it. Our system reads your entire website — services, pricing, hours, FAQs, everything.</p></div>
-          <div class="step"><div class="step__num">2</div><h3 class="step__title">We train your AI in seconds</h3><p class="step__desc">Our proprietary engine builds a custom AI agent that knows your business as well as your best employee. In under 10 seconds.</p></div>
-          <div class="step"><div class="step__num">3</div><h3 class="step__title">Talk to it yourself</h3><p class="step__desc">Chat with it. Talk to it by voice. Ask it about your services, your hours, your pricing. It already knows. Now imagine every website visitor getting this same experience.</p></div>
+        <h2 class="section__title">Four steps. Frictionless.</h2>
+        <p class="section__desc">No setup calls. No onboarding forms. No rebuild.</p>
+        <div class="flow">
+          <div class="flow__step"><div class="flow__num">1</div><h3 class="flow__title">See it learn</h3><p class="flow__desc">Type your URL — watch it learn your business and start answering like you would, in 10 seconds.</p></div>
+          <div class="flow__step"><div class="flow__num">2</div><h3 class="flow__title">Add it to your site</h3><p class="flow__desc">Love it? Start your plan in one click — secure Stripe checkout, $19/mo. Cancel anytime.</p></div>
+          <div class="flow__step"><div class="flow__num">3</div><h3 class="flow__title">Get your code</h3><p class="flow__desc">We send your widget snippet the same day to paste in yourself — or give us registrar access and we install it for you.</p></div>
+          <div class="flow__step"><div class="flow__num">4</div><h3 class="flow__title">It goes live</h3><p class="flow__desc">Once the snippet is in, your site is talking to every visitor, 24/7. We install within 24 hours if you'd rather we handle it.</p></div>
         </div>
       </div>
     </section>
@@ -381,13 +558,79 @@
     <section class="section" id="what">
       <div class="container">
         <div class="section__eyebrow">What You Get</div>
-        <h2 class="section__title">The employee that never misses a visitor</h2>
-        <p class="section__desc">An AI agent on your website that answers questions, captures leads, and works while you sleep.</p>
+        <h2 class="section__title">A website that answers — and never misses a customer</h2>
+        <p class="section__desc">Your existing site, upgraded into a talking smart website that captures leads while you're on the job.</p>
         <div class="features">
-          <div class="feat"><h3 class="feat__title"><span class="feat__icon">💬</span> Chat with every visitor</h3><p class="feat__desc">An intelligent chat widget embedded right on your website. Trained on your actual business data — not a generic bot reading a script.</p></div>
-          <div class="feat"><h3 class="feat__title"><span class="feat__icon">🎙</span> Voice conversations on your site</h3><p class="feat__desc">Visitors can speak directly to your AI agent through their browser. No phone number needed — just click and talk.</p></div>
-          <div class="feat"><h3 class="feat__title"><span class="feat__icon">🕐</span> Available 24/7/365</h3><p class="feat__desc">Nights, weekends, holidays — your AI agent is always on. Every visitor gets an instant, informed response the moment they land on your site.</p></div>
-          <div class="feat"><h3 class="feat__title"><span class="feat__icon">🧠</span> Knows your business deeply</h3><p class="feat__desc">Built from your actual website content — services, pricing, hours, service areas, FAQs, specialties. It answers the way you would.</p></div>
+          <div class="feat"><h3 class="feat__title"><span class="feat__icon" aria-hidden="true">💬</span> Chat with every visitor</h3><p class="feat__desc">A smart chat widget right on your website. Trained on your actual business — not a generic bot reading a script.</p></div>
+          <div class="feat"><h3 class="feat__title"><span class="feat__icon" aria-hidden="true">🎙</span> Voice conversations on your site</h3><p class="feat__desc">Visitors can speak to your site through their browser. No phone number needed — just click and talk.</p></div>
+          <div class="feat"><h3 class="feat__title"><span class="feat__icon" aria-hidden="true">🕐</span> Available 24/7/365</h3><p class="feat__desc">Nights, weekends, holidays — always on. Every visitor gets an instant, informed answer the moment they land.</p></div>
+          <div class="feat"><h3 class="feat__title"><span class="feat__icon" aria-hidden="true">🛡️</span> It won't make things up</h3><p class="feat__desc">It only answers from what's on your website — no invented prices, no promises you didn't make. It knows your site cold.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="trust">
+      <div class="container">
+        <p class="trust__quote">The best proof isn't a testimonial — it's hearing <em>your own website</em> answer a real customer question, correctly, in 10 seconds.</p>
+        <p class="trust__demoline">That's exactly what the demo above does. Don't take our word for it — type your URL and watch.</p>
+      </div>
+    </div>
+
+    <!-- LANDING PRICING -->
+    <section class="section section--alt" id="pricing-lp">
+      <div class="container">
+        <div class="pricing__header">
+          <h2 class="pricing__title">Simple pricing. One booked job pays for the year.</h2>
+          <p class="pricing__sub">No setup fee. No contract. Cancel anytime in one click.</p>
+        </div>
+        <p class="pricing__anchor">A receptionist costs <b>$2,000+/mo</b>. A missed after-hours customer costs you the <b>whole job</b>. AgentCopyAI costs <b>$19</b>.</p>
+        <div class="pricing__grid pricing__grid--two">
+          <div class="plan">
+            <div class="plan__name">Talking Website</div>
+            <div class="plan__commitment">Your existing site, upgraded</div>
+            <div class="plan__price-row"><span class="plan__price">$19</span><span class="plan__period">/mo</span></div>
+            <div class="plan__daily">about 63¢ a day</div>
+            <div class="plan__divider"></div>
+            <ul class="plan__perks">
+              <li class="plan__perk">24/7 AI chat + voice on your website</li>
+              <li class="plan__perk">Trained on your own business</li>
+              <li class="plan__perk">Answers services, hours &amp; pricing</li>
+              <li class="plan__perk">No setup fee · cancel anytime</li>
+            </ul>
+            <button class="plan__btn plan__btn--outline" onclick="startCheckout('talking')">Add this to my site →</button>
+          </div>
+          <div class="plan plan--featured">
+            <div class="plan__badge">Most Popular</div>
+            <div class="plan__name">+ Scheduling</div>
+            <div class="plan__commitment">Let it book the job, not just answer</div>
+            <div class="plan__price-row"><span class="plan__price">$29</span><span class="plan__period">/mo</span></div>
+            <div class="plan__daily">about 97¢ a day · just +$10</div>
+            <div class="plan__divider"></div>
+            <ul class="plan__perks">
+              <li class="plan__perk">Everything in Talking Website</li>
+              <li class="plan__perk">Visitors book appointments in chat</li>
+              <li class="plan__perk">Request estimates automatically</li>
+              <li class="plan__perk">No setup fee · cancel anytime</li>
+            </ul>
+            <button class="plan__btn plan__btn--primary" onclick="startCheckout('scheduling')">Add booking — +$10/mo →</button>
+          </div>
+        </div>
+        <p class="pricing__guarantee"><strong>Cancel in one click</strong> — no contract, no call to cancel. Keep it only if it earns its keep.</p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section__eyebrow">Questions</div>
+        <h2 class="section__title">The quick answers</h2>
+        <p class="section__desc">Everything a busy owner wants to know before saying yes.</p>
+        <div class="faq">
+          <div class="faq__item"><div class="faq__q">Will this work with my current website?</div><div class="faq__a">Yes — Wix, Squarespace, WordPress, GoDaddy, anything. One line of code, or we add it for you. You keep your site exactly as it is. No rebuild.</div></div>
+          <div class="faq__item"><div class="faq__q">Can it make things up?</div><div class="faq__a">No. It only answers from what's on your website — no invented prices, no false promises.</div></div>
+          <div class="faq__item"><div class="faq__q">What does it cost to keep running?</div><div class="faq__a">$19/mo for the talking website, or $29/mo to add appointment and estimate scheduling. Billed securely through Stripe. Cancel anytime — no contract, no setup fee.</div></div>
+          <div class="faq__item"><div class="faq__q">Do I have to do anything technical?</div><div class="faq__a">No. Pay in one click, and we send your code snippet the same day to paste in yourself — or give us registrar access and we install it for you within 24 hours.</div></div>
+          <div class="faq__item"><div class="faq__q">How does the scheduling add-on work?</div><div class="faq__a">For $29/mo we connect your calendar for you, so visitors can book appointments and request estimates right in the chat. We wire it in — you don't lift a finger.</div></div>
         </div>
       </div>
     </section>
@@ -395,24 +638,21 @@
     <section class="bottom-cta" id="try">
       <div class="container">
         <h2 class="bottom-cta__title">Still skeptical? Good. Try it.</h2>
-        <p class="bottom-cta__desc">10 seconds. No signup. No credit card. Just your website URL and a little curiosity.</p>
+        <p class="bottom-cta__desc">10 seconds. Free. No signup, no card. Just your website URL and a little curiosity.</p>
         <div class="ip__card">
           <div class="ip__field">
-            <label class="ip__label" for="bottom-company-input">Business Name</label>
-            <input class="ip__input" id="bottom-company-input" type="text" placeholder="ScaleLocal" autocomplete="organization" />
+            <label class="ip__label" for="bottom-url-input">Enter your website — watch it learn your business in 10 seconds</label>
+            <input class="ip__input" id="bottom-url-input" type="text" placeholder="yourbusiness.com" autocomplete="url" aria-describedby="bottom-url-error" onkeypress="if(event.key==='Enter')handleDemoRequest('bottom')" />
+            <p id="bottom-url-error" role="alert" aria-live="assertive" style="display:none;color:var(--error);font-size:.78rem;margin-top:6px;line-height:1.4;">Please enter a valid website URL — include a domain extension like .com, .net, or .org.</p>
           </div>
-          <div class="ip__field">
-            <label class="ip__label" for="bottom-url-input">Website URL</label>
-            <input class="ip__input" id="bottom-url-input" type="text" placeholder="scalelocal.net" autocomplete="url" onkeypress="if(event.key==='Enter')handleDemoRequest('bottom')" />
-            <p id="bottom-url-error" style="display:none;color:#ef4444;font-size:.75rem;margin-top:6px;line-height:1.4;">Please enter a valid website URL — must include a domain extension like .com, .net, .org, etc.</p>
-          </div>
-          <button class="ip__btn" onclick="handleDemoRequest('bottom')">Build My AI Agent →</button>
-          <p class="ip__note">No signup. No credit card. See it in 10 seconds.</p>
+          <button class="ip__btn" onclick="handleDemoRequest('bottom')">Try it out now →</button>
+          <p class="ip__note">Free demo. No signup, no card to try it. Watch it learn your business in 10 seconds.</p>
         </div>
       </div>
     </section>
+    </main>
 
-    <footer class="footer"><div class="container"><p class="footer__text">&copy; 2026 AgentCopyAI &middot; AI technology by <a href="https://scalelocal.net" target="_blank">ScaleLocal</a></p></div></footer>
+    <footer class="footer"><div class="container"><p class="footer__text">&copy; 2026 AgentCopyAI &middot; Turn your website into one that talks.</p></div></footer>
   </div>
 
   <!-- AGENT DEMO PAGE -->
@@ -465,9 +705,9 @@
                 <div class="chat-zone-cta__bubble">
                   <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="18" cy="18" r="18" fill="var(--accent-light)"/><path d="M10 13.5C10 12.12 11.12 11 12.5 11h11C24.88 11 26 12.12 26 13.5v7C26 21.88 24.88 23 23.5 23H20l-4 3v-3h-3.5C11.12 23 10 21.88 10 20.5v-7z" fill="var(--accent)" opacity="0.85"/></svg>
                 </div>
-                <div class="chat-zone-cta__prompt" id="agent-prompt-text">Your AI agent is ready</div>
+                <div class="chat-zone-cta__prompt" id="agent-prompt-text">Your website is ready to talk</div>
                 <div class="chat-zone-cta__instruction">
-                  Look for the <strong>chat bubble</strong> in the <strong>bottom-right corner</strong> of this page — tap it to start the conversation. Hit the <strong>phone icon</strong> to talk by voice.
+                  Tap the <strong>chat bubble</strong> at the bottom-right to start talking — by text or voice. Ask it anything a real customer would.
                 </div>
                 <div class="chat-zone-cta__arrow">
                   <svg width="22" height="48" viewBox="0 0 22 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 2 Q18 16 11 30 Q7 38 14 44" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" fill="none" stroke-dasharray="4 3"/><path d="M10 40 L14 44 L18 40" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
@@ -482,61 +722,51 @@
           </div>
         </div>
 
+        <div class="peakcta">
+          <h2 class="peakcta__title">This is your business, answered.</h2>
+          <p class="peakcta__sub">That's your own website talking. Add it to your real site and it answers every customer, 24/7.</p>
+          <button class="peakcta__btn" onclick="startCheckout('talking')">Add this to my site — $19/mo →</button>
+          <p class="peakcta__note">Secure Stripe checkout · About 63¢ a day · Cancel in one click</p>
+        </div>
+
         <div class="pricing" id="demo-pricing">
           <div class="pricing__header">
             <h2 class="pricing__title">Keep it running on your website</h2>
-            <p class="pricing__sub">You just saw what it can do. Here's what it costs to have it working for you 24/7.</p>
+            <p class="pricing__sub">One booked job pays for the year. No setup fee, no contract, cancel anytime.</p>
           </div>
-          <div class="pricing__grid">
+          <p class="pricing__anchor">A receptionist costs <b>$2,000+/mo</b>. A missed after-hours customer costs you the <b>whole job</b>. This costs <b>$19</b>.</p>
+          <div class="pricing__grid pricing__grid--two">
             <div class="plan">
-              <div class="plan__name">Starter</div>
-              <div class="plan__commitment">Month-to-month</div>
-              <div class="plan__price-row"><span class="plan__price">$149</span><span class="plan__period">/mo</span></div>
-              <div class="plan__setup">+ $149 one-time setup</div>
+              <div class="plan__name">Talking Website</div>
+              <div class="plan__commitment">Your existing site, upgraded</div>
+              <div class="plan__price-row"><span class="plan__price">$19</span><span class="plan__period">/mo</span></div>
+              <div class="plan__daily">about 63¢ a day</div>
               <div class="plan__divider"></div>
               <ul class="plan__perks">
-                <li class="plan__perk">AI chat + voice on your website</li>
-                <li class="plan__perk">Trained on your business data</li>
-                <li class="plan__perk">Cancel anytime</li>
+                <li class="plan__perk">24/7 AI chat + voice on your website</li>
+                <li class="plan__perk">Trained on your own business</li>
+                <li class="plan__perk">Answers services, hours &amp; pricing</li>
+                <li class="plan__perk">No setup fee · cancel anytime</li>
               </ul>
-              <button class="plan__btn plan__btn--outline" onclick="openModal('starter')">Get Started</button>
+              <button class="plan__btn plan__btn--outline" onclick="startCheckout('talking')">Add this to my site →</button>
             </div>
             <div class="plan plan--featured">
               <div class="plan__badge">Most Popular</div>
-              <div class="plan__name">Growth</div>
-              <div class="plan__commitment">6-month commitment</div>
-              <div class="plan__price-row"><span class="plan__price">$149</span><span class="plan__period">/mo</span></div>
-              <div class="plan__setup"><s>$149 setup</s> &nbsp;Free setup</div>
+              <div class="plan__name">+ Scheduling</div>
+              <div class="plan__commitment">Let it book the job, not just answer</div>
+              <div class="plan__price-row"><span class="plan__price">$29</span><span class="plan__period">/mo</span></div>
+              <div class="plan__daily">about 97¢ a day · just +$10</div>
               <div class="plan__divider"></div>
               <ul class="plan__perks">
-                <li class="plan__perk">Everything in Starter</li>
-                <li class="plan__perk">$0 setup — save $149</li>
-                <li class="plan__perk">Priority support</li>
+                <li class="plan__perk">Everything in Talking Website</li>
+                <li class="plan__perk">Visitors book appointments in chat</li>
+                <li class="plan__perk">Request estimates automatically</li>
+                <li class="plan__perk">No setup fee · cancel anytime</li>
               </ul>
-              <button class="plan__btn plan__btn--primary" onclick="openModal('growth')">Get Started</button>
-            </div>
-            <div class="plan">
-              <div class="plan__name">Scale</div>
-              <div class="plan__commitment">12-month commitment</div>
-              <div class="plan__price-row"><span class="plan__price">$149</span><span class="plan__period">/mo</span></div>
-              <div class="plan__setup"><s>$149 setup</s> &nbsp;Free setup + 12th month free</div>
-              <div class="plan__divider"></div>
-              <ul class="plan__perks">
-                <li class="plan__perk">Everything in Growth</li>
-                <li class="plan__perk">Month 12 is on us — save $298</li>
-                <li class="plan__perk">Dedicated onboarding</li>
-              </ul>
-              <button class="plan__btn plan__btn--outline" onclick="openModal('scale')">Get Started</button>
+              <button class="plan__btn plan__btn--primary" onclick="startCheckout('scheduling')">Add booking — +$10/mo →</button>
             </div>
           </div>
-          <p class="pricing__note"><strong>Launch offer:</strong> Your first payment becomes a credit toward any ScaleLocal Starter plan if you upgrade within 30 days.</p>
-        </div>
-
-        <div class="upsell">
-          <div class="upsell__eyebrow">Need more?</div>
-          <h3 class="upsell__title">Want it answering your phone too?</h3>
-          <p class="upsell__desc">Our AI Receptionist picks up every inbound call and text — books appointments, answers questions, and routes urgent calls. Starting at $497/mo. Your website agent is included free.</p>
-          <a href="https://scalelocal.net" target="_blank" class="upsell__link">Explore ScaleLocal services →</a>
+          <p class="pricing__guarantee"><strong>Cancel in one click</strong> — no contract, no call to cancel. Keep it only if it earns its keep.</p>
         </div>
       </div>
 
@@ -546,30 +776,32 @@
         <a href="/" class="btn">← Back to home</a>
       </div>
 
-      <div class="demo-footer">Built by <a href="/">AgentCopyAI</a> · AI technology by <a href="https://scalelocal.net" target="_blank">ScaleLocal</a></div>
+      <div class="demo-footer">Built by <a href="/">AgentCopyAI</a> · Turn your website into one that talks.</div>
     </div>
   </div>
 
   <!-- SIGNUP MODAL -->
   <div class="modal-overlay" id="signup-modal">
-    <div class="modal">
-      <button class="modal__close" onclick="closeModal()">&#x2715;</button>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal__close" onclick="closeModal()" aria-label="Close">&#x2715;</button>
       <div id="modal-form-view">
-        <h2 class="modal__title">Activate your AI agent</h2>
-        <p class="modal__sub">Fill this out and we'll have your agent live on your website within 24 hours.</p>
-        <div class="modal__plan-tag" id="modal-plan-tag">Growth — $149/mo</div>
-        <div class="modal__field"><label class="modal__label" for="modal-biz">Business Name</label><input class="modal__input" id="modal-biz" aria-label="Business Name" type="text" placeholder="Joe's Plumbing" /></div>
-        <div class="modal__field"><label class="modal__label" for="modal-name">Your Name</label><input class="modal__input" id="modal-name" aria-label="Your Name" type="text" placeholder="Joe Smith" /></div>
-        <div class="modal__field"><label class="modal__label" for="modal-email">Email Address</label><input class="modal__input" id="modal-email" aria-label="Email Address" type="email" placeholder="joe@joesplumbing.com" /></div>
-        <div class="modal__field"><label class="modal__label" for="modal-phone">Phone Number</label><input class="modal__input" id="modal-phone" aria-label="Phone Number" type="tel" placeholder="(978) 555-0123" /></div>
-        <button class="modal__submit" id="modal-submit" onclick="submitSignup()">Activate My AI Agent</button>
-        <p class="modal__disclaimer">No payment collected now. We'll reach out within 24 hours to get you set up and answer any questions.</p>
+        <h2 class="modal__title" id="modal-title">Add it to your site</h2>
+        <p class="modal__sub">Drop your details below and we'll send your secure Stripe checkout link and your code snippet the same day. Prefer we install it? Give us registrar access and we'll have it live within 24 hours.</p>
+        <div class="modal__plan-tag" id="modal-plan-tag">Talking Website — $19/mo</div>
+        <div class="modal__field"><label class="modal__label" for="modal-biz">Business Name</label><input class="modal__input" id="modal-biz" type="text" placeholder="Joe's Plumbing" /></div>
+        <div class="modal__field"><label class="modal__label" for="modal-name">Your Name</label><input class="modal__input" id="modal-name" type="text" placeholder="Joe Smith" /></div>
+        <div class="modal__field"><label class="modal__label" for="modal-email">Email Address</label><input class="modal__input" id="modal-email" type="email" placeholder="joe@joesplumbing.com" /></div>
+        <div class="modal__field"><label class="modal__label" for="modal-phone">Phone Number</label><input class="modal__input" id="modal-phone" type="tel" placeholder="(978) 555-0123" /></div>
+        <div class="modal__field"><label class="modal__label" for="modal-platform">Where's your website? (so we can add the widget)</label><input class="modal__input" id="modal-platform" type="text" placeholder="WordPress, Wix, Squarespace, GoDaddy…" /></div>
+        <p id="modal-error" role="alert" aria-live="assertive" style="display:none;color:var(--error);font-size:.78rem;margin:4px 0 0;">Please fill in your business, name, email, and phone.</p>
+        <button class="modal__submit" id="modal-submit" onclick="submitSignup()">Send my checkout link →</button>
+        <p class="modal__disclaimer">$19/mo via Stripe ($29 with scheduling). We'll email your checkout link and code snippet the same day. Cancel anytime, one click.</p>
       </div>
       <div id="modal-success-view" style="display:none;">
         <div class="modal__success">
-          <div class="modal__success-icon">🎉</div>
+          <div class="modal__success-icon" aria-hidden="true">🎉</div>
           <h2 class="modal__success-title">You're in.</h2>
-          <p class="modal__success-desc">Check your email — we'll have your AI agent live on your website within 24 hours. Welcome aboard.</p>
+          <p class="modal__success-desc">Check your email — we'll send your Stripe checkout link and your code snippet the same day. Once it's in, your website starts talking to every visitor. Welcome aboard.</p>
         </div>
       </div>
     </div>
@@ -578,9 +810,11 @@
   <script>
     (function(){var r=sessionStorage.redirect;delete sessionStorage.redirect;if(r&&r!==location.href){history.replaceState(null,null,r)}else{var q=window.location.search;if(q.indexOf('?/')===0){var d=q.slice(2).split('&').map(function(s){return s.replace(/~and~/g,'&')});history.replaceState(null,null,'/'+d[0]+(d.length>1?'?'+d.slice(1).join('&'):'')+window.location.hash)}}})();
 
-    var CONFIG={WORKER_URL:'https://agentcopy-api.vercel.app',GHL_WIDGET_ID:'69c34fd013ad14bdd250aace',GHL_LOCATION_ID:'yJJywGNGFHkp8aQ5UtEE'};
+    var CONFIG={WORKER_URL:'https://agentcopy-api.vercel.app',GHL_WIDGET_ID:'69c34fd013ad14bdd250aace',GHL_LOCATION_ID:'yJJywGNGFHkp8aQ5UtEE',
+      /* Paste your Stripe Payment Link URLs below. Until set, the buttons open the contact form as a safe fallback. */
+      STRIPE_LINK_19:'https://buy.stripe.com/bJeaEY7xh4fte7qcwt3Je0M',STRIPE_LINK_29:'https://buy.stripe.com/aFa9AUaJth2fd3mbsp3Je0N'};
 
-    function getRoute(){var p=window.location.pathname;var m=p.match(/^\/agent\/(.+)\/?$/);if(m)return{page:'agent',slug:decodeURIComponent(m[1])};return{page:'landing'}}
+    function getRoute(){var p=window.location.pathname;var m=p.match(/^\/(?:agent|site-agent)\/(.+?)\/?$/);if(m)return{page:'agent',slug:decodeURIComponent(m[1])};return{page:'landing'}}
 
     function init(){var route=getRoute();if(route.page==='agent'){document.getElementById('nav-links-landing').style.display='none';document.getElementById('nav-cta').style.display='none';showPage('agent-page');loadAgent(route.slug)}else{showPage('landing-page');initObserver()}}
 
@@ -620,7 +854,7 @@
 }
 
     async function loadAgent(slug){var loading=document.getElementById('agent-loading');var result=document.getElementById('agent-result');var errorEl=document.getElementById('agent-error');var t0=Date.now();var tldMatch=slug.match(/^(.+)-(net|org|co|io|biz|us|info|dev|ai|app)$/i);var displaySlug=tldMatch?tldMatch[1]:slug;var displayName=displaySlug.split('-').map(function(w){return w.charAt(0).toUpperCase()+w.slice(1)}).join(' ');document.title=displayName+' — AI Demo | AgentCopyAI';try{var apiPromise;if(CONFIG.WORKER_URL){apiPromise=fetch(CONFIG.WORKER_URL+'/api/create-agent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({slug:slug})}).then(function(r){return r.json()}).catch(function(){return fallbackData(slug)})}else{apiPromise=Promise.resolve(fallbackData(slug))}await animateStep('step-scrape',1400);await animateStep('step-places',1100);await animateStep('step-agent',1200);// Hold on "Going live" until the API actually resolves
-var data=await apiPromise;await animateStep('step-ready',300);var buildTime=data.buildTime||((Date.now()-t0)/1000).toFixed(1);loading.style.display='none';result.style.display='block';result.style.animation='fadeIn 0.4s ease-out both';var name=data.name||displayName;var sourceUrl=data.sourceUrl||displaySlug+'.com';document.getElementById('agent-source-url').textContent=sourceUrl;document.getElementById('agent-biz-name').innerHTML='<em>'+name+'</em> — your AI agent is live';document.getElementById('agent-showcase-desc').innerHTML='This AI was just trained on <strong>'+name+'\'s</strong> website. It knows the services, hours, and everything in between. Go ahead — ask it anything a customer would.';document.getElementById('agent-info-name').textContent=name;document.getElementById('agent-info-url').textContent=sourceUrl;document.getElementById('agent-build-time').textContent=buildTime;var hasPlaces=false;if(data.rating){document.getElementById('agent-info-rating').style.display='flex';document.getElementById('agent-rating-text').textContent='\u2605 '+data.rating+(data.reviewCount?' ('+data.reviewCount+' reviews)':'');hasPlaces=true}if(data.address){document.getElementById('agent-info-address').style.display='flex';document.getElementById('agent-address-text').textContent=data.address;hasPlaces=true}if(data.phone){document.getElementById('agent-info-phone').style.display='flex';document.getElementById('agent-phone-text').textContent=data.phone;hasPlaces=true}if(data.hours){document.getElementById('agent-info-hours').style.display='flex';document.getElementById('agent-hours-text').textContent=data.hours;hasPlaces=true}if(!hasPlaces){var learned=document.getElementById('agent-info-learned');var list=document.getElementById('agent-learned-list');var items=[];if(data.services){var svcLines=data.services.replace(/#{1,4}\s*/g,'').replace(/\[([^\]]+)\]\([^)]+\)/g,'$1').replace(/[_*`]/g,'').replace(/^\s*[-•]\s*/gm,'').split('\n').map(function(l){return l.trim()}).filter(function(l){return l.length>3&&l.length<100&&!/^https?:/i.test(l)}).slice(0,6);if(svcLines.length>0)items.push('<strong>Services:</strong> '+svcLines.join(', '))}if(data.about){var aboutClean=data.about.replace(/#{1,4}\s*/g,'').replace(/\[([^\]]+)\]\([^)]+\)/g,'$1').replace(/[_*`]/g,'').replace(/\n+/g,' ').trim().slice(0,220);if(aboutClean.length>20)items.push('<strong>About:</strong> '+aboutClean)}if(items.length>0){list.innerHTML=items.join('<br style="margin-bottom:8px;">');learned.style.display='block'}else{list.innerHTML='<span style="color:var(--text-muted);">Website scanned — services, capabilities, and company info loaded into the AI agent.</span>';learned.style.display='block'}}document.getElementById('agent-prompt-text').textContent='Talk to '+name+'\u2019s AI agent';window.__agentBizName=name;injectChatWidget()}catch(err){console.error(err);loading.style.display='none';errorEl.style.display='block'}}
+var data=await apiPromise;await animateStep('step-ready',300);var buildTime=data.buildTime||((Date.now()-t0)/1000).toFixed(1);loading.style.display='none';result.style.display='block';result.style.animation='fadeIn 0.4s ease-out both';var hdr=result.querySelector('.demo-header');var info=result.querySelector('.demo-info');var chat=result.querySelector('.demo-chat-zone');var peak=result.querySelector('.peakcta');[hdr,info,chat,peak].forEach(function(el,i){if(el){el.classList.add('fi');el.style.animationDelay=(0.08+i*0.1)+'s'}});(function(){var bt=parseFloat(buildTime)||0;var target=document.getElementById('agent-build-time');if(!target||!bt){if(target)target.textContent=buildTime;return}var start=null,dur=900;function tick(ts){if(!start)start=ts;var p=Math.min((ts-start)/dur,1);target.textContent=(bt*p).toFixed(1);if(p<1)requestAnimationFrame(tick)}requestAnimationFrame(tick)})();var name=data.name||displayName;var sourceUrl=data.sourceUrl||displaySlug+'.com';document.getElementById('agent-source-url').textContent=sourceUrl;document.getElementById('agent-biz-name').innerHTML='<em>'+name+'</em> — your website is talking';document.getElementById('agent-showcase-desc').innerHTML='We just turned <strong>'+name+'\'s</strong> own website into a talking one. It knows the services, hours, and everything in between. Go ahead — ask it anything a customer would.';document.getElementById('agent-info-name').textContent=name;document.getElementById('agent-info-url').textContent=sourceUrl;var hasPlaces=false;if(data.rating){document.getElementById('agent-info-rating').style.display='flex';document.getElementById('agent-rating-text').textContent='\u2605 '+data.rating+(data.reviewCount?' ('+data.reviewCount+' reviews)':'');hasPlaces=true}if(data.address){document.getElementById('agent-info-address').style.display='flex';document.getElementById('agent-address-text').textContent=data.address;hasPlaces=true}if(data.phone){document.getElementById('agent-info-phone').style.display='flex';document.getElementById('agent-phone-text').textContent=data.phone;hasPlaces=true}if(data.hours){document.getElementById('agent-info-hours').style.display='flex';document.getElementById('agent-hours-text').textContent=data.hours;hasPlaces=true}if(!hasPlaces){var learned=document.getElementById('agent-info-learned');var list=document.getElementById('agent-learned-list');var items=[];if(data.services){var svcLines=data.services.replace(/#{1,4}\s*/g,'').replace(/\[([^\]]+)\]\([^)]+\)/g,'$1').replace(/[_*`]/g,'').replace(/^\s*[-•]\s*/gm,'').split('\n').map(function(l){return l.trim()}).filter(function(l){return l.length>3&&l.length<100&&!/^https?:/i.test(l)}).slice(0,6);if(svcLines.length>0)items.push('<strong>Services:</strong> '+svcLines.join(', '))}if(data.about){var aboutClean=data.about.replace(/#{1,4}\s*/g,'').replace(/\[([^\]]+)\]\([^)]+\)/g,'$1').replace(/[_*`]/g,'').replace(/\n+/g,' ').trim().slice(0,220);if(aboutClean.length>20)items.push('<strong>About:</strong> '+aboutClean)}if(items.length>0){list.innerHTML=items.join('<br style="margin-bottom:8px;">');learned.style.display='block'}else{list.innerHTML='<span style="color:var(--text-muted);">Website scanned — services, capabilities, and company info loaded into the AI agent.</span>';learned.style.display='block'}}document.getElementById('agent-prompt-text').textContent=name+'’s website is ready to talk';window.__agentBizName=name;injectChatWidget()}catch(err){console.error(err);loading.style.display='none';errorEl.style.display='block'}}
 
     function animateStep(id,ms){return new Promise(function(resolve){var el=document.getElementById(id);el.classList.add('active');el.querySelector('span').textContent='\u25C9';setTimeout(function(){el.classList.remove('active');el.classList.add('done');el.querySelector('span').textContent='\u2713';resolve()},ms)})}
 
@@ -628,15 +862,28 @@ var data=await apiPromise;await animateStep('step-ready',300);var buildTime=data
 
     function injectChatWidget(){if(!CONFIG.GHL_WIDGET_ID||document.getElementById('ghl-chat-script'))return;var s=document.createElement('script');s.id='ghl-chat-script';s.src='https://beta.leadconnectorhq.com/loader.js';s.setAttribute('data-resources-url','https://beta.leadconnectorhq.com/chat-widget/loader.js');s.setAttribute('data-widget-id',CONFIG.GHL_WIDGET_ID);document.body.appendChild(s)}
 
-    var selectedPlan='';var planLabels={starter:'Starter — $149/mo + $149 setup',growth:'Growth — $149/mo · Free setup',scale:'Scale — $149/mo · Free setup + month 12 free'};
+    var selectedPlan='';var planLabels={talking:'Talking Website — $19/mo',scheduling:'+ Scheduling — $29/mo'};
 
-    function openModal(plan){selectedPlan=plan;document.getElementById('modal-plan-tag').textContent=planLabels[plan]||plan;document.getElementById('modal-form-view').style.display='block';document.getElementById('modal-success-view').style.display='none';if(window.__agentBizName)document.getElementById('modal-biz').value=window.__agentBizName;document.getElementById('signup-modal').classList.add('active');document.body.style.overflow='hidden'}
+    function startCheckout(plan){
+      var link=(plan==='scheduling')?CONFIG.STRIPE_LINK_29:CONFIG.STRIPE_LINK_19;
+      // Pass business + email as Stripe prefill when we have them
+      if(link){
+        var url=link;var params=[];
+        if(window.__agentBizName)params.push('client_reference_id='+encodeURIComponent(window.__agentBizName));
+        if(params.length)url+=(link.indexOf('?')>-1?'&':'?')+params.join('&');
+        window.location.href=url;return;
+      }
+      // Fallback: no Stripe link configured yet -> capture details, we send checkout link same day
+      openModal(plan);
+    }
 
-    function closeModal(){document.getElementById('signup-modal').classList.remove('active');document.body.style.overflow=''}
+    var __lastFocus=null;function openModal(plan){selectedPlan=plan;document.getElementById('modal-plan-tag').textContent=planLabels[plan]||plan;document.getElementById('modal-form-view').style.display='block';document.getElementById('modal-success-view').style.display='none';var errEl=document.getElementById('modal-error');if(errEl)errEl.style.display='none';if(window.__agentBizName)document.getElementById('modal-biz').value=window.__agentBizName;__lastFocus=document.activeElement;document.getElementById('signup-modal').classList.add('active');document.body.style.overflow='hidden';setTimeout(function(){var f=document.getElementById('modal-biz');if(f&&!f.value)f.focus();else document.getElementById('modal-name').focus()},60)}
 
-    document.getElementById('signup-modal').addEventListener('click',function(e){if(e.target===this)closeModal()});
+    function closeModal(){document.getElementById('signup-modal').classList.remove('active');document.body.style.overflow='';if(__lastFocus&&__lastFocus.focus)__lastFocus.focus()}
 
-    async function submitSignup(){var biz=document.getElementById('modal-biz').value.trim();var name=document.getElementById('modal-name').value.trim();var email=document.getElementById('modal-email').value.trim();var phone=document.getElementById('modal-phone').value.trim();if(!biz||!name||!email||!phone){['modal-biz','modal-name','modal-email','modal-phone'].forEach(function(id){var inp=document.getElementById(id);if(!inp.value.trim()){inp.style.borderColor='#ef4444';setTimeout(function(){inp.style.borderColor=''},1500)}});return}var btn=document.getElementById('modal-submit');btn.disabled=true;btn.textContent='Submitting...';try{await fetch(CONFIG.WORKER_URL+'/api/create-agent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({slug:'__signup__',signupData:{businessName:biz,contactName:name,email:email,phone:phone,plan:selectedPlan,source:'agentcopyai-demo-page'}})}).catch(function(){})}catch(e){}document.getElementById('modal-form-view').style.display='none';document.getElementById('modal-success-view').style.display='block';btn.disabled=false;btn.textContent='Activate My AI Agent'}
+    document.getElementById('signup-modal').addEventListener('click',function(e){if(e.target===this)closeModal()});document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.getElementById('signup-modal').classList.contains('active'))closeModal()});
+
+    async function submitSignup(){var biz=document.getElementById('modal-biz').value.trim();var name=document.getElementById('modal-name').value.trim();var email=document.getElementById('modal-email').value.trim();var phone=document.getElementById('modal-phone').value.trim();var platform=(document.getElementById('modal-platform')||{}).value;platform=platform?platform.trim():'';var errEl=document.getElementById('modal-error');if(!biz||!name||!email||!phone){if(errEl)errEl.style.display='block';['modal-biz','modal-name','modal-email','modal-phone'].forEach(function(id){var inp=document.getElementById(id);if(!inp.value.trim()){inp.setAttribute('aria-invalid','true');inp.style.borderColor='var(--error)';setTimeout(function(){inp.style.borderColor='';inp.removeAttribute('aria-invalid')},2000)}});return}if(errEl)errEl.style.display='none';var btn=document.getElementById('modal-submit');btn.disabled=true;btn.textContent='Submitting…';try{await fetch(CONFIG.WORKER_URL+'/api/create-agent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({slug:'__signup__',signupData:{businessName:biz,contactName:name,email:email,phone:phone,platform:platform,plan:selectedPlan,source:'agentcopyai-demo-page'}})}).catch(function(){})}catch(e){}document.getElementById('modal-form-view').style.display='none';document.getElementById('modal-success-view').style.display='block';btn.disabled=false;btn.textContent='Put my website live \u2192'}
 
     init();
   </script>
