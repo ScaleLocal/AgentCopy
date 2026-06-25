@@ -477,33 +477,25 @@
 
         <button class="cta__btn" id="cta-main-btn" onclick="handleCTA()">
           Get This On My Website
-          <span id="cta-plan-sub">6-Month Commitment — $149/mo · No setup fee · Save $149</span>
+          <span id="cta-plan-sub">Talking Website — $19/mo · Cancel anytime · No setup fee</span>
         </button>
         <p class="cta__urgency" id="cta-urgency"></p>
 
         <div class="cta__plans" id="cta-plans">
-          <div class="plan-row" data-plan="m2m" onclick="selectPlan('m2m')">
-            <div class="plan-row__left">
-              <div class="plan-row__radio"></div>
-              <div><div class="plan-row__name">Month-to-Month</div><div class="plan-row__commit">Cancel anytime</div></div>
+          <div class="plan-row" data-plan="talking-website" onclick="selectPlan('talking-website')">
+            <div class="plan-row__radio"></div>
+            <div class="plan-row__info">
+              <div><div class="plan-row__name">Talking Website <span class="plan-row__tag">Most Popular</span></div><div class="plan-row__commit">Cancel anytime · No setup fee · Billed monthly</div></div>
             </div>
-            <div class="plan-row__price"><div class="plan-row__mo">$149/mo</div><div class="plan-row__setup">+ $149 setup fee</div></div>
+            <div class="plan-row__price"><div class="plan-row__mo">$19/mo</div><div class="plan-row__setup"><span class="free">No setup fee</span></div></div>
           </div>
-          <div class="plan-row featured" data-plan="6mo" onclick="selectPlan('6mo')">
-            <div class="plan-row__left">
-              <div class="plan-row__radio"></div>
-              <div><div class="plan-row__name">6-Month Commitment <span class="plan-row__tag">No Setup Fee</span></div><div class="plan-row__commit">Save $149 · Billed monthly</div></div>
+          <div class="plan-row featured" data-plan="talking-website-scheduling" onclick="selectPlan('talking-website-scheduling')">
+            <div class="plan-row__radio"></div>
+            <div class="plan-row__info">
+              <div><div class="plan-row__name">Talking Website + Scheduling <span class="plan-row__tag">+$10 Upgrade</span></div><div class="plan-row__commit">Includes calendar booking · Cancel anytime · No setup fee</div></div>
             </div>
-            <div class="plan-row__price"><div class="plan-row__mo">$149/mo</div><div class="plan-row__setup"><s>$149 setup</s> <span class="free">Free</span></div></div>
+            <div class="plan-row__price"><div class="plan-row__mo">$29/mo</div><div class="plan-row__setup"><span class="free">No setup fee</span></div></div>
           </div>
-          <div class="plan-row" data-plan="12mo" onclick="selectPlan('12mo')">
-            <div class="plan-row__left">
-              <div class="plan-row__radio"></div>
-              <div><div class="plan-row__name">12-Month Commitment <span class="plan-row__tag">Best Deal</span></div><div class="plan-row__commit">No setup fee · Month 12 free</div></div>
-            </div>
-            <div class="plan-row__price"><div class="plan-row__mo">$149/mo</div><div class="plan-row__setup"><span class="free">Setup free + month 12 free</span></div></div>
-          </div>
-        </div>
 
         <div class="cta__trust">
           <span class="cta__trust-item">⚡ Live in 24 hours</span>
@@ -594,9 +586,8 @@
 
     /* ── Urgency copy — defined first, used everywhere below ── */
     var planUrgency={
-      'm2m':  '',
-      '6mo':  '⚡ Setup fee waived with 6-month commitment — save $149',
-      '12mo': '⚡ Setup fee waived + month 12 free — save $298 or more'
+      'talking-website':            '',
+      'talking-website-scheduling': '⚡ Add scheduling for just $10 more per month — prospects book directly into your calendar'
     };
     function updateUrgency(plan){
       var el=document.getElementById('cta-urgency');
@@ -605,9 +596,8 @@
 
     /* ── Plan selection ── */
     var planSubs={
-      'm2m':  'Month-to-Month — $149/mo + $149 setup fee',
-      '6mo':  '6-Month Commitment — $149/mo · No setup fee · Save $149',
-      '12mo': '12-Month Commitment — $149/mo · No setup fee · Month 12 free'
+      'talking-website':            'Talking Website — $19/mo · Cancel anytime · No setup fee',
+      'talking-website-scheduling': 'Talking Website + Scheduling — $29/mo · Cancel anytime · No setup fee'
     };
     window.selectPlan=function(plan){
       document.querySelectorAll('.plan-row').forEach(function(r){
@@ -619,7 +609,7 @@
     };
     var defaultPlan=document.querySelector('.plan-row.featured');
     if(defaultPlan) document.getElementById('cta-plan-sub').textContent=planSubs[defaultPlan.dataset.plan]||'';
-    updateUrgency(defaultPlan ? defaultPlan.dataset.plan : '6mo');
+    updateUrgency(defaultPlan ? defaultPlan.dataset.plan : 'talking-website');
 
     /* ── Route detection ── */
     function getSlug(){
@@ -731,7 +721,7 @@
     window.handleCTA=function(){
       var btn=document.getElementById('cta-main-btn');
       var sel=document.querySelector('.plan-row.selected,.plan-row.featured');
-      var plan=sel?sel.dataset.plan:'6mo';
+      var plan=sel?sel.dataset.plan:'talking-website';
 
       // Show loading state on button
       var origText=btn.querySelector('span').textContent;
@@ -752,11 +742,10 @@
       .catch(function(){
         // Fallback: direct links if API fails
         var fallback={
-          'm2m':  'https://buy.stripe.com/dRmeVe18TeU78N6aol3Je0B',
-          '6mo':  'https://buy.stripe.com/cNi9AU8Bl6nB1kEfIF3Je0C',
-          '12mo': 'https://buy.stripe.com/9B63cwbNx6nBd3m9kh3Je0D'
+          'talking-website':            'https://buy.stripe.com/bJeaEY7xh4fte7qcwt3Je0M',
+          'talking-website-scheduling': 'https://buy.stripe.com/aFa9AUaJth2fd3mbsp3Je0N'
         };
-        window.location.href=fallback[plan]||fallback['6mo'];
+        window.location.href=fallback[plan]||fallback['talking-website'];
       });
     };
 

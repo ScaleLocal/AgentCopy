@@ -196,7 +196,7 @@
     <!-- Sub -->
     <p class="hero__sub">
       Your AI agent is being configured for your business right now.
-      <strong>We'll be in touch within 24 business hours</strong> to get it live on your website — no tech work needed on your end.
+      <strong>We'll email you within 24 hours</strong> with your custom widget snippet — paste it on your site and you're live.
     </p>
 
     <!-- Plan summary card -->
@@ -205,7 +205,7 @@
         <div class="plan-card__name" id="plan-name">AI Website Agent</div>
         <div class="plan-card__desc" id="plan-desc">Month-to-month</div>
       </div>
-      <div class="plan-card__price">$249<span>/mo</span></div>
+      <div class="plan-card__price"><span id="plan-price">$19</span><span>/mo</span></div>
     </div>
 
     <!-- What happens next -->
@@ -224,7 +224,7 @@
       <div class="tl-item">
         <div class="tl-icon tl-icon--next">📞</div>
         <div class="tl-body">
-          <div class="tl-label">We reach out within 24 business hours</div>
+          <div class="tl-label">We email you within 24 hours with your snippet</div>
           <div class="tl-sub">Our team will contact you to confirm your business details and coordinate the install. No tech knowledge needed.</div>
           <div class="tl-badge tl-badge--blue">Up next</div>
         </div>
@@ -242,7 +242,7 @@
         <div class="tl-icon tl-icon--later">📈</div>
         <div class="tl-body">
           <div class="tl-label">Monthly billing begins</div>
-          <div class="tl-sub">$249 billed monthly. Cancel anytime <span id="cancel-note">after your commitment period</span>. We'll send reminders before each charge.</div>
+          <div class="tl-sub"><span id="plan-bill-price">$19</span> billed monthly. Cancel anytime <span id="cancel-note">after your commitment period</span>. We'll send reminders before each charge.</div>
         </div>
       </div>
     </div>
@@ -269,28 +269,46 @@
   (function(){
     // Read plan from URL ?plan=m2m|6mo|12mo
     var params = new URLSearchParams(window.location.search);
-    var plan = params.get('plan') || 'm2m';
+    var plan = params.get('plan') || 'talking-website';
 
     var plans = {
+      'talking-website': {
+        name: 'Talking Website',
+        price: '$19',
+        desc: 'Your existing site becomes a 24/7 AI agent · Cancel anytime',
+        cancel: 'at any time'
+      },
+      'talking-website-scheduling': {
+        name: 'Talking Website + Scheduling',
+        price: '$29',
+        desc: 'Talking Website + integrated calendar booking · Cancel anytime',
+        cancel: 'at any time'
+      },
+      // Legacy aliases — if a payment-link redirect still uses these, render as base $19 tier
       'm2m': {
-        name: 'AI Website Agent',
+        name: 'Talking Website',
+        price: '$19',
         desc: 'Month-to-month · Cancel anytime',
         cancel: 'at any time'
       },
       '6mo': {
-        name: 'AI Website Agent',
+        name: 'Talking Website',
+        price: '$19',
         desc: '6-month commitment · No setup fee',
         cancel: 'after your 6-month commitment'
       },
       '12mo': {
-        name: 'AI Website Agent',
+        name: 'Talking Website',
+        price: '$19',
         desc: '12-month commitment · No setup fee · Month 12 free',
         cancel: 'after your 12-month commitment'
       }
     };
 
-    var p = plans[plan] || plans['m2m'];
+    var p = plans[plan] || plans['talking-website'];
     document.getElementById('plan-name').textContent = p.name;
+    var pp = document.getElementById('plan-price'); if (pp) pp.textContent = p.price || '$19';
+    var pb = document.getElementById('plan-bill-price'); if (pb) pb.textContent = p.price || '$19';
     document.getElementById('plan-desc').textContent = p.desc;
     document.getElementById('cancel-note').textContent = p.cancel;
 
