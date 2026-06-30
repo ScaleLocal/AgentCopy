@@ -761,8 +761,14 @@
     }
     if ($('wwu-page2root')) $('wwu-page2root').style.animation = 'wwuShake .5s ease';
     setTimeout(()=>{
-      // Navigate to the REAL demo page — keeps the working iframe + chat widget
-      window.location.href = '/site-agent/' + (slug || '');
+      // Navigate to the REAL demo page — keeps the working iframe + chat widget.
+      // Convert the domain (e.g. "scalelocal.net") to the slug format site-agent
+      // expects (strip .com OR convert other TLDs to -net/-org/... suffix).
+      var d = (slug || '').toLowerCase();
+      d = d.replace(/^https?:\/\//,'').replace(/^www\./,'').split('/')[0];
+      var saSlug = d.replace(/\.com$/,'').replace(/\.(net|org|co|io|biz|us|info|dev|ai|app|edu|gov|me|tv|ca|uk|au)$/,'-$1');
+      saSlug = saSlug.replace(/[^a-zA-Z0-9-]+/g,'-').replace(/^-|-$/g,'');
+      window.location.href = '/site-agent/' + saSlug;
     }, 1500);
   }
 
@@ -848,7 +854,7 @@
         try {
           fetch(CONFIG.WORKER_URL+'/api/create-agent', {
             method:'POST', headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({slug:domain.replace(/\./g,'-')})
+            body:JSON.stringify({slug:(function(d){d=d.toLowerCase();return d.replace(/\.com$/,'').replace(/\.(net|org|co|io|biz|us|info|dev|ai|app|edu|gov|me|tv|ca|uk|au)$/,'-$1').replace(/[^a-zA-Z0-9-]+/g,'-').replace(/^-|-$/g,'');})(domain)})
           }).catch(()=>{});
         } catch(e){}
       }, 270);

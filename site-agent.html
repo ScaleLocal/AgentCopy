@@ -40,7 +40,7 @@
     #demo-page {display:none;}
     body.state-demo #input-page{display:none;}
     body.state-demo #demo-page {display:block;}
-    #sa-loading{display:flex;}
+    #sa-loading{display:none;}
     #sa-result {display:none;}
     body.state-result #sa-loading{display:none;}
     body.state-result #sa-result {display:block;}
@@ -678,6 +678,8 @@
     }
 
     /* ── Main demo runner ── */
+    // NOTE: Per-step loader animation removed. The WWU landing already showed
+    // the wake-up sequence — we go straight to reveal here.
     async function runDemo(slug){
       var tldM=slug.match(/^(.+)-(net|org|co|io|biz|us|info|dev|ai|app)$/i);
       var dSlug=tldM?tldM[1]:slug;
@@ -685,19 +687,14 @@
       var guessName=dSlug.split('-').map(function(w){return w[0].toUpperCase()+w.slice(1);}).join(' ');
       var hint=sessionStorage.getItem('sa-hint-'+slug)||guessName;
 
+      // Reveal immediately — no loader animation
+      document.body.classList.add('state-result');
+
       try {
-        var apiPromise=fetch(CONFIG.API+'/api/create-agent',{
+        var data = await fetch(CONFIG.API+'/api/create-agent',{
           method:'POST',headers:{'Content-Type':'application/json'},
           body:JSON.stringify({slug:slug})
         }).then(function(r){return r.json();}).catch(function(){return{};});
-
-        await animStep('sa-s1',1400);
-        await animStep('sa-s2',1100);
-        await animStep('sa-s3',1200);
-        var data=await apiPromise;
-        await animStep('sa-s4',300);
-
-        document.body.classList.add('state-result');
 
         // Update real build time stat
         var btEl=document.getElementById('stat-buildtime');
