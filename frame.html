@@ -8,25 +8,16 @@
     *{margin:0;padding:0;box-sizing:border-box;}
     html,body{width:100%;height:100%;overflow:hidden;background:#fff;}
 
-    /* Render proxied site at "real" desktop width, then scale down to fit phone.
-       This prevents the iframe from showing huge clipped desktop text. */
+    /* biz-frame fills frame.html — no scaling here. The OUTER iframe (sa-iframe
+       in site-agent.html) is what gets scaled. This makes the proxied site render
+       at the natural iPhone viewport (393px width) so the GHL widget fits properly. */
     #biz-frame-wrap{
       position:absolute;top:0;left:0;right:0;bottom:0;overflow:hidden;background:#fff;z-index:1;
     }
     #biz-frame{
       position:absolute;top:0;left:0;
-      /* Force a "tablet-ish" render so most sites use mobile/tablet breakpoints
-         while still being legible inside ~300px scaled */
-      width:520px;height:calc(100% / 0.62);  /* scale 0.62 → effective 520 * .62 = ~322px wide */
+      width:100%;height:100%;
       border:none;outline:none;background:#fff;
-      transform:scale(0.62);transform-origin:top left;
-    }
-    /* Constrain anything the GHL chat widget positions absolutely so it can't
-       overflow the phone screen */
-    chat-widget, .lc-chat-widget, [class*="ChatWidget"]{
-      max-width:100% !important;
-      right:6px !important;
-      bottom:6px !important;
     }
 
     /* Loading overlay */
