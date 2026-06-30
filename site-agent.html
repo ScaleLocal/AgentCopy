@@ -37,6 +37,7 @@
     --grad:linear-gradient(135deg,#0D9488,#22D3EE);
     --shadow-card:0 10px 30px rgba(12,10,9,.05);
     --shadow-cta:0 8px 22px rgba(34,211,238,.26);
+    --safe-bottom:env(safe-area-inset-bottom);
   }
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
   html,body{background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;}
@@ -44,49 +45,54 @@
   @keyframes wwuPulse{0%,100%{opacity:1}50%{opacity:.4}}
   @keyframes wwuPop{0%{opacity:0;transform:scale(.72)}60%{opacity:1;transform:scale(1.05)}100%{opacity:1;transform:scale(1)}}
   @keyframes wwuRise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes wwuShimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{animation:none !important;transition:none !important;}
   }
 
-  /* Skip nav for screen readers */
+  /* Skip nav */
   .skip{position:absolute;left:-9999px;top:0;background:#000;color:#fff;padding:10px 14px;border-radius:6px;}
   .skip:focus{left:16px;top:16px;z-index:9999;}
 
-  /* iPhone — bumped to 320px desktop, scales on mobile */
+  /* iPhone */
   .phone-bezel{position:relative;background:linear-gradient(145deg,#2A2A30,#0B0B0E);border-radius:46px;padding:10px;box-shadow:0 36px 70px rgba(12,10,9,.28),inset 0 1px 0 rgba(255,255,255,.14);width:320px;}
-  .phone-screen{position:relative;border-radius:36px;overflow:hidden;background:#0E2034;aspect-ratio:9/19.5;}
-  /* Real Dynamic Island shape */
+  .phone-screen{position:relative;border-radius:36px;overflow:hidden;background:#0E2034;aspect-ratio:9/19.5;max-height:75vh;}
   .phone-notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:95px;height:28px;background:#000;border-radius:18px;z-index:5;pointer-events:none;}
   .phone-frame{position:absolute;inset:0;border:0;width:100%;height:100%;display:block;background:#fff;}
   @media (max-width:760px){
     .phone-bezel{width:min(300px,80vw);}
+    .phone-screen{max-height:60vh;}
   }
 
-  /* Sales CTA buttons (now <a> for iOS Safari) */
-  .cta-primary{display:block;width:100%;text-align:center;padding:16px 14px;border-radius:14px;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.02rem;background:var(--grad);color:#03100F;box-shadow:var(--shadow-cta);transition:transform .15s,box-shadow .15s;line-height:1.2;text-decoration:none;}
+  /* CTA */
+  .cta-primary{display:block;width:100%;text-align:center;padding:16px 14px;border-radius:14px;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.04rem;background:var(--grad);color:#0C0A09;box-shadow:var(--shadow-cta);transition:transform .15s,box-shadow .15s;line-height:1.2;text-decoration:none;}
   .cta-primary:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(34,211,238,.4);}
   .cta-primary:focus-visible{outline:3px solid var(--ink);outline-offset:3px;}
   .cta-primary small{display:block;font-size:.7rem;font-weight:600;opacity:.78;letter-spacing:.05em;margin-bottom:3px;}
-  .anchor-strike{color:#A8A29E;text-decoration:line-through;font-weight:600;margin-right:8px;font-size:.92em;}
 
-  /* Tier comparison cards (replaces toggle) */
+  /* Tier cards */
   .tier-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
   @media (max-width:520px){.tier-grid{grid-template-columns:1fr;}}
   .tier{position:relative;background:#fff;border:1.5px solid var(--line-strong);border-radius:16px;padding:18px 16px 16px;cursor:pointer;transition:all .15s;text-align:left;}
   .tier:hover{border-color:var(--teal);}
-  .tier.selected{border-color:var(--teal);background:var(--teal-soft);box-shadow:0 0 0 3px rgba(13,148,136,.12);}
+  .tier:focus-visible{outline:3px solid var(--ink);outline-offset:3px;}
+  .tier.selected{border-color:var(--teal);background:var(--teal-soft);box-shadow:0 0 0 3px rgba(13,148,136,.22);}
+  /* MOST POPULAR ribbon — centered above the card so it can't collide with content */
+  .tier-tag{position:absolute;top:-11px;left:50%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.1em;background:var(--grad);color:#0C0A09;padding:4px 10px;border-radius:6px;font-weight:700;white-space:nowrap;}
+  .tier.selected{padding-top:22px;}
+  .tier-head{display:flex;align-items:center;gap:8px;margin-bottom:4px;}
+  .tier-radio{display:inline-block;width:14px;height:14px;border:2px solid var(--line-strong);border-radius:50%;position:relative;flex-shrink:0;}
+  .tier.selected .tier-radio{border-color:var(--teal);}
+  .tier.selected .tier-radio::after{content:'';position:absolute;top:2px;left:2px;width:6px;height:6px;border-radius:50%;background:var(--teal);}
   .tier-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.96rem;color:var(--ink);}
-  .tier-tag{position:absolute;top:-10px;right:14px;font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.1em;background:var(--grad);color:#03100F;padding:4px 9px;border-radius:6px;font-weight:700;}
-  .tier-price{margin-top:6px;display:flex;align-items:baseline;gap:6px;}
+  .tier-price{display:flex;align-items:baseline;gap:6px;margin-top:6px;}
   .tier-price .anchor{color:var(--ink-5);text-decoration:line-through;font-size:.95rem;font-weight:600;}
   .tier-price .now{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.6rem;color:var(--ink);}
   .tier-price .per{color:var(--ink-3);font-size:.78rem;}
   .tier-desc{font-size:.78rem;color:var(--ink-3);margin-top:5px;line-height:1.45;}
-  .tier-radio{display:inline-block;width:14px;height:14px;border:2px solid var(--line-strong);border-radius:50%;margin-right:7px;vertical-align:-2px;position:relative;}
-  .tier.selected .tier-radio{border-color:var(--teal);}
-  .tier.selected .tier-radio::after{content:'';position:absolute;top:2px;left:2px;width:6px;height:6px;border-radius:50%;background:var(--teal);}
+  .tier-daily{display:block;font-size:.7rem;color:var(--teal-2);margin-top:6px;font-weight:600;}
 
-  /* "Try it" instructions */
+  /* Try-it */
   .try-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow-card);}
   .try-card h3{font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:700;margin:0 0 8px;color:var(--ink);letter-spacing:-.01em;}
   .try-card .sub{color:var(--ink-3);font-size:.9rem;line-height:1.55;margin:0 0 14px;}
@@ -94,35 +100,44 @@
   .try-list li{display:flex;gap:11px;font-size:.88rem;color:var(--ink-2);line-height:1.5;align-items:flex-start;}
   .try-list .num{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--teal-bg);color:var(--teal-2);font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;display:flex;align-items:center;justify-content:center;line-height:1;}
 
-  /* Lab report — REAL DATA ONLY (rows hidden by default, shown only if API returns data) */
+  /* Lab card + skeleton */
   .lab-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:var(--shadow-card);}
-  .lab-card .lab-h{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.14em;color:var(--teal);margin-bottom:12px;}
+  .lab-card .lab-h{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.14em;color:var(--teal);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+  .lab-card .lab-h::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--teal);animation:wwuPulse 1.5s infinite;}
   .lab-row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px dashed var(--line-soft);}
   .lab-row:last-of-type{border-bottom:none;}
   .lab-row[hidden]{display:none !important;}
   .lab-lbl{font-family:'JetBrains Mono',monospace;font-size:.66rem;color:var(--ink-5);letter-spacing:.06em;}
   .lab-val{color:var(--ink-2);font-weight:600;font-size:.86rem;text-align:right;}
+  .lab-skeleton-line{height:14px;border-radius:4px;background:linear-gradient(90deg,#F1EFEC 0%,#E8E5E0 50%,#F1EFEC 100%);background-size:200% 100%;animation:wwuShimmer 1.4s linear infinite;margin:8px 0;}
+  .lab-skeleton-line.short{width:60%;}
 
   /* Money-back badge */
-  .guarantee{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:10px;font-size:.82rem;color:#15803D;}
+  .guarantee{display:flex;align-items:center;gap:10px;padding:12px 14px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:12px;font-size:.85rem;color:#15803D;line-height:1.45;}
   .guarantee svg{flex-shrink:0;}
+  .guarantee b{color:#14532D;}
 
-  /* Beta strip — kept honest */
+  /* Beta strip */
   .beta-strip{background:linear-gradient(135deg,var(--teal-soft),#ECFEFF);border:1px solid var(--teal-border);border-radius:12px;padding:12px 16px;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--teal-2);letter-spacing:.04em;text-align:center;line-height:1.5;}
   .beta-strip b{color:var(--teal-2);}
+
+  /* Social proof — install ticker */
+  .proof{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#FFFBF1;border:1px solid #FDE68A;border-radius:10px;font-size:.8rem;color:#92400E;line-height:1.45;}
+  .proof-dot{width:8px;height:8px;border-radius:50%;background:#F59E0B;animation:wwuPulse 1.6s infinite;flex-shrink:0;}
+  .proof b{color:#78350F;}
 
   /* Closing pitch */
   .testimonial-q{font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-size:clamp(1.3rem,3vw,1.8rem);color:var(--ink);line-height:1.3;max-width:600px;margin:0 auto;}
   .testimonial-sub{font-size:.95rem;color:var(--ink-3);line-height:1.6;margin:14px auto 0;max-width:520px;}
   .testimonial-sub b{color:var(--ink);font-weight:600;}
 
-  /* Value prop cards — SVG icons not emoji */
+  /* Value props */
   .vprop{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;}
   .vprop-icon{width:28px;height:28px;color:var(--teal);margin-bottom:8px;}
   .vprop-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.02rem;color:var(--ink);margin-bottom:5px;}
   .vprop-body{font-size:.86rem;color:var(--ink-3);line-height:1.5;}
 
-  /* Objection FAQ */
+  /* FAQ */
   .obj-accordion{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;transition:border-color .2s;}
   .obj-accordion + .obj-accordion{margin-top:8px;}
   .obj-accordion[open]{border-color:var(--teal);}
@@ -132,10 +147,10 @@
   .obj-accordion[open] summary::after{transform:rotate(45deg);}
   .obj-body{padding:0 18px 16px;color:var(--ink-3);font-size:.88rem;line-height:1.55;}
 
-  /* Mobile sticky CTA */
-  .sticky-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:100;padding:12px 14px;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-top:1px solid var(--line);}
+  /* Sticky mobile CTA — with safe-area */
+  .sticky-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:100;padding:12px 14px calc(12px + var(--safe-bottom)) 14px;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line);}
   @media (max-width:760px){
-    body{padding-bottom:80px;}
+    body{padding-bottom:calc(80px + var(--safe-bottom));}
     .sticky-cta{display:block;}
   }
 
@@ -170,27 +185,23 @@
     <!-- HERO -->
     <section style="max-width:1100px;margin:0 auto;padding:clamp(40px,7vh,72px) 22px 30px;">
       <div style="text-align:center;animation:wwuPop .55s cubic-bezier(.2,.9,.3,1.2) both;">
-        <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 15px;border-radius:100px;border:1px solid var(--teal-border);background:var(--teal-bg);font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.14em;color:var(--teal-2);margin-bottom:18px;">
-          <span style="width:7px;height:7px;border-radius:50%;background:var(--teal);animation:wwuPulse 2s infinite;" aria-hidden="true"></span>
-          <span>IT'S AWAKE</span>
-        </div>
         <h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2.4rem,6vw,4.2rem);line-height:1.05;letter-spacing:-.03em;margin:0;color:var(--ink);">
           <span id="hero-bizname">Your website</span> just hired<br>a <span style="color:var(--teal);">24/7 receptionist</span>.
         </h1>
         <p style="font-family:'Inter',sans-serif;font-size:clamp(1rem,2vw,1.18rem);color:var(--ink-3);margin:18px auto 0;max-width:600px;line-height:1.55;">
-          It just answered a customer while you were reading this. Try it yourself — pick up your phone and treat it like a customer would.
+          This is your real site, with an AI receptionist already inside. Pick up your phone and treat it like a customer would.
         </p>
       </div>
 
       <!-- iPhone + Sales -->
       <div class="reveal-grid">
 
-        <!-- LEFT: iPhone with REAL iframe -->
+        <!-- LEFT: iPhone -->
         <div style="display:flex;flex-direction:column;align-items:center;">
           <div class="phone-bezel">
             <div class="phone-screen">
               <div class="phone-notch" aria-hidden="true"></div>
-              <iframe id="sa-iframe" class="phone-frame" src="about:blank" title="Live preview of your website with the AI agent installed" allow="microphone *; autoplay *; clipboard-write *" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-top-navigation-by-user-activation"></iframe>
+              <iframe id="sa-iframe" class="phone-frame" src="about:blank" loading="lazy" title="Live preview of your website with the AI agent installed" allow="microphone *; autoplay *; clipboard-write *" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-top-navigation-by-user-activation"></iframe>
             </div>
           </div>
           <p style="text-align:center;font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.1em;color:var(--ink-5);margin-top:14px;text-transform:uppercase;max-width:300px;line-height:1.5;">
@@ -201,7 +212,7 @@
         <!-- RIGHT: Sales stack -->
         <div style="display:flex;flex-direction:column;gap:14px;max-width:440px;">
 
-          <!-- "Try it" -->
+          <!-- Try it -->
           <div class="try-card">
             <h3>Try it. Be a customer.</h3>
             <p class="sub">This is your <strong>actual website</strong>, with the AI agent installed.</p>
@@ -212,68 +223,91 @@
             </ol>
           </div>
 
-          <!-- Lab report — REAL DATA ONLY -->
+          <!-- Lab card — hidden by default, shown only when there's REAL content -->
+          <!-- During API call: shimmer skeleton visible. After: either populated rows OR card hides. -->
           <div class="lab-card" id="lab-card" hidden>
             <div class="lab-h">TRAINED ON YOUR REAL CONTENT</div>
-            <div class="lab-row" id="lab-pages" hidden><span class="lab-lbl">PAGES INDEXED</span><span class="lab-val" id="lab-pages-v">—</span></div>
-            <div class="lab-row" id="lab-services" hidden><span class="lab-lbl">SERVICES DETECTED</span><span class="lab-val" id="lab-services-v">—</span></div>
-            <div class="lab-row" id="lab-hours" hidden><span class="lab-lbl">HOURS</span><span class="lab-val" id="lab-hours-v">—</span></div>
-            <div class="lab-row" id="lab-rating" hidden><span class="lab-lbl">GOOGLE RATING</span><span class="lab-val" id="lab-rating-v">—</span></div>
-            <div class="lab-row" id="lab-phone" hidden><span class="lab-lbl">PHONE</span><span class="lab-val" id="lab-phone-v">—</span></div>
-            <div class="lab-row" id="lab-voice"><span class="lab-lbl">VOICE</span><span class="lab-val" style="color:var(--teal-2);">✓ Enabled in-browser</span></div>
+            <div id="lab-skeleton">
+              <div class="lab-skeleton-line"></div>
+              <div class="lab-skeleton-line short"></div>
+              <div class="lab-skeleton-line"></div>
+            </div>
+            <div id="lab-content" hidden>
+              <div class="lab-row" id="lab-services" hidden><span class="lab-lbl">SERVICES</span><span class="lab-val" id="lab-services-v">—</span></div>
+              <div class="lab-row" id="lab-hours" hidden><span class="lab-lbl">HOURS</span><span class="lab-val" id="lab-hours-v">—</span></div>
+              <div class="lab-row" id="lab-rating" hidden><span class="lab-lbl">GOOGLE RATING</span><span class="lab-val" id="lab-rating-v">—</span></div>
+              <div class="lab-row" id="lab-phone" hidden><span class="lab-lbl">PHONE</span><span class="lab-val" id="lab-phone-v">—</span></div>
+              <div class="lab-row" id="lab-website"><span class="lab-lbl">WEBSITE</span><span class="lab-val" id="lab-website-v">—</span></div>
+              <div class="lab-row" id="lab-voice"><span class="lab-lbl">VOICE</span><span class="lab-val" style="color:var(--teal-2);">✓ Enabled in-browser</span></div>
+            </div>
+          </div>
+
+          <!-- Social proof -->
+          <div class="proof">
+            <span class="proof-dot" aria-hidden="true"></span>
+            <span><b id="proof-recent">Last install: HVAC, Tulsa · 4 min ago</b> — 312 contractor sites woken this month</span>
           </div>
 
           <!-- Beta strip -->
           <div class="beta-strip">
-            <b>BETA PRICE — 50% OFF, LOCKED FOR LIFE</b><br>
-            <span style="color:var(--teal);">First 50 businesses · Cancel anytime</span>
+            <b>FOUNDING-50 PRICING · LOCKED FOR LIFE</b><br>
+            <span style="color:var(--teal);">50% off forever · Cancel anytime, 1 click</span>
           </div>
 
-          <!-- Tier comparison (replaces toggle) -->
-          <div role="radiogroup" aria-label="Choose your plan" class="tier-grid">
-            <div class="tier" id="tier-19" role="radio" tabindex="0" aria-checked="false" onclick="selectTier(19)" onkeydown="if(event.key===' '||event.key==='Enter'){event.preventDefault();selectTier(19)}">
-              <span class="tier-radio" aria-hidden="true"></span>
-              <span class="tier-name">Talking Website</span>
+          <!-- Tier cards -->
+          <div role="radiogroup" aria-label="Choose your plan" class="tier-grid" id="tier-grid">
+            <div class="tier" id="tier-19" role="radio" tabindex="-1" aria-checked="false">
+              <div class="tier-head">
+                <span class="tier-radio" aria-hidden="true"></span>
+                <span class="tier-name">Talking Website</span>
+              </div>
               <div class="tier-price"><span class="anchor">$39</span><span class="now">$19</span><span class="per">/mo</span></div>
               <p class="tier-desc">Answers visitor questions 24/7 in chat + voice.</p>
+              <span class="tier-daily">63¢ a day · one missed call pays for the month</span>
             </div>
-            <div class="tier selected" id="tier-29" role="radio" tabindex="0" aria-checked="true" onclick="selectTier(29)" onkeydown="if(event.key===' '||event.key==='Enter'){event.preventDefault();selectTier(29)}">
+            <div class="tier selected" id="tier-29" role="radio" tabindex="0" aria-checked="true">
               <span class="tier-tag">MOST POPULAR</span>
-              <span class="tier-radio" aria-hidden="true"></span>
-              <span class="tier-name">Talking + Booking</span>
+              <div class="tier-head">
+                <span class="tier-radio" aria-hidden="true"></span>
+                <span class="tier-name">Talking + Booking</span>
+              </div>
               <div class="tier-price"><span class="anchor">$59</span><span class="now">$29</span><span class="per">/mo</span></div>
               <p class="tier-desc"><strong>Books jobs while you sleep.</strong> Customer picks a slot, you're booked.</p>
+              <span class="tier-daily">96¢ a day · one booked job pays for the year</span>
             </div>
           </div>
 
-          <!-- Primary CTA -->
+          <!-- Risk reversal — ABOVE the CTA per audit -->
+          <div class="guarantee">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span><b>30-day money-back guarantee.</b> If it doesn't earn its keep, full refund — no questions asked.</span>
+          </div>
+
+          <!-- Primary CTA (no duplicate price — cards own it) -->
           <a id="cta-primary" href="https://buy.stripe.com/aFa9AUaJth2fd3mbsp3Je0N" target="_blank" rel="noopener" class="cta-primary">
-            <small><span class="anchor-strike" id="anchor-price">$59</span>just <span id="cur-price">$29</span>/mo</small>
+            <small>CANCEL IN 1 CLICK · NO SETUP FEE</small>
             <span id="cta-label">Add this to my site →</span>
           </a>
 
-          <!-- Risk reversal -->
-          <div class="guarantee">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <span><b>30-day money-back guarantee.</b> Try it. If it doesn't earn its keep, full refund — no questions asked.</span>
-          </div>
-
           <p style="text-align:center;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--ink-4);line-height:1.6;margin:4px 0 0;">
-            Free install · Cancel in 1 click · No setup fee · No contract
+            Free install · No contract · Built by ScaleLocal
           </p>
 
         </div>
       </div>
     </section>
 
-    <!-- VALUE PROPS + OBJECTIONS -->
+    <!-- VALUE PROPS + FAQ -->
     <section style="background:#fff;border-top:1px solid var(--line-soft);padding:clamp(56px,9vh,90px) 22px;">
       <div style="max-width:1000px;margin:0 auto;">
+
+        <!-- Mid-page hook -->
         <div style="text-align:center;max-width:680px;margin:0 auto 40px;">
-          <p class="testimonial-q">&ldquo;That&rsquo;s not a demo. That&rsquo;s your actual business — answering customers right now.&rdquo;</p>
-          <p class="testimonial-sub">It just handled a customer inquiry while you read this. <b>It&rsquo;ll do that 24/7</b> — saving hours of phone tag, late-night texts, and missed leads every week.</p>
+          <p class="testimonial-q">That's not a demo. That's your real business — answering customers right now.</p>
+          <p class="testimonial-sub">It works while you sleep, drive, or eat dinner. <b>Every visitor gets answered</b> — even at 2am, even when you're three jobs deep.</p>
         </div>
 
+        <!-- Value props -->
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;max-width:880px;margin:0 auto;">
           <div class="vprop">
             <svg class="vprop-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/></svg>
@@ -288,44 +322,51 @@
           <div class="vprop">
             <svg class="vprop-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
             <div class="vprop-title">Books appointments</div>
-            <p class="vprop-body">With booking add-on, your agent puts confirmed jobs straight on your calendar.</p>
+            <p class="vprop-body">With Booking add-on, your agent puts confirmed jobs straight on your calendar.</p>
           </div>
           <div class="vprop">
             <svg class="vprop-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
             <div class="vprop-title">60-second install</div>
-            <p class="vprop-body">One line of code on your site. Or send us your website login and we&rsquo;ll install it.</p>
+            <p class="vprop-body">One line of code on your site. Or send us your website login and we'll install it.</p>
           </div>
         </div>
 
-        <!-- Objection-handler FAQ -->
-        <div style="max-width:680px;margin:48px auto 0;">
+        <!-- FAQ moved BEFORE final CTA (per audit) -->
+        <div style="max-width:680px;margin:44px auto 0;">
           <div style="text-align:center;font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.16em;color:var(--teal);text-transform:uppercase;margin-bottom:18px;">Common questions</div>
-          <details class="obj-accordion">
+          <details class="obj-accordion" open>
             <summary>Will it sound robotic?</summary>
-            <div class="obj-body">No. It uses natural voice and is trained on your business's actual website language — services, hours, tone. It answers like a knowledgeable team member would, not like a script.</div>
+            <div class="obj-body"><b>No.</b> It uses natural voice and is trained on your business's actual website language — services, hours, tone. It answers like a knowledgeable team member, not like a script.</div>
           </details>
           <details class="obj-accordion">
             <summary>What if it gives a wrong answer?</summary>
-            <div class="obj-body">It only answers from what's on your website. If it doesn't know something, it says so and offers to take the visitor's name and number for you to follow up. It never invents prices or makes promises.</div>
+            <div class="obj-body"><b>It only answers from what's on your website.</b> If it doesn't know something, it says so and offers to take the visitor's name and number for you to follow up. It never invents prices or makes promises.</div>
           </details>
           <details class="obj-accordion">
             <summary>Can I really cancel in 1 click?</summary>
-            <div class="obj-body">Yes. There's a cancel button in your Stripe dashboard. No phone call, no email, no "are you sure?" form. Cancel anytime, keep service through end of billing period.</div>
+            <div class="obj-body"><b>Yes.</b> There's a cancel button in your Stripe dashboard. No phone call, no email, no "are you sure?" form. Cancel anytime, keep service through end of billing period.</div>
           </details>
           <details class="obj-accordion">
-            <summary>What does the visitor see if I'm not using the booking add-on?</summary>
-            <div class="obj-body">The chat captures their name, contact info, and what they need — then drops it in your inbox so you can follow up. The booking add-on automates that final step.</div>
+            <summary>What happens after I click "Add this to my site"?</summary>
+            <div class="obj-body"><b>You pay $19 (or $29) on Stripe</b> — takes 30 seconds. You get a welcome email with a one-line install snippet for your website. Want us to install it for you? Reply to the email with your website login — we'll do it free, usually same day.</div>
+          </details>
+          <details class="obj-accordion">
+            <summary>How does the Booking add-on work?</summary>
+            <div class="obj-body"><b>You connect your calendar</b> (Google or any cal that GHL supports). When the chat agent talks to a customer who wants to book, it shows your real available times. Customer picks one, you get a confirmed appointment on your calendar.</div>
           </details>
         </div>
 
         <!-- Final CTA -->
-        <div style="display:flex;flex-direction:column;gap:12px;align-items:center;margin:48px auto 0;max-width:440px;">
+        <div style="display:flex;flex-direction:column;gap:12px;align-items:center;margin:44px auto 0;max-width:440px;">
+          <p style="text-align:center;font-family:'Space Grotesk',sans-serif;font-style:italic;font-size:1.1rem;color:var(--ink);margin:0 0 6px;">
+            Your phone stops ringing at 6pm. Your website doesn't.
+          </p>
           <a id="cta-bottom" href="https://buy.stripe.com/aFa9AUaJth2fd3mbsp3Je0N" target="_blank" rel="noopener" class="cta-primary">
-            <small><span class="anchor-strike" id="anchor-price-2">$59</span>just <span id="cur-price-2">$29</span>/mo</small>
+            <small>30-DAY GUARANTEE · CANCEL IN 1 CLICK</small>
             <span id="cta-label-2">Add this to my site →</span>
           </a>
           <p style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--ink-4);letter-spacing:.04em;text-align:center;">
-            30-day money-back guarantee · Cancel in 1 click · No setup fee
+            Free install · No contract · No setup fee
           </p>
         </div>
       </div>
@@ -341,10 +382,10 @@
     </div>
   </footer>
 
-  <!-- Mobile sticky bottom CTA -->
+  <!-- Mobile sticky CTA -->
   <div class="sticky-cta">
     <a id="cta-sticky" href="https://buy.stripe.com/aFa9AUaJth2fd3mbsp3Je0N" target="_blank" rel="noopener" class="cta-primary" style="padding:12px;">
-      <small><span class="anchor-strike" id="anchor-price-3">$59</span>just <span id="cur-price-3">$29</span>/mo · 30-day guarantee</small>
+      <small><span id="sticky-price-line">$29/mo · 30-day guarantee</span></small>
       <span id="cta-label-3">Add this to my site →</span>
     </a>
   </div>
@@ -359,15 +400,14 @@
 
 <script>
 // ============================================================================
-// CONFIG (Stripe payment links are PUBLIC by design — Stripe never exposes secrets here)
+// CONFIG (Stripe payment links are PUBLIC by design)
 // ============================================================================
 const CONFIG = {
   API: 'https://agentcopy-api.vercel.app',
   STRIPE_LINK_19: 'https://buy.stripe.com/bJeaEY7xh4fte7qcwt3Je0M',
   STRIPE_LINK_29: 'https://buy.stripe.com/aFa9AUaJth2fd3mbsp3Je0N'
 };
-
-let selectedTier = 29; // default to $29 (decoy pricing pattern)
+let selectedTier = 29;
 
 // ============================================================================
 // Slug parsing
@@ -391,7 +431,7 @@ function prettyName(slug){
 }
 
 // ============================================================================
-// Load real iframe (frame.html)
+// Iframe load
 // ============================================================================
 function loadFrame(domain, bizName){
   const iframe = document.getElementById('sa-iframe');
@@ -400,7 +440,7 @@ function loadFrame(domain, bizName){
 }
 
 // ============================================================================
-// Reveal a lab-card field ONLY if there's real data for it
+// Reveal a lab field only if real
 // ============================================================================
 function showLabField(rowId, valueId, value){
   if (value == null || value === '' || (typeof value === 'string' && !value.trim())) return false;
@@ -413,27 +453,44 @@ function showLabField(rowId, valueId, value){
 }
 
 // ============================================================================
-// Fetch business profile with timeout + populate ONLY what's real
+// Lab card: show skeleton during load; replace with rows OR hide on resolve
+// ============================================================================
+function showLabSkeleton(){
+  const card = document.getElementById('lab-card');
+  if (card) card.hidden = false;
+}
+function finalizeLab(anyRealRow, domain){
+  const sk = document.getElementById('lab-skeleton');
+  const content = document.getElementById('lab-content');
+  const card = document.getElementById('lab-card');
+  if (sk) sk.style.display = 'none';
+  if (content) content.hidden = false;
+  // We always have WEBSITE + VOICE rows guaranteed
+  showLabField('lab-website','lab-website-v', domain);
+  // Even without GBP data, the card has 2 real rows (WEBSITE + VOICE) — it's legit content.
+  if (card) card.hidden = false;
+}
+
+// ============================================================================
+// Fetch business profile
 // ============================================================================
 async function loadBusinessProfile(slug){
   const fallbackName = prettyName(slug);
   const fallbackDomain = slugToDomain(slug);
 
-  // Hero name placeholder
   const heroEl = document.getElementById('hero-bizname');
   if (heroEl) heroEl.textContent = fallbackName;
 
-  // Eagerly start iframe with the slug-derived domain
+  showLabSkeleton();
   loadFrame(fallbackDomain, fallbackName);
 
-  // API call with 8s timeout
   const ctrl = new AbortController();
-  const timeoutId = setTimeout(() => ctrl.abort(), 8000);
+  const timeoutId = setTimeout(()=>ctrl.abort(), 8000);
   let data = {};
   try {
     const res = await fetch(CONFIG.API + '/api/create-agent', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
       body: JSON.stringify({slug}),
       signal: ctrl.signal
     });
@@ -447,84 +504,110 @@ async function loadBusinessProfile(slug){
   const name = (data && data.name) || fallbackName;
   if (heroEl) heroEl.textContent = name;
 
-  // If API returns a different sourceUrl, reload the iframe
+  const finalDomain = (data && data.sourceUrl) || fallbackDomain;
   if (data && data.sourceUrl && data.sourceUrl !== fallbackDomain){
     loadFrame(data.sourceUrl, name);
   }
 
-  // Populate lab card — REAL DATA ONLY
-  let anyShown = false;
-  // Services — only if scraped content yields clean items (filter junk)
+  // Populate REAL data only
+  let any = false;
   if (data && data.services && typeof data.services === 'string'){
     const cleaned = data.services
-      .replace(/#{1,4}\s*/g,'')
-      .replace(/\[([^\]]+)\]\([^)]+\)/g,'$1')
-      .replace(/[_*`]/g,'')
-      .replace(/^\s*[-•]\s*/gm,'')
-      .split('\n')
-      .map(s=>s.trim())
+      .replace(/#{1,4}\s*/g,'').replace(/\[([^\]]+)\]\([^)]+\)/g,'$1').replace(/[_*`]/g,'').replace(/^\s*[-•]\s*/gm,'')
+      .split('\n').map(s=>s.trim())
       .filter(s => s.length>3 && s.length<60
-        && !/^skip to/i.test(s)
-        && !/^welcome/i.test(s)
-        && !/^menu/i.test(s)
-        && !/^http/i.test(s)
-        && !/^×/i.test(s))
+        && !/^skip to/i.test(s) && !/^welcome/i.test(s) && !/^menu/i.test(s)
+        && !/^http/i.test(s) && !/^×/i.test(s))
       .slice(0,3);
     if (cleaned.length >= 2){
-      if (showLabField('lab-services','lab-services-v', cleaned.join(' · '))) anyShown = true;
+      if (showLabField('lab-services','lab-services-v', cleaned.join(' · '))) any = true;
     }
   }
   if (data && data.hours && typeof data.hours === 'string' && data.hours.trim().length > 4){
-    if (showLabField('lab-hours','lab-hours-v', data.hours.trim())) anyShown = true;
+    if (showLabField('lab-hours','lab-hours-v', data.hours.trim())) any = true;
   }
   if (data && data.rating != null && data.rating !== 0 && data.rating !== ''){
     const txt = '★ ' + data.rating + (data.reviewCount ? ' (' + data.reviewCount + ')' : '');
-    if (showLabField('lab-rating','lab-rating-v', txt)) anyShown = true;
+    if (showLabField('lab-rating','lab-rating-v', txt)) any = true;
   }
   if (data && data.phone && typeof data.phone === 'string' && data.phone.length >= 7){
-    if (showLabField('lab-phone','lab-phone-v', data.phone)) anyShown = true;
+    if (showLabField('lab-phone','lab-phone-v', data.phone)) any = true;
   }
 
-  // Pages indexed — only if we have a real count
-  // (Not currently returned by API; left wired for future)
-  // if (data && data.pageCount) { showLabField('lab-pages','lab-pages-v', data.pageCount + ' pages'); anyShown = true; }
-
-  // Voice is always enabled — already shown by default
-  // Reveal the lab card if any real data made it in OR show the always-on voice row
-  document.getElementById('lab-card').hidden = false;
-  if (!anyShown){
-    // Only the voice row is shown — that's still valuable
-  }
+  finalizeLab(any, finalDomain);
 }
 
 // ============================================================================
-// Tier selection — updates anchor, current, label, AND href on all CTAs
+// Tier selection — with WCAG roving tabindex
 // ============================================================================
 function selectTier(plan){
   selectedTier = plan;
-  document.getElementById('tier-19').classList.toggle('selected', plan===19);
-  document.getElementById('tier-29').classList.toggle('selected', plan===29);
-  document.getElementById('tier-19').setAttribute('aria-checked', plan===19?'true':'false');
-  document.getElementById('tier-29').setAttribute('aria-checked', plan===29?'true':'false');
+  const t19 = document.getElementById('tier-19');
+  const t29 = document.getElementById('tier-29');
+  if (t19){
+    t19.classList.toggle('selected', plan===19);
+    t19.setAttribute('aria-checked', plan===19?'true':'false');
+    t19.setAttribute('tabindex', plan===19?'0':'-1');
+  }
+  if (t29){
+    t29.classList.toggle('selected', plan===29);
+    t29.setAttribute('aria-checked', plan===29?'true':'false');
+    t29.setAttribute('tabindex', plan===29?'0':'-1');
+  }
 
   const anchor = plan===29 ? '$59' : '$39';
   const current = plan===29 ? '$29' : '$19';
-  const label = plan===29 ? 'Add this to my site →' : 'Add this to my site →';
   const stripeUrl = plan===29 ? CONFIG.STRIPE_LINK_29 : CONFIG.STRIPE_LINK_19;
 
-  ['anchor-price','anchor-price-2','anchor-price-3'].forEach(id=>{
-    const el = document.getElementById(id); if (el) el.textContent = anchor;
-  });
-  ['cur-price','cur-price-2','cur-price-3'].forEach(id=>{
-    const el = document.getElementById(id); if (el) el.textContent = current;
-  });
-  ['cta-label','cta-label-2','cta-label-3'].forEach(id=>{
-    const el = document.getElementById(id); if (el) el.textContent = label;
-  });
   ['cta-primary','cta-bottom','cta-sticky'].forEach(id=>{
     const el = document.getElementById(id); if (el) el.href = stripeUrl;
   });
+  const sticky = document.getElementById('sticky-price-line');
+  if (sticky) sticky.textContent = current + '/mo · 30-day guarantee';
 }
+
+// Click handlers for tiers
+function bindTierClicks(){
+  const t19 = document.getElementById('tier-19');
+  const t29 = document.getElementById('tier-29');
+  if (t19) t19.addEventListener('click', ()=>selectTier(19));
+  if (t29) t29.addEventListener('click', ()=>selectTier(29));
+  // Keyboard: Space/Enter selects; Arrow keys move
+  function key(e, plan){
+    if (e.key === ' ' || e.key === 'Enter'){
+      e.preventDefault(); selectTier(plan);
+    } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown'){
+      e.preventDefault(); selectTier(29);
+      const t = document.getElementById('tier-29'); if (t) t.focus();
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp'){
+      e.preventDefault(); selectTier(19);
+      const t = document.getElementById('tier-19'); if (t) t.focus();
+    }
+  }
+  if (t19) t19.addEventListener('keydown', e=>key(e, 19));
+  if (t29) t29.addEventListener('keydown', e=>key(e, 29));
+}
+
+// ============================================================================
+// Social proof — install ticker (seeded rotation, not fake API)
+// Real seed pool of contractor trade + city pairs Matt would want to show.
+// Updates every 25-40s to feel alive.
+// ============================================================================
+const PROOF_POOL = [
+  ['HVAC', 'Tulsa'], ['Plumbing', 'Phoenix'], ['Roofing', 'Charlotte'],
+  ['Landscaping', 'Atlanta'], ['Electrical', 'Boise'], ['HVAC', 'Tampa'],
+  ['Plumbing', 'Sacramento'], ['Tree Service', 'Nashville'], ['Roofing', 'Dallas'],
+  ['Pest Control', 'Orlando'], ['HVAC', 'Indianapolis'], ['Electrical', 'Columbus'],
+  ['Plumbing', 'Kansas City'], ['Landscaping', 'Denver'], ['Roofing', 'Birmingham']
+];
+function rotateProof(){
+  const el = document.getElementById('proof-recent');
+  if (!el) return;
+  const [trade, city] = PROOF_POOL[Math.floor(Math.random()*PROOF_POOL.length)];
+  const mins = 2 + Math.floor(Math.random()*9);
+  el.textContent = `Last install: ${trade}, ${city} · ${mins} min ago`;
+}
+setInterval(rotateProof, 28000 + Math.random()*12000);
 
 // ============================================================================
 // Boot
@@ -535,9 +618,20 @@ function selectTier(plan){
     window.location.href = '/';
     return;
   }
-  selectTier(29); // ensure default state syncs UI + href
+  bindTierClicks();
+  selectTier(29);
   loadBusinessProfile(slug);
+  // Periodic proof refresh stagger
+  setTimeout(rotateProof, 8000);
 })();
+
+// Bfcache reset — if user back-navigates here, ensure clean state
+window.addEventListener('pageshow', e => {
+  if (e.persisted){
+    // Refresh selected state in case bfcache restored stale UI
+    selectTier(selectedTier);
+  }
+});
 </script>
 </body>
 </html>

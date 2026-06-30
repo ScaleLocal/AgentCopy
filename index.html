@@ -925,7 +925,15 @@
     let m;
     if ((m = h.match(/waking\/(.+?)\/?$/))){ startFlow(decodeURIComponent(m[1])); }
     else if ((m = h.match(/site-agent\/(.+?)\/?$/))){ window.location.href = '/site-agent/' + decodeURIComponent(m[1]); }
-    window.addEventListener('resize', function(){
+    // bfcache reset — if user back-navigates here, clear any stale wake-up overlay state
+    window.addEventListener('pageshow', function(e){
+      if (e.persisted){
+        try {
+          app.restart && app.restart();
+        } catch(err){}
+      }
+    });
+        window.addEventListener('resize', function(){
       if (state.page==='waking') sizeCanvas($('wwu-sparkcanvas'));
       if (state.page==='reveal') sizeCanvas($('wwu-revealcanvas'));
     });
