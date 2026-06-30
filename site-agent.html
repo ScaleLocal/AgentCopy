@@ -96,11 +96,11 @@
   .lab-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow-card);}
   .lab-card .lab-h{font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.14em;color:var(--teal);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
   .lab-card .lab-h::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--teal);animation:wwuPulse 1.5s infinite;}
-  .lab-row{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px dashed var(--line-soft);}
+  .lab-row{display:flex;flex-direction:column;gap:3px;padding:9px 0;border-bottom:1px dashed var(--line-soft);}
   .lab-row:last-of-type{border-bottom:none;}
   .lab-row[hidden]{display:none !important;}
-  .lab-lbl{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--ink-5);letter-spacing:.06em;}
-  .lab-val{color:var(--ink-2);font-weight:600;font-size:.82rem;text-align:right;}
+  .lab-lbl{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--ink-5);letter-spacing:.08em;text-transform:uppercase;display:block;}
+  .lab-val{color:var(--ink-2);font-weight:600;font-size:.88rem;text-align:left;display:block;}
   .lab-skeleton-line{height:12px;border-radius:4px;background:linear-gradient(90deg,#F1EFEC 0%,#E8E5E0 50%,#F1EFEC 100%);background-size:200% 100%;animation:wwuShimmer 1.4s linear infinite;margin:7px 0;}
   .lab-skeleton-line.short{width:60%;}
 
@@ -153,10 +153,10 @@
     <section style="max-width:1080px;margin:0 auto;padding:clamp(34px,6vh,60px) 22px 28px;">
       <div style="text-align:center;animation:wwuPop .5s ease both;">
         <h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2.2rem,5.5vw,3.8rem);line-height:1.05;letter-spacing:-.03em;margin:0;color:var(--ink);">
-          <span id="hero-bizname">Your website</span> just hired<br>a <span style="color:var(--teal);">24/7 receptionist</span>.
+          <span id="hero-bizname">Your business</span> just added a<br><span style="color:var(--teal);">live employee</span> to its website.
         </h1>
         <p style="font-family:'Inter',sans-serif;font-size:clamp(1rem,1.8vw,1.12rem);color:var(--ink-3);margin:14px auto 0;max-width:560px;line-height:1.55;">
-          That's your real site, with an AI agent already inside. Tap the chat bubble — it already knows your business.
+          Tap the chat bubble on the phone — it already knows your business and is ready to help your visitors.
         </p>
       </div>
 
@@ -198,7 +198,6 @@
               <div class="lab-skeleton-line short"></div>
             </div>
             <div id="lab-content" hidden>
-              <div class="lab-row" id="lab-services" hidden><span class="lab-lbl">SERVICES</span><span class="lab-val" id="lab-services-v">—</span></div>
               <div class="lab-row" id="lab-hours" hidden><span class="lab-lbl">HOURS</span><span class="lab-val" id="lab-hours-v">—</span></div>
               <div class="lab-row" id="lab-rating" hidden><span class="lab-lbl">GOOGLE RATING</span><span class="lab-val" id="lab-rating-v">—</span></div>
               <div class="lab-row" id="lab-phone" hidden><span class="lab-lbl">PHONE</span><span class="lab-val" id="lab-phone-v">—</span></div>
@@ -386,22 +385,6 @@ async function loadBusinessProfile(slug){
   }
 
   // REAL DATA ONLY
-  if (data && data.services && typeof data.services === 'string'){
-    // Aggressive filter — service lines must look like real services, not nav/banner/CTA copy
-    const banListRegex = /(skip to|welcome|menu|sign in|log in|home|about|contact|book a|talk to|see how|get started|learn more|click here|pick up where|left off|brings you in today|free demo|wake mine up|wake it up|read more|view all|all rights|privacy|terms|cookie|©|navigation|toggle|opens in)/i;
-    const cleaned = data.services
-      .replace(/#{1,4}\s*/g,'').replace(/\[([^\]]+)\]\([^)]+\)/g,'$1').replace(/[_*`]/g,'').replace(/^\s*[-•]\s*/gm,'')
-      .split(/[\n·•|]/).map(s=>s.trim())  // split on common separators too
-      .filter(s => s.length >= 4 && s.length <= 40   // real service names are short
-        && !banListRegex.test(s)
-        && !/^http/i.test(s)
-        && !/^×|^→|^—|^-/.test(s)
-        && !/[?!]$/.test(s)                            // exclude questions / exclamations
-        && /^[A-Z]/.test(s)                            // services usually capitalize
-        && (s.match(/\s/g) || []).length <= 5)        // exclude long sentences
-      .slice(0,3);
-    if (cleaned.length >= 2) showLabField('lab-services','lab-services-v', cleaned.join(' · '));
-  }
   if (data && data.hours && typeof data.hours === 'string' && data.hours.trim().length > 4){
     showLabField('lab-hours','lab-hours-v', data.hours.trim());
   }
