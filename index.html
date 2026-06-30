@@ -1,910 +1,891 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>WebsiteWakeUp — Your website is asleep. Wake it up in 30 seconds.</title>
-<meta name="description" content="Your website is asleep. Wake it up in 30 seconds and let it answer your customers — by chat and voice — 24/7. From $19/mo." />
-<meta property="og:title" content="WebsiteWakeUp — Wake your website up in 30 seconds" />
-<meta property="og:description" content="Turn your existing site into a 24/7 chat-and-voice agent. From $19/mo." />
-<meta property="og:url" content="https://agentcopyai.com/" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgentCopyAI — Turn Your Website Into One That Talks. $19/mo.</title>
+  <meta name="description" content="Turn your existing website into a 24/7 AI agent that answers every customer — in chat or by voice — trained on your own site. See it in 10 seconds, then keep it for $19/mo. Cancel anytime." />
+  <link rel="canonical" href="https://agentcopyai.com/" />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://agentcopyai.com/" />
+  <meta property="og:site_name" content="AgentCopyAI" />
+  <meta property="og:title" content="Turn your website into one that talks back — $19/mo" />
+  <meta property="og:description" content="Drop in your URL and watch your own site answer customers out loud in 10 seconds. Go live for $19/mo. No rebuild, no contract." />
+  <meta property="og:image" content="https://agentcopyai.com/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Turn your website into one that talks back — $19/mo" />
+  <meta name="twitter:description" content="Watch your own site answer customers in 10 seconds. Go live for $19/mo. No rebuild, no contract." />
+  <meta name="twitter:image" content="https://agentcopyai.com/og-image.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://agentcopyai.com/#org",
+        "name": "AgentCopyAI",
+        "url": "https://agentcopyai.com/",
+        "description": "AgentCopyAI turns a business's existing website into a 24/7 AI chat and voice agent trained on its own content."
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "AgentCopyAI",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "description": "An AI chat and voice agent that trains on your existing website and answers every visitor 24/7. No rebuild required.",
+        "offers": [
+          { "@type": "Offer", "name": "Talking Website", "price": "19.00", "priceCurrency": "USD", "description": "24/7 AI chat + voice trained on your website. Cancel anytime." },
+          { "@type": "Offer", "name": "Talking Website + Scheduling", "price": "29.00", "priceCurrency": "USD", "description": "Everything in Talking Website, plus visitors can book appointments and request estimates in chat." }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "Will this work with my current website?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — Wix, Squarespace, WordPress, GoDaddy, anything. One line of code, or we add it for you. You keep your site exactly as it is. No rebuild." } },
+          { "@type": "Question", "name": "Can it make things up?", "acceptedAnswer": { "@type": "Answer", "text": "No. It only answers from what is on your website — no invented prices, no false promises." } },
+          { "@type": "Question", "name": "What does it cost to keep running?", "acceptedAnswer": { "@type": "Answer", "text": "$19/mo for the talking website, or $29/mo to add appointment and estimate scheduling. Cancel anytime, no contract, no setup fee." } },
+          { "@type": "Question", "name": "Do I have to do anything technical?", "acceptedAnswer": { "@type": "Answer", "text": "No. Pay in one click, and we send your code snippet the same day to paste in yourself, or give us registrar access and we install it within 24 hours." } }
+        ]
+      }
+    ]
+  }
+  </script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%230D9488'/><stop offset='100%25' stop-color='%232563EB'/></linearGradient></defs><rect width='32' height='32' rx='8' fill='url(%23g)'/><text x='50%25' y='56%25' dominant-baseline='middle' text-anchor='middle' font-size='17' font-family='system-ui' font-weight='800' fill='white'>A</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #FAFAF9;
+      --bg-white: #FFFFFF;
+      --bg-warm: #F5F3EF;
+      --bg-accent: #0C0A09;
+      --border: #E7E5E4;
+      --border-dark: #D6D3D1;
+      --text: #0C0A09;
+      --text-secondary: #57534E;
+      --text-muted: #78716C;
+      --text-faint: #A8A29E;
+      --error: #DC2626;
+      --grad: linear-gradient(135deg, #0D9488 0%, #2563EB 100%);
+      --accent: #0D9488;
+      --accent-hover: #0F766E;
+      --accent-light: #CCFBF1;
+      --accent-border: #99F6E4;
+      --blue: #2563EB;
+      --blue-light: #EFF6FF;
+      --green: #16A34A;
+      --green-bg: #F0FDF4;
+      --green-border: #BBF7D0;
+      --radius: 8px;
+      --radius-lg: 14px;
+      --radius-xl: 20px;
+      --font: 'DM Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+    }
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='8'%20fill='%230C0A09'/%3E%3Cpolyline%20points='6,9%2011,23%2016,15.5%2021,23%2026,9'%20fill='none'%20stroke='%2322D3EE'%20stroke-width='3.4'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E">
-<style>
-  *,*::before,*::after{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{background:#FAFAF9;color:#0C0A09;font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
-  @keyframes wwuPulse{0%,100%{opacity:1}50%{opacity:.4}}
-  @keyframes wwuRise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-  @keyframes wwuGlow{0%,100%{text-shadow:0 0 22px rgba(103,232,249,.55),0 0 4px rgba(103,232,249,.4)}50%{text-shadow:0 0 40px rgba(103,232,249,.9),0 0 9px rgba(103,232,249,.6)}}
-  @keyframes wwuLive{0%,100%{box-shadow:0 0 0 1px rgba(34,211,238,.5),0 10px 26px rgba(34,211,238,.28)}50%{box-shadow:0 0 0 1px rgba(34,211,238,.8),0 12px 34px rgba(34,211,238,.5)}}
-  @keyframes wwuAurora{0%{transform:translate(-7%,-4%) scale(1.1);opacity:.45}50%{transform:translate(7%,6%) scale(1.32);opacity:.8}100%{transform:translate(-7%,-4%) scale(1.1);opacity:.45}}
-  @keyframes wwuFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
-  @keyframes wwuGlowPulse{0%,100%{opacity:.28}50%{opacity:.62}}
-  @keyframes wwuPop{0%{opacity:0;transform:scale(.72)}60%{opacity:1;transform:scale(1.05)}100%{opacity:1;transform:scale(1)}}
-  @keyframes wwuShake{0%,100%{transform:translate(0,0)}15%{transform:translate(-7px,4px)}30%{transform:translate(6px,-4px)}45%{transform:translate(-5px,3px)}60%{transform:translate(5px,-2px)}80%{transform:translate(-3px,2px)}}
-  @media (prefers-reduced-motion: reduce){*{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}
-</style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+    a { color: var(--accent-hover); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
 
+    /* ── ACCESSIBILITY ── */
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+    .skip-link { position: absolute; left: -9999px; top: 0; z-index: 2000; padding: 10px 16px; background: var(--text); color: #fff; border-radius: 0 0 8px 0; font-weight: 600; font-size: 0.85rem; }
+    .skip-link:focus { left: 0; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+    }
+
+    /* ── NAV ── */
+    .nav { position: sticky; top: 0; z-index: 100; background: rgba(250,250,249,0.9); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    .nav .container { display: flex; justify-content: space-between; align-items: center; height: 56px; }
+    .nav__logo { display: flex; align-items: center; gap: 10px; font-family: var(--font); font-weight: 700; font-size: 1rem; color: var(--text); text-decoration: none; letter-spacing: -0.01em; }
+    .nav__mark { width: 28px; height: 28px; border-radius: 7px; background: linear-gradient(135deg, var(--accent) 0%, var(--blue) 100%); color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; }
+    .nav__links { display: flex; gap: 24px; align-items: center; }
+    .nav__link { font-size: 0.84rem; font-weight: 500; color: var(--text-secondary); text-decoration: none; transition: color 0.15s; }
+    .nav__link:hover { color: var(--text); text-decoration: none; }
+    .nav__cta { padding: 7px 16px; border-radius: 7px; background: var(--grad); color: white; font-weight: 600; font-size: 0.82rem; border: none; cursor: pointer; font-family: var(--font); transition: transform 0.15s, box-shadow 0.15s, filter 0.15s; }
+    .nav__cta:hover { filter: brightness(1.06); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(37,99,235,0.25); }
+
+    /* ── HERO ── */
+    .hero { padding: 80px 0 48px; text-align: center; }
+    .hero__eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px 5px 10px; border-radius: 100px; background: var(--accent-light); border: 1px solid var(--accent-border); font-size: 0.78rem; font-weight: 600; color: var(--accent-hover); margin-bottom: 24px; }
+    .hero__eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+    .hero__title { font-family: var(--font-display); font-size: clamp(2.6rem, 6vw, 4.2rem); font-weight: 400; line-height: 1.08; letter-spacing: -0.025em; margin-bottom: 20px; color: var(--text); }
+    .hero__title em { font-style: italic; color: var(--accent); background: linear-gradient(135deg, var(--accent) 0%, var(--blue) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero__sub { font-size: 1.1rem; color: var(--text-secondary); max-width: 520px; margin: 0 auto 36px; line-height: 1.65; }
+
+    /* ── URL INPUT ── */
+    .url-bar { max-width: 520px; margin: 0 auto; background: white; border: 2px solid var(--border-dark); border-radius: 14px; padding: 10px; transition: border-color 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; gap: 8px; }
+    .url-bar:focus-within { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(13,148,136,0.1); }
+    .url-bar__row { display: flex; gap: 8px; }
+    .url-bar__input { flex: 1; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 8px; background: var(--bg); font-family: var(--font); font-size: 0.92rem; color: var(--text); outline: none; transition: border-color 0.15s; }
+    .url-bar__input:focus { border-color: var(--accent); background: white; }
+    .url-bar__input::placeholder { color: var(--text-muted); }
+    .url-bar__btn { width: 100%; padding: 11px 22px; border-radius: 8px; background: var(--text); color: white; font-family: var(--font); font-weight: 600; font-size: 0.92rem; border: none; cursor: pointer; white-space: nowrap; transition: background 0.15s; }
+    .url-bar__btn:hover { background: #292524; }
+    .url-bar__note { text-align: center; margin-top: 10px; font-size: 0.78rem; color: var(--text-muted); }
+
+    /* ── SOCIAL PROOF ── */
+    .proof { padding: 48px 0 0; text-align: center; }
+    .proof__text { font-size: 0.8rem; font-weight: 500; color: var(--text-muted); letter-spacing: 0.04em; text-transform: uppercase; }
+    .proof__logos { display: flex; gap: 32px; justify-content: center; align-items: center; margin-top: 16px; flex-wrap: wrap; font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+    .proof__item { padding: 6px 16px; border-radius: 100px; background: var(--bg-warm); border: 1px solid var(--border); }
+
+    /* ── PREVIEW (iPhone frame showing the real site + live widget) ── */
+    .preview { max-width: 880px; margin: 50px auto 0; padding: 0 24px; }
+    .preview__head { text-align:center; margin-bottom: 22px; }
+    .preview__pill { display:inline-flex; align-items:center; gap:7px; font-family: var(--font-display); font-size: 1.05rem; color: var(--text); }
+    .preview__pill .live { display:inline-flex; align-items:center; gap:6px; font-family: var(--font); font-size:0.7rem; font-weight:700; color: var(--green); background: var(--green-bg); border:1px solid var(--green-border); padding:3px 10px; border-radius:100px; }
+    .preview__pill .live::before { content:''; width:6px; height:6px; border-radius:50%; background: var(--green); animation: pulse 2s infinite; }
+    .preview__pill em { font-style:normal; color: var(--text-muted); }
+    .preview__grid { display:grid; grid-template-columns: 1fr auto 1fr; align-items:center; gap: 28px; }
+    .preview__stats { display:flex; flex-direction:column; gap: 32px; }
+    .preview__stats--r { text-align:left; }
+    .preview__stats--l { text-align:right; align-items:flex-end; }
+    .pstat__num { font-family: var(--font-display); font-size: 2.6rem; font-weight:400; line-height:1; color: var(--text); letter-spacing:-0.02em; }
+    .pstat__lbl { margin-top:8px; font-size:0.68rem; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; color: var(--text-muted); max-width: 150px; line-height:1.4; }
+    .preview__stats--r .pstat__lbl { margin-left:0; }
+    .preview__stats--l .pstat__lbl { margin-left:auto; }
+    .pstat::after { content:''; display:block; width:30px; height:2px; background: var(--border-dark); margin-top:12px; }
+    .preview__stats--l .pstat::after { margin-left:auto; }
+
+    /* iPhone frame */
+    .iphone { position:relative; width: 290px; justify-self:center; }
+    .iphone__frame { position:relative; background:#0C0A09; border-radius: 44px; padding: 11px; box-shadow: 0 24px 60px rgba(12,10,9,0.28), 0 4px 12px rgba(12,10,9,0.16); }
+    .iphone__screen { position:relative; border-radius: 34px; overflow:hidden; background:#0E2034; aspect-ratio: 9 / 19.3; }
+    .iphone__notch { position:absolute; top:9px; left:50%; transform:translateX(-50%); width: 90px; height: 22px; background:#0C0A09; border-radius: 0 0 14px 14px; z-index:5; }
+    .iphone__status { position:absolute; top:0; left:0; right:0; height:34px; display:flex; align-items:center; justify-content:space-between; padding: 9px 22px 0; font-size:0.62rem; font-weight:700; color:#fff; z-index:4; }
+    .iphone__urlbar { position:absolute; top:34px; left:14px; right:14px; height:24px; background:rgba(255,255,255,0.92); border-radius:7px; display:flex; align-items:center; justify-content:center; gap:5px; font-size:0.6rem; color:#57534E; z-index:4; }
+    .site { position:absolute; inset:0; padding: 70px 18px 0; color:#fff; background:
+      radial-gradient(circle at 80% 8%, rgba(37,99,235,0.18), transparent 45%), #0E2034; }
+    .site__logo { font-weight:800; font-size:0.95rem; letter-spacing:-0.01em; }
+    .site__logo span { color:#60A5FA; }
+    .site__menu { float:right; color:#fff; font-size:1rem; }
+    .site__eyebrow { margin-top:30px; font-size:0.5rem; font-weight:800; letter-spacing:0.08em; color:#34D399; text-transform:uppercase; }
+    .site__h1 { margin-top:8px; font-family: var(--font); font-weight:800; font-size:1.5rem; line-height:1.04; letter-spacing:-0.02em; }
+    .site__h1 b { color:#3B82F6; font-weight:800; }
+    .site__p { margin-top:12px; font-size:0.66rem; line-height:1.5; color:#CBD5E1; }
+    .site__cta { margin-top:14px; background:#2563EB; color:#fff; text-align:center; font-size:0.7rem; font-weight:700; padding:9px; border-radius:7px; }
+    /* live widget bubble on the site */
+    .site__widget { position:absolute; right:14px; bottom:16px; z-index:6; }
+    .site__widget-card { background:#fff; color:#1C1917; border-radius:12px; padding:11px 13px; font-size:0.62rem; line-height:1.4; box-shadow:0 10px 24px rgba(0,0,0,0.28); width:150px; margin-bottom:9px; position:relative; }
+    .site__widget-card .x { position:absolute; top:7px; right:9px; color:#A8A29E; font-size:0.7rem; }
+    .site__widget-btn { width:42px; height:42px; border-radius:50%; background:#2563EB; display:flex; align-items:center; justify-content:center; margin-left:auto; box-shadow:0 6px 16px rgba(37,99,235,0.4); }
+    .preview__caption { text-align:center; margin-top:24px; font-family: var(--font-display); font-style:italic; font-size:1.15rem; color: var(--text); }
+
+    @media (max-width: 760px) {
+      .preview__grid { grid-template-columns: 1fr; gap: 24px; }
+      .preview__stats { flex-direction:row; flex-wrap:wrap; justify-content:center; gap:24px 36px; text-align:center; }
+      .preview__stats--l { align-items:center; }
+      .preview__stats--l .pstat__lbl, .preview__stats--r .pstat__lbl { margin:8px auto 0; }
+      .preview__stats--l .pstat::after, .pstat::after { margin:12px auto 0; }
+      .iphone { order:-1; }
+    }
+
+    /* ── SECTIONS ── */
+    .section { padding: 80px 0; }
+    .section--alt { background: white; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .section__eyebrow { font-size: 0.74rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+    .section__title { font-family: var(--font-display); font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 400; letter-spacing: -0.015em; margin-bottom: 8px; line-height: 1.15; }
+    .section__desc { color: var(--text-secondary); font-size: 1rem; max-width: 480px; margin-bottom: 40px; }
+
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .step { background: white; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px 22px; position: relative; transition: border-color 0.2s; }
+    .step:hover { border-color: var(--accent-border); }
+    .step__num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: var(--accent-light); color: var(--accent); font-size: 0.75rem; font-weight: 700; margin-bottom: 14px; }
+    .step__title { font-weight: 700; font-size: 0.95rem; margin-bottom: 6px; }
+    .step__desc { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.55; }
+
+    .features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .feat { padding: 24px 22px; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--bg); transition: border-color 0.2s; }
+    .feat:hover { border-color: var(--accent-border); }
+    .feat__title { font-weight: 700; font-size: 0.92rem; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+    .feat__icon { font-size: 1rem; }
+    .feat__desc { font-size: 0.84rem; color: var(--text-secondary); line-height: 1.55; }
+
+    .bottom-cta { text-align: center; padding: 80px 0; }
+    .bottom-cta__title { font-family: var(--font-display); font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 400; margin-bottom: 8px; }
+    .bottom-cta__desc { color: var(--text-secondary); font-size: 1rem; max-width: 400px; margin: 0 auto 28px; }
+
+    .footer { padding: 20px 0; border-top: 1px solid var(--border); text-align: center; }
+    .footer__text { color: var(--text-muted); font-size: 0.75rem; }
+    .footer__text a { color: var(--text-secondary); font-weight: 600; }
+
+    /* ══════════════════════════════════════════
+       AGENT DEMO PAGE
+    ══════════════════════════════════════════ */
+    .demo-page { min-height: 100vh; display: flex; flex-direction: column; background: var(--bg); }
+
+    .demo-loading { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 70vh; gap: 20px; text-align: center; padding: 40px 24px; }
+    .demo-loading__icon { width: 64px; height: 64px; border-radius: 16px; background: linear-gradient(135deg, var(--accent-light) 0%, var(--blue-light) 100%); border: 1px solid var(--accent-border); display: flex; align-items: center; justify-content: center; font-size: 24px; animation: breathe 2s ease-in-out infinite; }
+    @keyframes breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+    .demo-loading__title { font-family: var(--font-display); font-size: 1.3rem; font-weight: 400; color: var(--text); }
+    .demo-loading__subtitle { font-size: 0.9rem; color: var(--text-secondary); max-width: 320px; }
+    .demo-loading__steps { display: flex; flex-direction: column; gap: 5px; font-size: 0.8rem; color: var(--text-muted); text-align: left; background: white; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px 22px; }
+    .demo-loading__step { display: flex; align-items: center; gap: 8px; font-weight: 500; transition: color 0.2s; }
+    .demo-loading__step.done { color: var(--green); }
+    .demo-loading__step.active { color: var(--accent); }
+
+    .demo-result { max-width: 1080px; margin: 0 auto; padding: 80px 24px 40px; width: 100%; }
+
+    .demo-header { text-align: center; margin-bottom: 40px; }
+    .demo-header__pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 100px; background: var(--green-bg); border: 1px solid var(--green-border); font-size: 0.72rem; font-weight: 600; color: var(--green); margin-bottom: 14px; }
+    .demo-header__pill-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+    .demo-header__title { font-family: var(--font-display); font-size: clamp(1.7rem, 4vw, 2.4rem); font-weight: 400; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 8px; }
+    .demo-header__title em { font-style: italic; color: var(--accent); }
+    .demo-header__sub { font-size: 0.95rem; color: var(--text-secondary); max-width: 440px; margin: 0 auto; line-height: 1.6; }
+    .demo-header__sub strong { color: var(--text); font-weight: 600; }
+
+    .demo-main { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 48px; }
+
+    .demo-info { background: white; border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 32px 28px; }
+    .demo-info__label { font-size: 0.68rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
+    .demo-info__name { font-family: var(--font-display); font-size: 1.4rem; margin-bottom: 4px; }
+    .demo-info__url { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 16px; }
+    .demo-info__detail { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+    .demo-info__detail-icon { font-size: 0.75rem; }
+    .demo-info__divider { height: 1px; background: var(--border); margin: 16px 0; }
+    .demo-info__built { font-size: 0.72rem; color: var(--text-muted); display: flex; align-items: center; gap: 4px; }
+    .demo-info__built .g { color: var(--green); font-weight: 600; }
+
+    .demo-chat-zone { background: white; border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 28px; display: flex; flex-direction: column; min-height: 360px; }
+    .demo-chat-zone__header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+    .demo-chat-zone__title { font-weight: 700; font-size: 0.88rem; display: flex; align-items: center; gap: 6px; }
+    .demo-chat-zone__live { display: flex; align-items: center; gap: 5px; font-size: 0.7rem; font-weight: 600; color: var(--green); }
+    .demo-chat-zone__dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+    .demo-chat-zone__body { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 12px; padding: 20px 0; }
+    .demo-chat-zone__prompt { font-size: 0.95rem; color: var(--text); font-weight: 500; }
+    .demo-chat-zone__hint { font-size: 0.82rem; color: var(--text-muted); max-width: 260px; line-height: 1.5; }
+    .demo-chat-zone__suggestions { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-top: 4px; }
+    .demo-chat-zone__suggestion { padding: 5px 12px; border-radius: 100px; font-size: 0.75rem; background: var(--bg-warm); border: 1px solid var(--border); color: var(--text-secondary); font-weight: 500; }
+    .chat-zone-cta { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; padding: 12px 0; }
+    .chat-zone-cta__bubble { width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; }
+    .chat-zone-cta__prompt { font-family: var(--font-display); font-size: 1.15rem; font-weight: 400; color: var(--text); }
+    .chat-zone-cta__instruction { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.65; max-width: 270px; }
+    .chat-zone-cta__instruction strong { color: var(--text); font-weight: 600; }
+    .chat-zone-cta__arrow { opacity: 0.5; margin: 2px 0; }
+    .demo-chat-zone__suggestion { padding: 5px 12px; border-radius: 100px; font-size: 0.75rem; background: var(--bg-warm); border: 1px solid var(--border); color: var(--text-muted); font-weight: 500; cursor: default; }
+
+    /* ── PRICING ── */
+    .pricing { margin-bottom: 48px; }
+    .pricing__header { text-align: center; margin-bottom: 32px; }
+    .pricing__title { font-family: var(--font-display); font-size: clamp(1.4rem, 3vw, 1.9rem); font-weight: 400; margin-bottom: 6px; }
+    .pricing__sub { font-size: 0.92rem; color: var(--text-secondary); }
+    .pricing__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+    .plan { background: white; border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 28px 24px; position: relative; transition: border-color 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; }
+    .plan:hover { border-color: var(--accent-border); box-shadow: 0 4px 16px rgba(13,148,136,0.06); }
+    .plan--featured { border-color: var(--accent); box-shadow: 0 4px 20px rgba(13,148,136,0.1); }
+    .plan__badge { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); padding: 3px 12px; border-radius: 100px; background: var(--accent); color: white; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap; }
+    .plan__name { font-weight: 700; font-size: 0.9rem; margin-bottom: 2px; }
+    .plan__commitment { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 14px; }
+    .plan__price-row { display: flex; align-items: baseline; gap: 3px; margin-bottom: 4px; }
+    .plan__price { font-family: var(--font-display); font-size: 2.2rem; font-weight: 400; letter-spacing: -0.02em; }
+    .plan__period { font-size: 0.82rem; color: var(--text-muted); }
+    .plan__setup { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 16px; }
+    .plan__setup s { color: var(--text-muted); }
+    .plan__divider { height: 1px; background: var(--border); margin-bottom: 14px; }
+    .plan__perks { list-style: none; margin-bottom: 20px; flex: 1; }
+    .plan__perk { font-size: 0.82rem; color: var(--text-secondary); padding: 3px 0; display: flex; align-items: flex-start; gap: 6px; }
+    .plan__perk::before { content: '\2713'; color: var(--accent); font-weight: 700; font-size: 0.78rem; margin-top: 1px; }
+    .plan__btn { display: block; width: 100%; padding: 11px; border-radius: var(--radius); font-family: var(--font); font-weight: 600; font-size: 0.88rem; text-align: center; cursor: pointer; border: none; transition: all 0.15s; text-decoration: none; }
+    .plan__btn--primary { background: var(--grad); color: white; }
+    .plan__btn--primary:hover { filter: brightness(1.06); transform: translateY(-1px); box-shadow: 0 6px 16px rgba(37,99,235,0.25); text-decoration: none; color: white; }
+    .plan__btn--outline { background: white; color: var(--text); border: 1px solid var(--border-dark); }
+    .plan__btn--outline:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+
+    .pricing__note { text-align: center; margin-top: 20px; font-size: 0.78rem; color: var(--text-muted); max-width: 500px; margin-left: auto; margin-right: auto; }
+    .pricing__note strong { color: var(--accent); font-weight: 600; }
+
+    /* ── UPSELL ── */
+    .upsell { background: linear-gradient(135deg, var(--bg-warm) 0%, white 100%); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 36px 32px; text-align: center; margin-bottom: 48px; }
+    .upsell__eyebrow { font-size: 0.72rem; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .upsell__title { font-family: var(--font-display); font-size: 1.3rem; font-weight: 400; margin-bottom: 6px; }
+    .upsell__desc { font-size: 0.88rem; color: var(--text-secondary); max-width: 440px; margin: 0 auto 20px; line-height: 1.55; }
+    .upsell__link { display: inline-flex; align-items: center; gap: 4px; font-size: 0.88rem; font-weight: 600; color: var(--blue); }
+
+    /* ── MODAL ── */
+    .modal-overlay { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(12,10,9,0.5); backdrop-filter: blur(4px); align-items: center; justify-content: center; padding: 24px; }
+    .modal-overlay.active { display: flex; }
+    .modal { background: white; border-radius: var(--radius-xl); padding: 36px 32px; max-width: 440px; width: 100%; position: relative; box-shadow: 0 24px 48px rgba(12,10,9,0.15); animation: modalIn 0.25s ease-out; }
+    @keyframes modalIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .modal__close { position: absolute; top: 16px; right: 16px; background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-muted); padding: 4px; }
+    .modal__close:hover { color: var(--text); }
+    .modal__title { font-family: var(--font-display); font-size: 1.3rem; margin-bottom: 4px; }
+    .modal__sub { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 20px; }
+    .modal__plan-tag { display: inline-block; padding: 4px 10px; border-radius: 6px; background: var(--accent-light); color: var(--accent-hover); font-size: 0.75rem; font-weight: 700; margin-bottom: 16px; }
+    .modal__field { margin-bottom: 12px; }
+    .modal__label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px; }
+    .modal__input { width: 100%; padding: 10px 13px; border: 1px solid var(--border-dark); border-radius: var(--radius); font-family: var(--font); font-size: 0.9rem; color: var(--text); outline: none; transition: border-color 0.15s; }
+    .modal__input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(13,148,136,0.1); }
+    .modal__submit { width: 100%; padding: 12px; border-radius: var(--radius); margin-top: 16px; background: var(--grad); color: white; font-family: var(--font); font-weight: 600; font-size: 0.9rem; border: none; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s, filter 0.15s; }
+    .modal__submit:hover { filter: brightness(1.06); transform: translateY(-1px); box-shadow: 0 6px 16px rgba(37,99,235,0.25); }
+    .modal__submit:disabled { opacity: 0.5; cursor: not-allowed; }
+    .modal__disclaimer { font-size: 0.72rem; color: var(--text-muted); margin-top: 12px; text-align: center; line-height: 1.5; }
+    .modal__success { text-align: center; padding: 20px 0; }
+    .modal__success-icon { font-size: 2.4rem; margin-bottom: 12px; }
+    .modal__success-title { font-family: var(--font-display); font-size: 1.3rem; margin-bottom: 6px; }
+    .modal__success-desc { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; }
+
+    .demo-footer { text-align: center; padding: 20px 0; color: var(--text-muted); font-size: 0.72rem; border-top: 1px solid var(--border); margin-top: auto; }
+    .demo-footer a { color: var(--text-secondary); font-weight: 600; }
+
+    .demo-error { text-align: center; padding: 80px 24px; }
+    .demo-error__title { font-size: 1.05rem; font-weight: 700; margin-bottom: 6px; }
+    .demo-error__desc { color: var(--text-secondary); font-size: 0.88rem; max-width: 340px; margin: 0 auto; }
+    .demo-error .btn { margin-top: 16px; display: inline-flex; padding: 10px 20px; border-radius: var(--radius); background: white; color: var(--text); border: 1px solid var(--border-dark); font-weight: 600; font-size: 0.88rem; text-decoration: none; font-family: var(--font); }
+
+    /* ── NEW: bigger secondary text for readability ── */
+    .step__desc, .feat__desc { font-size: 0.9rem; }
+    .nav__link { font-size: 0.875rem; }
+
+    /* ── NEW: value-strip under hero (the "no-brainer" math) ── */
+    .valuestrip { max-width: 640px; margin: 28px auto 0; display: flex; flex-wrap: wrap; gap: 10px 28px; justify-content: center; align-items: center; }
+    .valuestrip__item { display: inline-flex; align-items: center; gap: 7px; font-size: 0.86rem; color: var(--text-secondary); font-weight: 500; }
+    .valuestrip__item b { color: var(--text); font-weight: 700; }
+    .valuestrip__check { color: var(--accent); font-weight: 800; }
+
+    /* ── NEW: trust strip ── */
+    .trust { padding: 40px 0 0; text-align: center; }
+    .trust__quote { max-width: 600px; margin: 0 auto; font-family: var(--font-display); font-size: clamp(1.25rem, 3vw, 1.6rem); font-weight: 400; line-height: 1.35; color: var(--text); letter-spacing: -0.01em; }
+    .trust__quote em { font-style: italic; color: var(--accent-hover); }
+    .trust__attr { margin-top: 14px; font-size: 0.82rem; color: var(--text-muted); font-weight: 500; }
+    .trust__demoline { margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary); }
+
+    /* ── NEW: differentiator band ── */
+    .diffband { text-align: center; padding: 12px 0 0; }
+    .diffband__text { max-width: 620px; margin: 0 auto; font-size: 1.02rem; color: var(--text-secondary); line-height: 1.6; }
+    .diffband__text strong { color: var(--text); font-weight: 700; }
+
+    /* ── NEW: FAQ ── */
+    .faq { max-width: 720px; margin: 0 auto; }
+    .faq__item { border: 1px solid var(--border); border-radius: var(--radius-lg); background: white; padding: 18px 22px; margin-bottom: 12px; }
+    .faq__q { font-weight: 700; font-size: 0.95rem; margin-bottom: 6px; color: var(--text); }
+    .faq__a { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
+
+    /* ── NEW: 4-step flow ── */
+    .flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .flow__step { background: white; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 22px 18px; text-align: left; }
+    .flow__num { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; background: var(--grad); color: #fff; font-size: 0.72rem; font-weight: 700; margin-bottom: 12px; }
+    .flow__title { font-weight: 700; font-size: 0.92rem; margin-bottom: 4px; }
+    .flow__desc { font-size: 0.84rem; color: var(--text-secondary); line-height: 1.5; }
+
+    /* ── NEW: peak CTA inside the demo reveal ── */
+    .peakcta { margin: 24px auto 0; max-width: 620px; background: var(--grad); border-radius: var(--radius-xl); padding: 26px 28px; text-align: center; color: #fff; }
+    .peakcta__title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 400; margin-bottom: 6px; color: #fff; }
+    .peakcta__sub { font-size: 0.92rem; opacity: 0.92; margin-bottom: 16px; line-height: 1.55; }
+    .peakcta__btn { display: inline-block; padding: 13px 28px; border-radius: 8px; background: #fff; color: #0F766E; font-weight: 700; font-size: 0.98rem; border: none; cursor: pointer; font-family: var(--font); transition: transform 0.15s, box-shadow 0.15s; }
+    .peakcta__btn:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(0,0,0,0.18); text-decoration: none; color: #0F766E; }
+    .peakcta__note { margin-top: 12px; font-size: 0.78rem; opacity: 0.9; }
+
+    /* ── NEW: pricing two-up + price reframe ── */
+    .pricing__grid--two { grid-template-columns: repeat(2, 1fr); max-width: 660px; margin: 0 auto; }
+    .plan__daily { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 14px; }
+    .plan__addon { font-size: 0.82rem; color: var(--accent-hover); font-weight: 600; margin-bottom: 4px; }
+    .pricing__anchor { text-align: center; max-width: 560px; margin: 0 auto 24px; font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; }
+    .pricing__anchor b { color: var(--text); font-weight: 700; }
+    .pricing__guarantee { text-align: center; margin-top: 18px; font-size: 0.84rem; color: var(--text-muted); }
+    .pricing__guarantee strong { color: var(--accent-hover); font-weight: 700; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .flow { grid-template-columns: 1fr 1fr; }
+      .pricing__grid--two { grid-template-columns: 1fr; }
+      .ip__card { padding: 24px 20px; }
+      .nav__links { display: none; }
+      .hero { padding: 64px 0 36px; }
+      .url-bar__row { flex-direction: column; }
+      .url-bar__btn { text-align: center; }
+      .steps { grid-template-columns: 1fr; }
+      .features { grid-template-columns: 1fr; }
+      .demo-main { grid-template-columns: 1fr; }
+      .pricing__grid { grid-template-columns: 1fr; }
+      .demo-result { padding: 64px 20px 30px; }
+      .modal { padding: 28px 24px; margin: 16px; }
+    }
+
+    .page { display: none; }
+    .page.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .fi { animation: fadeIn 0.4s ease-out both; }
+    .fi-1 { animation-delay: 0.06s; }
+    .fi-2 { animation-delay: 0.12s; }
+    .fi-3 { animation-delay: 0.18s; }
+    .fi-4 { animation-delay: 0.24s; }
+    .fi-5 { animation-delay: 0.30s; }
+    [class*="chat-widget"] iframe { border-radius: 14px !important; }
+
+    /* ── INPUT CARD — matches site-agent.html exactly ── */
+    .ip__eyebrow{display:inline-flex;align-items:center;gap:8px;padding:5px 14px 5px 10px;border-radius:100px;background:#CCFBF1;border:1px solid #99F6E4;font-size:.78rem;font-weight:600;color:#0F766E;margin-bottom:24px;}
+    .ip__dot{width:6px;height:6px;border-radius:50%;background:#0D9488;animation:pulse 2s infinite;}
+    .ip__card{background:#fff;border:1px solid var(--border-dark);border-radius:20px;padding:36px 32px;width:100%;max-width:440px;box-shadow:0 8px 32px rgba(12,10,9,.06);margin:0 auto;}
+    .ip__field{margin-bottom:14px;}
+    .ip__label{display:block;font-size:.78rem;font-weight:600;color:#57534E;margin-bottom:5px;}
+    .ip__input{width:100%;padding:11px 14px;border:1.5px solid var(--border-dark);border-radius:8px;font-family:var(--font);font-size:.95rem;color:var(--text);outline:none;transition:border-color .15s,box-shadow .15s;background:#fff;}
+    .ip__input:focus{border-color:#0D9488;box-shadow:0 0 0 3px rgba(13,148,136,.1);}
+    .ip__input::placeholder{color:#A8A29E;}
+    .ip__btn{width:100%;padding:14px;border-radius:8px;margin-top:8px;background:var(--grad);color:#fff;font-family:var(--font);font-weight:700;font-size:1rem;border:none;cursor:pointer;transition:transform .15s,box-shadow .15s,filter .15s;}
+    .ip__btn:hover{filter:brightness(1.06);transform:translateY(-1px);box-shadow:0 6px 18px rgba(37,99,235,0.28);}
+    .ip__note{text-align:center;margin-top:14px;font-size:.78rem;color:var(--text-muted);}
+    .ip__reassure{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;margin-top:12px;font-size:.74rem;color:var(--text-muted);font-weight:500;}
+    .ip__reassure span{display:inline-flex;align-items:center;gap:4px;}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  </style>
 </head>
 <body>
-<div id="wwu-root">
+  <a href="#main" class="skip-link">Skip to content</a>
 
-<helmet>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='8'%20fill='%230C0A09'/%3E%3Cpolyline%20points='6,9%2011,23%2016,15.5%2021,23%2026,9'%20fill='none'%20stroke='%2322D3EE'%20stroke-width='3.4'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E">
-<style>
-  *,*::before,*::after{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{background:#FAFAF9;color:#0C0A09;font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
-  @keyframes wwuPulse{0%,100%{opacity:1}50%{opacity:.4}}
-  @keyframes wwuRise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-  @keyframes wwuGlow{0%,100%{text-shadow:0 0 22px rgba(103,232,249,.55),0 0 4px rgba(103,232,249,.4)}50%{text-shadow:0 0 40px rgba(103,232,249,.9),0 0 9px rgba(103,232,249,.6)}}
-  @keyframes wwuLive{0%,100%{box-shadow:0 0 0 1px rgba(34,211,238,.5),0 10px 26px rgba(34,211,238,.28)}50%{box-shadow:0 0 0 1px rgba(34,211,238,.8),0 12px 34px rgba(34,211,238,.5)}}
-  @keyframes wwuAurora{0%{transform:translate(-7%,-4%) scale(1.1);opacity:.45}50%{transform:translate(7%,6%) scale(1.32);opacity:.8}100%{transform:translate(-7%,-4%) scale(1.1);opacity:.45}}
-  @keyframes wwuFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
-  @keyframes wwuGlowPulse{0%,100%{opacity:.28}50%{opacity:.62}}
-  @keyframes wwuPop{0%{opacity:0;transform:scale(.72)}60%{opacity:1;transform:scale(1.05)}100%{opacity:1;transform:scale(1)}}
-  @keyframes wwuShake{0%,100%{transform:translate(0,0)}15%{transform:translate(-7px,4px)}30%{transform:translate(6px,-4px)}45%{transform:translate(-5px,3px)}60%{transform:translate(5px,-2px)}80%{transform:translate(-3px,2px)}}
-  @media (prefers-reduced-motion: reduce){*{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}
-</style>
-</helmet>
-
-<div class="sc-cond" data-show-when="isLanding" hidden>
-<div>
-  <nav style="position:sticky;top:0;z-index:100;background:rgba(250,250,249,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid #ECEAE6;">
-    <div style="max-width:1100px;margin:0 auto;padding:0 22px;height:60px;display:flex;align-items:center;justify-content:space-between;gap:16px;">
-      <a href="#top" style="display:flex;align-items:center;gap:11px;text-decoration:none;">
-        <svg width="30" height="23" viewBox="0 0 34 26" fill="none" style="display:block;"><defs><linearGradient id="wgN" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0D9488"/><stop offset="1" stop-color="#22D3EE"/></linearGradient></defs><polyline points="3,3 9.5,23 17,11.5 24.5,23 31,3" fill="none" stroke="url(#wgN)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.04rem;letter-spacing:-.01em;color:#0C0A09;">Website<span style="color:#0D9488;">WakeUp</span></span>
-      </a>
-      <div style="display:flex;align-items:center;gap:18px;">
-        <a href="#how" style="font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.04em;color:#57534E;text-decoration:none;">HOW</a>
-        <a href="#pricing" style="font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.04em;color:#57534E;text-decoration:none;">PRICING</a>
-        <button onclick="window._app.goWake(event)" style="padding:9px 18px;border-radius:9px;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.82rem;background:linear-gradient(135deg,#0D9488,#22D3EE);color:#04201E;box-shadow:0 4px 14px rgba(34,211,238,.24);">Wake mine up</button>
+  <nav class="nav">
+    <div class="container">
+      <a href="/" class="nav__logo"><div class="nav__mark">A</div> AgentCopyAI</a>
+      <div class="nav__links" id="nav-links-landing">
+        <a href="#how" class="nav__link">How It Works</a>
+        <a href="#pricing-lp" class="nav__link">Pricing</a>
+        <a href="#faq" class="nav__link">FAQ</a>
       </div>
+      <button class="nav__cta" id="nav-cta" onclick="scrollToDemo()">Try it out now →</button>
     </div>
   </nav>
 
-  <main id="top">
-    <section style="background:#FAFAF9;padding:clamp(72px,12vh,140px) 22px clamp(48px,7vh,80px);text-align:center;">
-      <div style="max-width:780px;margin:0 auto;">
-        <div style="display:inline-flex;align-items:center;gap:9px;padding:6px 15px;border-radius:100px;border:1px solid #E2E0DB;background:#fff;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.13em;color:#57534E;margin-bottom:28px;">
-          <span style="width:7px;height:7px;border-radius:50%;background:#0D9488;animation:wwuPulse 2.4s infinite;"></span> NO REBUILD &middot; WORKS WITH THE SITE YOU HAVE
-        </div>
-        <h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2.6rem,7vw,4.8rem);line-height:1.0;letter-spacing:-.035em;margin:0;color:#0C0A09;">Your website is <span style="color:#B7B3AB;">asleep.</span></h1>
-        <p style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(1.25rem,3.2vw,2rem);line-height:1.14;letter-spacing:-.02em;margin:16px auto 0;max-width:680px;color:#1C1917;">Wake it up in 30 seconds &mdash; and let it answer your customers, by chat <span style="color:#0D9488;">and voice</span>, 24/7.</p>
-        <p style="font-size:clamp(1rem,1.7vw,1.12rem);line-height:1.6;margin:20px auto 0;max-width:540px;color:#57534E;">Enter your URL. Watch it become a chat-and-voice agent that knows your business &mdash; and answers customers around the clock.</p>
-
-        <div style="display:flex;flex-wrap:wrap;gap:10px;max-width:520px;margin:34px auto 0;">
-          <input id="wwu-input" onkeydown="window._app.onKey(event)" placeholder="yourbusiness.com" aria-label="Enter your website URL" style="flex:1 1 230px;min-width:0;padding:16px 18px;border-radius:13px;border:1.5px solid #D6D3D1;background:#fff;color:#0C0A09;font-family:'JetBrains Mono',monospace;font-size:1rem;outline:none;transition:border-color .2s,box-shadow .2s;" style-focus="border-color:#0D9488;box-shadow:0 0 0 4px rgba(13,148,136,.13);">
-          <button onclick="window._app.onWake(event)" style="flex:0 0 auto;padding:16px 28px;border-radius:13px;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;letter-spacing:.01em;background:linear-gradient(135deg,#0D9488,#22D3EE);color:#04201E;animation:wwuLive 2.6s ease-in-out infinite;transition:transform .15s;" style-hover="transform:translateY(-1px);">WAKE IT UP &rarr;</button>
-        </div>
-
-        <div class="sc-cond" data-show-when="urlError" hidden>
-          <p style="margin:10px auto 0;font-family:'JetBrains Mono',monospace;font-size:.74rem;color:#DC2626;">Enter a full website URL &mdash; include .com, .net, or .org</p>
-        </div>
-
-        <div style="display:flex;flex-wrap:wrap;gap:7px 16px;justify-content:center;align-items:center;margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#8E8E96;">
-          <span>FREE DEMO</span><span style="color:#CBC8C2;">/</span><span>NO SIGNUP, NO CARD</span><span style="color:#CBC8C2;">/</span><span>~30 SECONDS</span>
-          <div class="sc-cond" data-show-when="showSoundToggle" hidden>
-            <button onclick="window._app.toggleSound(event)" style="margin-left:4px;padding:5px 11px;border-radius:100px;border:1px solid #E2E0DB;background:#fff;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:{{ soundColor }};">{{ soundLabel }}</button>
+  <!-- LANDING PAGE -->
+  <div class="page active" id="landing-page">
+    <noscript><div style="max-width:680px;margin:40px auto;padding:0 24px;text-align:center;font-family:'DM Sans',sans-serif;"><h1 style="font-size:2rem;">Turn your website into one that talks back — $19/mo</h1><p>AgentCopyAI turns your existing website into a 24/7 AI agent that answers every customer, trained on your own site. No rebuild. Please enable JavaScript to try the live demo.</p></div></noscript>
+    <main id="main">
+    <section class="hero">
+      <div class="container">
+        <div class="hero__eyebrow fi"><span class="hero__eyebrow-dot"></span> No rebuild. Works with the website you already have.</div>
+        <h1 class="hero__title fi-1">Your website can't talk.<br/><em>Your competitor's can.</em></h1>
+        <p class="hero__sub fi-2">Turn your existing site into a 24/7 AI agent trained on your business.<br/>See it live in 10 seconds. Only <strong>$19/mo</strong>.</p>
+        <div class="fi-3">
+          <div class="ip__card">
+            <div class="ip__field">
+              <label class="ip__label" for="hero-url-input">Enter your website — watch it learn your business in 10 seconds</label>
+              <input class="ip__input" id="hero-url-input" type="text" placeholder="yourbusiness.com" autocomplete="url" aria-describedby="hero-url-error" onkeypress="if(event.key==='Enter')handleDemoRequest('hero')" />
+              <p id="hero-url-error" role="alert" aria-live="assertive" style="display:none;color:var(--error);font-size:.78rem;margin-top:6px;line-height:1.4;">Please enter a valid website URL — include a domain extension like .com, .net, or .org.</p>
+            </div>
+            <button class="ip__btn" onclick="handleDemoRequest('hero')">Try it out now →</button>
+            <p class="ip__note">Free demo. No signup, no card to try it. Watch it learn your business in 10 seconds.</p>
+          </div>
+          <div class="valuestrip">
+            <span class="valuestrip__item"><span class="valuestrip__check">✓</span> Code <b>same day</b> — or we install it</span>
+            <span class="valuestrip__item"><span class="valuestrip__check">✓</span> <b>No rebuild</b> — keep your site</span>
+            <span class="valuestrip__item"><span class="valuestrip__check">✓</span> Cancel anytime, <b>one click</b></span>
           </div>
         </div>
       </div>
     </section>
-    <section id="how" style="background:#FFFFFF;border-top:1px solid #EAE8E4;padding:clamp(64px,9vw,104px) 22px;">
-  <div style="max-width:1100px;margin:0 auto;">
-    <div style="font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.16em;color:#0D9488;margin-bottom:12px;">WHAT JUST HAPPENED</div>
-    <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(1.8rem,4vw,2.7rem);line-height:1.08;letter-spacing:-.02em;margin:0 0 12px;color:#0C0A09;max-width:620px;">Three things happen the second you flip the switch.</h2>
-    <p style="font-size:1.05rem;line-height:1.6;color:#57534E;max-width:520px;margin:0 0 44px;">No rebuild. No setup call. No forms. Your existing site, awake and answering.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;">
-      <div style="border:1px solid #EAE8E4;border-radius:16px;padding:28px 26px;background:#FAFAF9;">
-        <div style="font-family:'JetBrains Mono',monospace;font-size:.82rem;font-weight:700;letter-spacing:.1em;color:#0D9488;margin-bottom:16px;">01</div>
-        <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.18rem;margin:0 0 8px;color:#0C0A09;">It reads your site.</h3>
-        <p style="font-size:.95rem;line-height:1.6;color:#57534E;margin:0;">Every page, every service, your hours and location &mdash; pulled straight from the website you already have.</p>
-      </div>
-      <div style="border:1px solid #EAE8E4;border-radius:16px;padding:28px 26px;background:#FAFAF9;">
-        <div style="font-family:'JetBrains Mono',monospace;font-size:.82rem;font-weight:700;letter-spacing:.1em;color:#0D9488;margin-bottom:16px;">02</div>
-        <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.18rem;margin:0 0 8px;color:#0C0A09;">It trains an agent.</h3>
-        <p style="font-size:.95rem;line-height:1.6;color:#57534E;margin:0;">Chat <em>and</em> voice. It knows your business better than a brand-new employee would on day one &mdash; and it won&rsquo;t make things up.</p>
-      </div>
-      <div style="border:1px solid #EAE8E4;border-radius:16px;padding:28px 26px;background:#FAFAF9;">
-        <div style="font-family:'JetBrains Mono',monospace;font-size:.82rem;font-weight:700;letter-spacing:.1em;color:#0D9488;margin-bottom:16px;">03</div>
-        <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.18rem;margin:0 0 8px;color:#0C0A09;">It&rsquo;s ready to install.</h3>
-        <p style="font-size:.95rem;line-height:1.6;color:#57534E;margin:0;">One line of code and it&rsquo;s live in 60 seconds. Don&rsquo;t want to touch code? We install it for you, free.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section style="background:#FAFAF9;padding:clamp(64px,9vw,104px) 22px;">
-  <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px;align-items:center;">
-    <div>
-      <div style="font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.16em;color:#0D9488;margin-bottom:12px;">LIVE ON YOUR SITE</div>
-      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(1.8rem,4vw,2.7rem);line-height:1.08;letter-spacing:-.02em;margin:0 0 14px;color:#0C0A09;">It sits in the corner of your site and never clocks out.</h2>
-      <p style="font-size:1.02rem;line-height:1.65;color:#57534E;margin:0 0 24px;">Visitors type or talk. It answers from your own content &mdash; instantly, at 2pm or 2am &mdash; and drops every lead into your inbox.</p>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:380px;">
-        <div style="border-left:2px solid #67E8F9;padding-left:12px;"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.5rem;color:#0C0A09;">14 pages</div><div style="font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.08em;color:#78716C;margin-top:2px;">READ &amp; LEARNED</div></div>
-        <div style="border-left:2px solid #0D9488;padding-left:12px;"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.5rem;color:#0C0A09;">Voice</div><div style="font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.08em;color:#78716C;margin-top:2px;">ENABLED IN-BROWSER</div></div>
-        <div style="border-left:2px solid #1E40AF;padding-left:12px;"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.5rem;color:#0C0A09;">Leads ON</div><div style="font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.08em;color:#78716C;margin-top:2px;">STRAIGHT TO YOUR INBOX</div></div>
-        <div style="border-left:2px solid #FACC15;padding-left:12px;"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.5rem;color:#0C0A09;">24/7</div><div style="font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.08em;color:#78716C;margin-top:2px;">NEVER MISSES A SOUL</div></div>
+    <div class="diffband fi-4">
+      <div class="container">
+        <p class="diffband__text">Other chat widgets make <strong>you</strong> write the answers. This one <strong>already read your website</strong> — so it answers like you would, from day one.</p>
       </div>
     </div>
-    <div style="position:relative;border-radius:16px;overflow:hidden;border:1px solid #E2E0DB;background:#FFFFFF;box-shadow:0 24px 60px rgba(12,10,9,.1);">
-      <div style="display:flex;align-items:center;gap:6px;padding:11px 14px;background:#F4F2EE;border-bottom:1px solid #E7E5E1;">
-        <span style="width:10px;height:10px;border-radius:50%;background:#E0DDD7;"></span><span style="width:10px;height:10px;border-radius:50%;background:#E0DDD7;"></span><span style="width:10px;height:10px;border-radius:50%;background:#E0DDD7;"></span>
-        <span style="margin-left:8px;font-family:'JetBrains Mono',monospace;font-size:.66rem;color:#A8A29E;">&#128274; yourbusiness.com</span>
-      </div>
-      <div style="position:relative;padding:26px 22px 30px;min-height:230px;background:repeating-linear-gradient(135deg,#FBFBFA 0 11px,#F4F3F0 11px 12px);">
-        <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.1em;color:#B8B2AA;position:absolute;top:10px;right:14px;">[ YOUR SITE &mdash; UNCHANGED ]</div>
-        <div style="height:12px;width:120px;border-radius:4px;background:#E7E5E1;margin-bottom:16px;"></div>
-        <div style="height:22px;width:80%;border-radius:5px;background:#E7E5E1;margin-bottom:9px;"></div>
-        <div style="height:22px;width:55%;border-radius:5px;background:#E7E5E1;margin-bottom:18px;"></div>
-        <div style="height:10px;width:90%;border-radius:4px;background:#EFEDE9;margin-bottom:7px;"></div>
-        <div style="height:10px;width:84%;border-radius:4px;background:#EFEDE9;"></div>
-        <div style="position:absolute;right:18px;bottom:80px;max-width:200px;background:#0C0A09;color:#fff;border-radius:14px 14px 14px 4px;padding:11px 14px;font-size:.82rem;line-height:1.45;box-shadow:0 12px 28px rgba(12,10,9,.22);">Hi! I&rsquo;m the team here &mdash; want a quote or to book a visit?</div>
-        <div style="position:absolute;right:18px;bottom:20px;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#0D9488,#22D3EE);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px rgba(34,211,238,.4);">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 6.5C5 5.67 5.67 5 6.5 5h11C18.33 5 19 5.67 19 6.5v8C19 15.33 18.33 16 17.5 16H11l-4 3v-3H6.5C5.67 16 5 15.33 5 14.5v-8z" fill="#fff"/></svg>
+
+    <div class="proof fi-4">
+      <div class="container">
+        <div class="proof__text">Built for businesses like yours</div>
+        <div class="proof__logos">
+          <span class="proof__item">Plumbers</span>
+          <span class="proof__item">Dentists</span>
+          <span class="proof__item">Contractors</span>
+          <span class="proof__item">Salons</span>
+          <span class="proof__item">Restaurants</span>
+          <span class="proof__item">Law Firms</span>
         </div>
       </div>
     </div>
-  </div>
-</section>
 
-<section id="pricing" style="background:#FFFFFF;border-top:1px solid #EAE8E4;padding:clamp(64px,9vw,104px) 22px;">
-  <div style="max-width:880px;margin:0 auto;text-align:center;">
-    <div style="font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.16em;color:#0D9488;margin-bottom:12px;">PRICING</div>
-    <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(1.8rem,4vw,2.7rem);line-height:1.08;letter-spacing:-.02em;margin:0 0 10px;color:#0C0A09;">One booked job pays for the year.</h2>
-    <p style="font-size:1.05rem;line-height:1.6;color:#57534E;max-width:480px;margin:0 auto 40px;">Free install. Cancel anytime, one click. No setup fee.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;text-align:left;">
-      <div style="border:1px solid #E2E0DB;border-radius:20px;padding:30px 28px;background:#FAFAF9;display:flex;flex-direction:column;">
-        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem;color:#0C0A09;">Talking Website</div>
-        <div style="font-size:.86rem;color:#78716C;margin-bottom:16px;">Your existing site, awake</div>
-        <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:4px;"><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:2.6rem;color:#0C0A09;letter-spacing:-.02em;"><s style="color:#A8A29E;font-weight:400;font-size:1.5rem;">$39</s>&nbsp;$19</span><span style="color:#78716C;font-size:.9rem;">/mo</span></div>
-        <div style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#A8A29E;margin-bottom:18px;">about 63&cent; a day</div>
-        <div style="height:1px;background:#E7E5E1;margin-bottom:16px;"></div>
-        <ul style="list-style:none;margin:0 0 24px;padding:0;flex:1;display:flex;flex-direction:column;gap:9px;">
-          <li style="display:flex;gap:9px;font-size:.9rem;color:#44403C;line-height:1.45;"><span style="color:#0D9488;font-weight:700;">&#10003;</span> AI chat agent trained on your business</li>
-          <li style="display:flex;gap:9px;font-size:.9rem;color:#44403C;line-height:1.45;"><span style="color:#0D9488;font-weight:700;">&#10003;</span> Voice agent &mdash; visitors can speak to it</li>
-          <li style="display:flex;gap:9px;font-size:.9rem;color:#44403C;line-height:1.45;"><span style="color:#0D9488;font-weight:700;">&#10003;</span> Lead capture &mdash; straight to your inbox</li>
-          <li style="display:flex;gap:9px;font-size:.9rem;color:#44403C;line-height:1.45;"><span style="color:#0D9488;font-weight:700;">&#10003;</span> Answers 24/7 while you&rsquo;re on jobs</li>
-        </ul>
-        <button onclick="window._app.checkoutTalking(event)" style="width:100%;padding:13px;border-radius:11px;border:1.5px solid #D6D3D1;background:#fff;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.92rem;color:#0C0A09;transition:border-color .15s,color .15s;" style-hover="border-color:#0D9488;color:#0D9488;">Wake mine up &mdash; $19/mo</button>
+    <div class="preview fi-5">
+      <div class="preview__head">
+        <span class="preview__pill"><span class="live">Agent live</span> &nbsp;ScaleLocal <em>— AI agent live</em></span>
       </div>
-      <div style="position:relative;border:1.5px solid #0D9488;border-radius:20px;padding:30px 28px;background:#FFFFFF;display:flex;flex-direction:column;box-shadow:0 14px 40px rgba(13,148,136,.12);">
-        <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);padding:4px 14px;border-radius:100px;background:linear-gradient(135deg,#0D9488,#22D3EE);color:#04201E;font-family:'JetBrains Mono',monospace;font-size:.64rem;font-weight:700;letter-spacing:.1em;white-space:nowrap;">MOST POPULAR</div>
-        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem;color:#0C0A09;">Talking Website + Booking</div>
-        <div style="font-size:.86rem;color:#78716C;margin-bottom:16px;">Let it book the job, not just answer</div>
-        <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:4px;"><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:2.6rem;color:#0C0A09;letter-spacing:-.02em;"><s style="color:#A8A29E;font-weight:400;font-size:1.5rem;">$59</s>&nbsp;$29</span><span style="color:#78716C;font-size:.9rem;">/mo</span></div>
-        <div style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#A8A29E;margin-bottom:18px;">about 97&cent; a day &middot; just +$10</div>
-        <div style="height:1px;background:#E7E5E1;margin-bottom:16px;"></div>
-        <ul style="list-style:none;margin:0 0 24px;padding:0;flex:1;display:flex;flex-direction:column;gap:9px;">
-          <li style="display:flex;gap:9px;font-size:.9rem;color:#44403C;line-height:1.45;"><span style="color:#0D9488;font-weight:700;">&#10003;</span> Everything in Talking Website</li>
-          <li style="display:flex;gap:9px;font-size:.9rem;color:#44403C;line-height:1.45;"><span style="color:#0D9488;font-weight:700;">&#10003;</span> <span><strong style="color:#0C0A09;">Books appointments &amp; quotes</strong> right in chat</span></li>
-          <li style="display:flex;gap:9px;font-size:.9rem;color:#44403C;line-height:1.45;"><span style="color:#0D9488;font-weight:700;">&#10003;</span> Visitor picks a slot &mdash; you&rsquo;re booked</li>
-          <li style="display:flex;gap:9px;font-size:.9rem;color:#44403C;line-height:1.45;"><span style="color:#0D9488;font-weight:700;">&#10003;</span> We wire your calendar in for you</li>
-        </ul>
-        <button onclick="window._app.checkoutSched(event)" style="width:100%;padding:13px;border-radius:11px;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.92rem;background:linear-gradient(135deg,#0D9488,#22D3EE);color:#04201E;box-shadow:0 8px 22px rgba(34,211,238,.28);transition:transform .15s;" style-hover="transform:translateY(-1px);">Wake mine up &mdash; $29/mo</button>
-      </div>
-    </div>
-    <p style="font-family:'JetBrains Mono',monospace;font-size:.74rem;color:#78716C;margin-top:22px;"><span style="color:#0D9488;font-weight:700;">Free install.</span> Cancel anytime. No setup fee. <span style="color:#0D9488;">Locked in for life during private beta &mdash; first 50 customers.</span></p>
-  </div>
-</section>
+      <div class="preview__grid">
+        <div class="preview__stats preview__stats--l">
+          <div class="pstat"><div class="pstat__num">3.3s</div><div class="pstat__lbl">To build &amp; deploy</div></div>
+          <div class="pstat"><div class="pstat__num">24/7</div><div class="pstat__lbl">Always answering</div></div>
+        </div>
 
-<div class="sc-cond" data-show-when="showBeta" hidden>
-<section style="background:#FAFAF9;padding:clamp(48px,7vw,72px) 22px;text-align:center;">
-  <div style="max-width:760px;margin:0 auto;">
-    <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 15px;border-radius:100px;border:1px solid #99F6E4;background:#CCFBF1;font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.1em;color:#0F766E;margin-bottom:20px;"><span style="width:7px;height:7px;border-radius:50%;background:#0D9488;animation:wwuPulse 2s infinite;"></span> PRIVATE BETA</div>
-    <p style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:clamp(1.2rem,3vw,1.7rem);line-height:1.3;letter-spacing:-.01em;color:#0C0A09;margin:0 0 22px;">First <span style="color:#0D9488;">50 businesses</span> get half-off, for life. We&rsquo;re onboarding contractors and local shops one switch at a time.</p>
-    <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;">
-      <span style="padding:6px 15px;border-radius:100px;background:#fff;border:1px solid #E7E5E1;font-size:.84rem;color:#57534E;">Plumbers</span>
-      <span style="padding:6px 15px;border-radius:100px;background:#fff;border:1px solid #E7E5E1;font-size:.84rem;color:#57534E;">HVAC</span>
-      <span style="padding:6px 15px;border-radius:100px;background:#fff;border:1px solid #E7E5E1;font-size:.84rem;color:#57534E;">Roofers</span>
-      <span style="padding:6px 15px;border-radius:100px;background:#fff;border:1px solid #E7E5E1;font-size:.84rem;color:#57534E;">Electricians</span>
-      <span style="padding:6px 15px;border-radius:100px;background:#fff;border:1px solid #E7E5E1;font-size:.84rem;color:#57534E;">Landscapers</span>
-      <span style="padding:6px 15px;border-radius:100px;background:#fff;border:1px solid #E7E5E1;font-size:.84rem;color:#57534E;">Local service pros</span>
-    </div>
-  </div>
-</section>
-</div>
-
-<section id="faq" style="background:#FFFFFF;border-top:1px solid #EAE8E4;padding:clamp(64px,9vw,104px) 22px;">
-  <div style="max-width:760px;margin:0 auto;">
-    <div style="font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.16em;color:#0D9488;margin-bottom:12px;">QUESTIONS</div>
-    <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(1.8rem,4vw,2.7rem);line-height:1.08;letter-spacing:-.02em;margin:0 0 36px;color:#0C0A09;">The quick answers.</h2>
-    <details style="border:1px solid #EAE8E4;border-radius:14px;background:#FAFAF9;padding:18px 22px;margin-bottom:12px;">
-      <summary style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.02rem;color:#0C0A09;cursor:pointer;list-style:none;">How long does it take to install?</summary>
-      <p style="font-size:.94rem;line-height:1.6;color:#57534E;margin:12px 0 0;">60 seconds &mdash; one line of code on your site. Or give us access and we install it for you, free, within 24 hours.</p>
-    </details>
-    <details style="border:1px solid #EAE8E4;border-radius:14px;background:#FAFAF9;padding:18px 22px;margin-bottom:12px;">
-      <summary style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.02rem;color:#0C0A09;cursor:pointer;list-style:none;">Will it actually know about MY business?</summary>
-      <p style="font-size:.94rem;line-height:1.6;color:#57534E;margin:12px 0 0;">Yes. It reads your website and your Google Business Profile &mdash; your services, hours, and location. And it only answers from what&rsquo;s really there, so it won&rsquo;t invent prices or promises.</p>
-    </details>
-    <details style="border:1px solid #EAE8E4;border-radius:14px;background:#FAFAF9;padding:18px 22px;margin-bottom:12px;">
-      <summary style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.02rem;color:#0C0A09;cursor:pointer;list-style:none;">Does the voice agent really talk?</summary>
-      <p style="font-size:.94rem;line-height:1.6;color:#57534E;margin:12px 0 0;">Yes. A visitor clicks a button and a real voice conversation starts, right in their browser &mdash; no phone number needed.</p>
-    </details>
-    <details style="border:1px solid #EAE8E4;border-radius:14px;background:#FAFAF9;padding:18px 22px;margin-bottom:12px;">
-      <summary style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.02rem;color:#0C0A09;cursor:pointer;list-style:none;">What platforms does it work on?</summary>
-      <p style="font-size:.94rem;line-height:1.6;color:#57534E;margin:12px 0 0;">WordPress, Shopify, Wix, Squarespace, GoDaddy, custom HTML &mdash; anything that lets you paste a line of code. You keep your site exactly as it is.</p>
-    </details>
-    <details style="border:1px solid #EAE8E4;border-radius:14px;background:#FAFAF9;padding:18px 22px;">
-      <summary style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.02rem;color:#0C0A09;cursor:pointer;list-style:none;">Can I cancel?</summary>
-      <p style="font-size:.94rem;line-height:1.6;color:#57534E;margin:12px 0 0;">Anytime, in one click. No contract, no call to cancel. Keep it only if it earns its keep.</p>
-    </details>
-  </div>
-</section>
-
-<section style="position:relative;overflow:hidden;background:radial-gradient(120% 80% at 50% 10%,#34343B,#202024 64%,#1A1A1E);padding:clamp(64px,9vw,104px) 22px;">
-  <div style="max-width:820px;margin:0 auto;display:grid;grid-template-columns:auto 1fr;gap:clamp(20px,4vw,40px);align-items:center;">
-    <div style="flex:0 0 auto;justify-self:center;">
-      <svg width="78" height="60" viewBox="0 0 34 26" fill="none" style="display:block;"><defs><linearGradient id="wgC" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0D9488"/><stop offset="1" stop-color="#22D3EE"/></linearGradient></defs><polyline points="3,3 9.5,23 17,11.5 24.5,23 31,3" fill="none" stroke="url(#wgC)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </div>
-    <div>
-      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(1.7rem,4vw,2.6rem);line-height:1.06;letter-spacing:-.02em;margin:0 0 10px;color:#F4F4F5;">Ready to wake yours up?</h2>
-      <p style="font-size:1.05rem;line-height:1.6;color:#A9A9B2;margin:0 0 22px;max-width:440px;">30 seconds. Free to try. Type your URL and watch your website start answering.</p>
-      <button onclick="window._app.goWake(event)" style="padding:15px 28px;border-radius:13px;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.02rem;background:linear-gradient(135deg,#FACC15,#FDE047);color:#1A1500;box-shadow:0 0 0 1px rgba(34,211,238,.45),0 8px 24px rgba(34,211,238,.24);transition:box-shadow .2s,transform .15s;" style-hover="box-shadow:0 0 0 1px rgba(103,232,249,.7),0 8px 30px rgba(103,232,249,.4);transform:translateY(-1px);">WAKE MINE UP &#9889;</button>
-    </div>
-  </div>
-</section>
-
-<footer style="background:#18181B;padding:34px 22px;border-top:1px solid rgba(255,255,255,.07);">
-  <div style="max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;">
-    <div style="display:flex;align-items:center;gap:10px;">
-      <svg width="27" height="21" viewBox="0 0 34 26" fill="none" style="display:block;"><defs><linearGradient id="wgF" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0D9488"/><stop offset="1" stop-color="#22D3EE"/></linearGradient></defs><polyline points="3,3 9.5,23 17,11.5 24.5,23 31,3" fill="none" stroke="url(#wgF)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span style="font-family:'JetBrains Mono',monospace;font-size:.74rem;color:#A1A1AA;">&copy; 2026 WebsiteWakeUp &middot; Built by <a href="https://scalelocal.net" style="color:#D4D4D8;text-decoration:none;">ScaleLocal</a></span>
-    </div>
-    <div style="display:flex;gap:20px;font-family:'JetBrains Mono',monospace;font-size:.74rem;">
-      <a href="#how" style="color:#A1A1AA;text-decoration:none;">How it works</a>
-      <a href="#pricing" style="color:#A1A1AA;text-decoration:none;">Pricing</a>
-      <a href="#faq" style="color:#A1A1AA;text-decoration:none;">FAQ</a>
-    </div>
-  </div>
-</footer>
-  </main>
-</div>
-</div>
-
-<div class="sc-cond" data-show-when="isWaking" hidden>
-<div id="wwu-page2root" style="position:fixed;inset:0;z-index:50;overflow:hidden;background:#070710;">
-  <img src="assets/lab-scene.png" alt="Aetheric laboratory" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"/>
-  <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(125% 95% at 50% 42%,transparent 55%,rgba(4,6,12,0.5));"></div>
-  <svg id="wwu-bolt" viewBox="0 0 950 540" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;">
-    <defs>
-      <filter id="lb2" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5"/></filter>
-      <radialGradient id="sceneGlow" cx="50%" cy="22%" r="78%"><stop offset="0%" stop-color="#e4f3ff" stop-opacity="0.7"/><stop offset="55%" stop-color="#bfe3ff" stop-opacity="0.22"/><stop offset="100%" stop-color="#bfe3ff" stop-opacity="0"/></radialGradient>
-      <radialGradient id="greenGlow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#46ffb0" stop-opacity="0.75"/><stop offset="100%" stop-color="#46ffb0" stop-opacity="0"/></radialGradient>
-    </defs>
-    <rect id="wwu-sceneflash" width="950" height="540" fill="url(#sceneGlow)" opacity="0" style="mix-blend-mode:screen;"/>
-    <ellipse cx="440" cy="300" rx="205" ry="245" fill="url(#greenGlow)" opacity="0.4" style="mix-blend-mode:screen;animation:wwuGlowPulse 1.7s ease-in-out infinite;"/>
-    <g data-bolt opacity="0"><path d="" fill="none" stroke="#7fd6ff" stroke-width="5" stroke-linejoin="round" filter="url(#lb2)"/><path d="" fill="none" stroke="#eaffff" stroke-width="2" stroke-linejoin="round"/></g>
-    <g data-bolt opacity="0"><path d="" fill="none" stroke="#7fd6ff" stroke-width="4.5" stroke-linejoin="round" filter="url(#lb2)"/><path d="" fill="none" stroke="#eaffff" stroke-width="1.8" stroke-linejoin="round"/></g>
-    <g data-bolt opacity="0"><path d="" fill="none" stroke="#8ad8ff" stroke-width="4" stroke-linejoin="round" filter="url(#lb2)"/><path d="" fill="none" stroke="#eaffff" stroke-width="1.6" stroke-linejoin="round"/></g>
-  </svg>
-  <canvas id="wwu-sparkcanvas" style="position:absolute;inset:0;pointer-events:none;z-index:6;"></canvas>
-  <div style="position:absolute;top:16px;left:18px;z-index:9;"><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.9rem;color:#F4F4F5;text-shadow:0 1px 10px #000;">Website<span style="color:#67E8F9;">WakeUp</span></span></div>
-  <button onclick="window._app.toggleSound(event)" title="Click for full effect" style="position:absolute;top:16px;right:16px;z-index:9;display:flex;align-items:center;gap:8px;width:130px;height:42px;justify-content:center;border-radius:11px;border:1px solid {{ soundBorder }};background:rgba(8,10,20,0.74);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:700;letter-spacing:.06em;color:{{ soundColor }};box-shadow:{{ soundGlow }};transition:all .2s;">{{ soundIcon }} {{ soundLabel2 }}</button>
-  <div style="position:absolute;top:0;left:0;right:0;z-index:7;padding:46px 16px 92px;pointer-events:none;text-align:center;background:linear-gradient(180deg,rgba(6,8,16,.84),rgba(6,8,16,.34) 62%,transparent);"><div style="font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:700;letter-spacing:.3em;color:#67E8F9;text-shadow:0 0 12px rgba(103,232,249,.65);margin-bottom:12px;">⚡&nbsp; AETHERIC AWAKENING IN PROGRESS</div>
-    <h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(1.8rem,5.4vw,3.4rem);letter-spacing:-.01em;text-transform:uppercase;text-align:center;margin:0;">
-      <div class="sc-cond" data-show-when="climax" hidden><span style="text-transform:none;color:#ffffff;text-shadow:0 0 34px rgba(127,255,196,.95),0 0 10px rgba(127,255,196,.8);animation:wwuPop .55s cubic-bezier(.2,.9,.3,1.3) both;">It&rsquo;s awake.</span></div>
-      <div class="sc-cond" data-show-when="notClimax" hidden><span style="color:#F4F4F5;text-shadow:0 2px 16px #000,0 0 34px rgba(103,232,249,.4);">We&rsquo;re bringing your website to life<span style="color:#67E8F9;text-shadow:0 0 16px rgba(103,232,249,.95);">&hellip;</span></span></div>
-    </h1>
-  </div>
-  <div style="position:absolute;bottom:30px;left:0;right:0;z-index:7;display:flex;justify-content:center;padding:0 16px;">
-    <div style="font-family:'JetBrains Mono',monospace;font-size:clamp(.7rem,1.7vw,.86rem);letter-spacing:.13em;color:#7fffc4;background:rgba(6,10,14,.8);border:1px solid rgba(127,255,196,.35);border-radius:8px;padding:9px 18px;text-shadow:0 0 9px rgba(127,255,196,.5);box-shadow:0 6px 24px rgba(0,0,0,.55);">&gt; {{ statusText }}</div>
-  </div>
-</div>
-</div>
-
-<div class="sc-cond" data-show-when="isReveal" hidden>
-<div id="wwu-revealroot" style="position:fixed;inset:0;z-index:40;overflow:auto;background:#FAFAF9;color:#0C0A09;">
-  <div style="position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;padding:14px 22px;background:rgba(250,250,249,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid #ECEAE6;">
-    <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;color:#0C0A09;">Website<span style="color:#0D9488;">WakeUp</span></span>
-    <button onclick="window._app.restart(event)" style="padding:8px 14px;border-radius:9px;border:1px solid #E2E0DB;background:#fff;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:#57534E;">&larr; START OVER</button>
-  </div>
-  <div style="max-width:1000px;margin:0 auto;padding:clamp(34px,7vh,70px) 22px 70px;">
-    <div style="text-align:center;animation:wwuPop .55s cubic-bezier(.2,.9,.3,1.2) both;">
-      <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 15px;border-radius:100px;border:1px solid #99F6E4;background:#CCFBF1;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.12em;color:#0F766E;margin-bottom:20px;"><span style="width:7px;height:7px;border-radius:50%;background:#0D9488;animation:wwuPulse 2s infinite;"></span> YOUR SITE IS LIVE</div>
-      <h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2.8rem,8vw,5rem);line-height:1.0;letter-spacing:-.035em;margin:0;color:#0C0A09;">It&rsquo;s <span style="color:#0D9488;">awake.</span></h1>
-      <p style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(1.1rem,2.6vw,1.55rem);line-height:1.18;letter-spacing:-.01em;margin:14px auto 0;max-width:600px;color:#1C1917;"><span style="color:#0D9488;">{{ learned.name }}</span> is answering customers now &mdash; by chat <span style="color:#0D9488;">and voice</span>, 24/7.</p>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:32px;align-items:center;margin-top:clamp(34px,6vh,58px);">
-      <div style="justify-self:center;width:clamp(238px,72vw,284px);">
-        <div style="position:relative;background:linear-gradient(145deg,#2A2A30,#0B0B0E);border-radius:46px;padding:11px;box-shadow:0 36px 70px rgba(12,10,9,.28),inset 0 1px 0 rgba(255,255,255,.14);">
-          <div style="position:relative;border-radius:36px;overflow:hidden;background:#0E2034;aspect-ratio:9/19.3;">
-            <div style="position:absolute;top:9px;left:50%;transform:translateX(-50%);width:88px;height:21px;background:#0B0B0E;border-radius:0 0 14px 14px;z-index:5;"></div>
-            <div style="position:absolute;top:0;left:0;right:0;height:34px;display:flex;align-items:center;justify-content:space-between;padding:9px 20px 0;font-size:.6rem;font-weight:700;color:#fff;z-index:4;"><span>9:41</span><span>&#9646;&#9646;&#9646; &#128246;</span></div>
-            <div style="position:absolute;top:34px;left:14px;right:14px;height:23px;background:rgba(255,255,255,.92);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.58rem;color:#57534E;z-index:4;">&#128274; {{ learned.url }}</div>
-            <div style="position:absolute;inset:0;padding:70px 16px 0;color:#fff;background:radial-gradient(circle at 80% 6%,rgba(34,211,238,.16),transparent 46%),#0E2034;">
-              <div style="font-weight:800;font-size:.9rem;">{{ learned.name }}</div>
-              <div style="margin-top:16px;font-weight:800;font-size:1.12rem;line-height:1.1;letter-spacing:-.01em;">{{ learned.tagline }}</div>
-              <div style="margin-top:9px;font-size:.62rem;line-height:1.5;color:#9FB6CC;">{{ learned.blurb }}</div>
-            </div>
-            <div style="position:absolute;left:12px;right:12px;bottom:12px;z-index:6;background:#fff;border-radius:16px;box-shadow:0 12px 30px rgba(0,0,0,.34);overflow:hidden;">
-              <div style="display:flex;align-items:center;gap:7px;padding:9px 12px;background:linear-gradient(135deg,#0D9488,#22D3EE);"><span style="width:7px;height:7px;border-radius:50%;background:#fff;"></span><span style="font-size:.62rem;font-weight:700;color:#fff;font-family:'Space Grotesk',sans-serif;">{{ learned.name }} Assistant</span></div>
-              <div style="padding:11px;display:flex;flex-direction:column;gap:7px;">
-                <div style="align-self:flex-start;max-width:85%;background:#F1F0EC;color:#1C1917;border-radius:11px 11px 11px 3px;padding:7px 10px;font-size:.6rem;line-height:1.4;">Hi! Need a quote or want to book a visit?</div>
-                <div style="align-self:flex-end;max-width:85%;background:#0D9488;color:#fff;border-radius:11px 11px 3px 11px;padding:7px 10px;font-size:.6rem;line-height:1.4;">Do you do emergency calls?</div>
-                <div style="align-self:flex-start;max-width:85%;background:#F1F0EC;color:#1C1917;border-radius:11px 11px 11px 3px;padding:7px 10px;font-size:.6rem;line-height:1.4;">Yes &mdash; 24/7. Want me to book one now?</div>
+        <div class="iphone">
+          <div class="iphone__frame">
+            <div class="iphone__screen">
+              <div class="iphone__notch"></div>
+              <div class="iphone__status"><span>1:06</span><span>&#9646;&#9646;&#9646; &#128246; &#128267;</span></div>
+              <div class="iphone__urlbar">&#128274; scalelocal.net</div>
+              <div class="site">
+                <div><span class="site__logo">Scale<span>Local</span></span><span class="site__menu">&#9776;</span></div>
+                <div class="site__eyebrow">Local Search · Web Design · AI Growth Solutions</div>
+                <div class="site__h1">Your business is ready to climb. <b>We're the team that gets you to the top.</b></div>
+                <div class="site__p">ScaleLocal is a web design, SEO, and AI growth agency serving Massachusetts, Rhode Island, and New Hampshire.</div>
+                <div class="site__cta">See how the climb works</div>
+                <div class="site__widget">
+                  <div class="site__widget-card"><span class="x">&#10005;</span>Have a question? Chat with us here.</div>
+                  <div class="site__widget-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 6.5C5 5.67 5.67 5 6.5 5h11C18.33 5 19 5.67 19 6.5v8C19 15.33 18.33 16 17.5 16H11l-4 3v-3H6.5C5.67 16 5 15.33 5 14.5v-8z" fill="#fff"/></svg></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:16px;">
-        <div style="border:1px solid #E2E0DB;border-radius:18px;background:#fff;padding:24px;box-shadow:0 10px 30px rgba(12,10,9,.05);">
-          <div style="font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.14em;color:#0D9488;margin-bottom:14px;">TRAINED ON YOUR BUSINESS</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px 18px;">
-            <div><div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.05em;color:#A8A29E;">SERVICES</div><div style="color:#1C1917;font-weight:600;font-size:.86rem;margin-top:3px;">{{ learned.servicesText }}</div></div>
-            <div><div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.05em;color:#A8A29E;">HOURS</div><div style="color:#1C1917;font-weight:600;font-size:.86rem;margin-top:3px;">{{ learned.hours }}</div></div>
-            <div><div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.05em;color:#A8A29E;">LOCATION</div><div style="color:#1C1917;font-weight:600;font-size:.86rem;margin-top:3px;">{{ learned.location }}</div></div>
-            <div><div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.05em;color:#A8A29E;">GOOGLE RATING</div><div style="color:#1C1917;font-weight:600;font-size:.86rem;margin-top:3px;">&#9733; {{ learned.rating }}</div></div>
-          </div>
-          <div style="margin-top:15px;padding-top:14px;border-top:1px solid #EFEDE9;display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:#0F766E;">&#127897;&#65039; VOICE &middot; <span style="color:#0D9488;font-weight:700;">ENABLED IN-BROWSER</span></div>
+
+        <div class="preview__stats preview__stats--r">
+          <div class="pstat"><div class="pstat__num">78%</div><div class="pstat__lbl">Of website visitors will interact with your agent</div></div>
+          <div class="pstat"><div class="pstat__num">3x</div><div class="pstat__lbl">More leads with instant AI response</div></div>
         </div>
-        <button onclick="window._app.checkoutTalking(event)" style="width:100%;padding:15px;border-radius:12px;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;background:linear-gradient(135deg,#0D9488,#22D3EE);color:#04201E;box-shadow:0 8px 22px rgba(34,211,238,.26);transition:transform .15s;" style-hover="transform:translateY(-1px);">Add this to my site &mdash; $19/mo &rarr;</button>
-        <button onclick="window._app.checkoutSched(event)" style="width:100%;padding:14px;border-radius:12px;border:1.5px solid #D6D3D1;background:#fff;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.95rem;color:#0C0A09;transition:border-color .15s,color .15s;" style-hover="border-color:#0D9488;color:#0D9488;">+ Add Booking &mdash; $29/mo</button>
+      </div>
+      <p class="preview__caption">"That's not a demo. That's your actual business."</p>
+    </div>
+
+    <section class="section section--alt" id="how">
+      <div class="container">
+        <div class="section__eyebrow">How It Works</div>
+        <h2 class="section__title">Four steps. Frictionless.</h2>
+        <p class="section__desc">No setup calls. No onboarding forms. No rebuild.</p>
+        <div class="flow">
+          <div class="flow__step"><div class="flow__num">1</div><h3 class="flow__title">See it learn</h3><p class="flow__desc">Type your URL — watch it learn your business and start answering like you would, in 10 seconds.</p></div>
+          <div class="flow__step"><div class="flow__num">2</div><h3 class="flow__title">Add it to your site</h3><p class="flow__desc">Love it? Start your plan in one click — secure Stripe checkout, $19/mo. Cancel anytime.</p></div>
+          <div class="flow__step"><div class="flow__num">3</div><h3 class="flow__title">Get your code</h3><p class="flow__desc">We send your widget snippet the same day to paste in yourself — or give us registrar access and we install it for you.</p></div>
+          <div class="flow__step"><div class="flow__num">4</div><h3 class="flow__title">It goes live</h3><p class="flow__desc">Once the snippet is in, your site is talking to every visitor, 24/7. We install within 24 hours if you'd rather we handle it.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="what">
+      <div class="container">
+        <div class="section__eyebrow">What You Get</div>
+        <h2 class="section__title">A website that answers — and never misses a customer</h2>
+        <p class="section__desc">Your existing site, upgraded into a talking smart website that captures leads while you're on the job.</p>
+        <div class="features">
+          <div class="feat"><h3 class="feat__title"><span class="feat__icon" aria-hidden="true">💬</span> Chat with every visitor</h3><p class="feat__desc">A smart chat widget right on your website. Trained on your actual business — not a generic bot reading a script.</p></div>
+          <div class="feat"><h3 class="feat__title"><span class="feat__icon" aria-hidden="true">🎙</span> Voice conversations on your site</h3><p class="feat__desc">Visitors can speak to your site through their browser. No phone number needed — just click and talk.</p></div>
+          <div class="feat"><h3 class="feat__title"><span class="feat__icon" aria-hidden="true">🕐</span> Available 24/7/365</h3><p class="feat__desc">Nights, weekends, holidays — always on. Every visitor gets an instant, informed answer the moment they land.</p></div>
+          <div class="feat"><h3 class="feat__title"><span class="feat__icon" aria-hidden="true">🛡️</span> It won't make things up</h3><p class="feat__desc">It only answers from what's on your website — no invented prices, no promises you didn't make. It knows your site cold.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="trust">
+      <div class="container">
+        <p class="trust__quote">The best proof isn't a testimonial — it's hearing <em>your own website</em> answer a real customer question, correctly, in 10 seconds.</p>
+        <p class="trust__demoline">That's exactly what the demo above does. Don't take our word for it — type your URL and watch.</p>
       </div>
     </div>
-    <p style="text-align:center;font-family:'JetBrains Mono',monospace;font-size:.74rem;color:#78716C;margin-top:30px;">Free install in 60 seconds &middot; We can install it for you, free &middot; Cancel anytime</p>
+
+    <!-- LANDING PRICING -->
+    <section class="section section--alt" id="pricing-lp">
+      <div class="container">
+        <div class="pricing__header">
+          <h2 class="pricing__title">Simple pricing. One booked job pays for the year.</h2>
+          <p class="pricing__sub">No setup fee. No contract. Cancel anytime in one click.</p>
+        </div>
+        <p class="pricing__anchor">A receptionist costs <b>$2,000+/mo</b>. A missed after-hours customer costs you the <b>whole job</b>. AgentCopyAI costs <b>$19</b>.</p>
+        <div class="pricing__grid pricing__grid--two">
+          <div class="plan">
+            <div class="plan__name">Talking Website</div>
+            <div class="plan__commitment">Your existing site, upgraded</div>
+            <div class="plan__price-row"><span class="plan__price">$19</span><span class="plan__period">/mo</span></div>
+            <div class="plan__daily">about 63¢ a day</div>
+            <div class="plan__divider"></div>
+            <ul class="plan__perks">
+              <li class="plan__perk">24/7 AI chat + voice on your website</li>
+              <li class="plan__perk">Trained on your own business</li>
+              <li class="plan__perk">Answers services, hours &amp; pricing</li>
+              <li class="plan__perk">No setup fee · cancel anytime</li>
+            </ul>
+            <button class="plan__btn plan__btn--outline" onclick="startCheckout('talking')">Add this to my site →</button>
+          </div>
+          <div class="plan plan--featured">
+            <div class="plan__badge">Most Popular</div>
+            <div class="plan__name">+ Scheduling</div>
+            <div class="plan__commitment">Let it book the job, not just answer</div>
+            <div class="plan__price-row"><span class="plan__price">$29</span><span class="plan__period">/mo</span></div>
+            <div class="plan__daily">about 97¢ a day · just +$10</div>
+            <div class="plan__divider"></div>
+            <ul class="plan__perks">
+              <li class="plan__perk">Everything in Talking Website</li>
+              <li class="plan__perk">Visitors book appointments in chat</li>
+              <li class="plan__perk">Request estimates automatically</li>
+              <li class="plan__perk">No setup fee · cancel anytime</li>
+            </ul>
+            <button class="plan__btn plan__btn--primary" onclick="startCheckout('scheduling')">Add booking — +$10/mo →</button>
+          </div>
+        </div>
+        <p class="pricing__guarantee"><strong>Cancel in one click</strong> — no contract, no call to cancel. Keep it only if it earns its keep.</p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section__eyebrow">Questions</div>
+        <h2 class="section__title">The quick answers</h2>
+        <p class="section__desc">Everything a busy owner wants to know before saying yes.</p>
+        <div class="faq">
+          <div class="faq__item"><div class="faq__q">Will this work with my current website?</div><div class="faq__a">Yes — Wix, Squarespace, WordPress, GoDaddy, anything. One line of code, or we add it for you. You keep your site exactly as it is. No rebuild.</div></div>
+          <div class="faq__item"><div class="faq__q">Can it make things up?</div><div class="faq__a">No. It only answers from what's on your website — no invented prices, no false promises.</div></div>
+          <div class="faq__item"><div class="faq__q">What does it cost to keep running?</div><div class="faq__a">$19/mo for the talking website, or $29/mo to add appointment and estimate scheduling. Billed securely through Stripe. Cancel anytime — no contract, no setup fee.</div></div>
+          <div class="faq__item"><div class="faq__q">Do I have to do anything technical?</div><div class="faq__a">No. Pay in one click, and we send your code snippet the same day to paste in yourself — or give us registrar access and we install it for you within 24 hours.</div></div>
+          <div class="faq__item"><div class="faq__q">How does the scheduling add-on work?</div><div class="faq__a">For $29/mo we connect your calendar for you, so visitors can book appointments and request estimates right in the chat. We wire it in — you don't lift a finger.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bottom-cta" id="try">
+      <div class="container">
+        <h2 class="bottom-cta__title">Still skeptical? Good. Try it.</h2>
+        <p class="bottom-cta__desc">10 seconds. Free. No signup, no card. Just your website URL and a little curiosity.</p>
+        <div class="ip__card">
+          <div class="ip__field">
+            <label class="ip__label" for="bottom-url-input">Enter your website — watch it learn your business in 10 seconds</label>
+            <input class="ip__input" id="bottom-url-input" type="text" placeholder="yourbusiness.com" autocomplete="url" aria-describedby="bottom-url-error" onkeypress="if(event.key==='Enter')handleDemoRequest('bottom')" />
+            <p id="bottom-url-error" role="alert" aria-live="assertive" style="display:none;color:var(--error);font-size:.78rem;margin-top:6px;line-height:1.4;">Please enter a valid website URL — include a domain extension like .com, .net, or .org.</p>
+          </div>
+          <button class="ip__btn" onclick="handleDemoRequest('bottom')">Try it out now →</button>
+          <p class="ip__note">Free demo. No signup, no card to try it. Watch it learn your business in 10 seconds.</p>
+        </div>
+      </div>
+    </section>
+    </main>
+
+    <footer class="footer"><div class="container"><p class="footer__text">&copy; 2026 AgentCopyAI &middot; Turn your website into one that talks.</p></div></footer>
   </div>
-</div>
-</div>
 
-<div id="wwu-transoverlay" style="position:fixed;inset:0;z-index:200;display:none;pointer-events:none;">
-  <div id="wwu-transflash" style="position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,#F4FEFF,#C7F2FF 45%,#67E8F9 90%);opacity:0;"></div>
-  <svg id="wwu-transbolt" style="position:absolute;inset:0;width:100%;height:100%;" preserveAspectRatio="none">
-    <defs><filter id="boltGlow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
-    <g data-bolt style="opacity:0"><path d="" fill="none" stroke="#67E8F9" stroke-width="6" stroke-linejoin="round" filter="url(#boltGlow)"/><path d="" fill="none" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"/></g>
-    <g data-bolt style="opacity:0"><path d="" fill="none" stroke="#67E8F9" stroke-width="5" stroke-linejoin="round" filter="url(#boltGlow)"/><path d="" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></g>
-    <g data-bolt style="opacity:0"><path d="" fill="none" stroke="#A5F3FC" stroke-width="4" stroke-linejoin="round" filter="url(#boltGlow)"/><path d="" fill="none" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></g>
-  </svg>
-</div>
+  <!-- AGENT DEMO PAGE -->
+  <div class="page" id="agent-page">
+    <div class="demo-page">
+      <div class="demo-loading" id="agent-loading">
+        <div class="demo-loading__icon">&#x26A1;</div>
+        <div class="demo-loading__title">Building your AI agent</div>
+        <div class="demo-loading__subtitle">We're reading the website and training a custom AI. Hang tight — this takes about 10 seconds.</div>
+        <div class="demo-loading__steps">
+          <div class="demo-loading__step" id="step-scrape"><span>&#x25CB;</span> Reading the website</div>
+          <div class="demo-loading__step" id="step-places"><span>&#x25CB;</span> Pulling business details</div>
+          <div class="demo-loading__step" id="step-agent"><span>&#x25CB;</span> Training the AI agent</div>
+          <div class="demo-loading__step" id="step-ready"><span>&#x25CB;</span> Going live</div>
+        </div>
+      </div>
 
-</div>
-<script>
-/* ============================================================================
- * WebsiteWakeUp runtime — vanilla port of Claude Design's React component.
- * Drives: state machine, sc-cond visibility, {{ X }} interpolation, audio,
- * canvas sparks, SVG bolts, transitions, and Stripe redirects.
- * ============================================================================ */
-(function(){
-  const CONFIG = {
-    WORKER_URL:'https://agentcopy-api.vercel.app',
-    GHL_WIDGET_ID:'69c34fd013ad14bdd250aace',
-    GHL_LOCATION_ID:'yJJywGNGFHkp8aQ5UtEE',
-    STRIPE_LINK_19:'https://buy.stripe.com/bJeaEY7xh4fte7qcwt3Je0M',
-    STRIPE_LINK_29:'https://buy.stripe.com/aFa9AUaJth2fd3mbsp3Je0N'
-  };
+      <div class="demo-result" id="agent-result" style="display:none;">
+        <div class="demo-header">
+          <div class="demo-header__pill"><span class="demo-header__pill-dot"></span> <span id="agent-source-url">agent ready</span></div>
+          <h1 class="demo-header__title" id="agent-biz-name"></h1>
+          <p class="demo-header__sub" id="agent-showcase-desc"></p>
+        </div>
 
-  // ── State ────────────────────────────────────────────────────────────────
-  const state = {
-    page:'landing', domain:'yoursite.com', urlError:false, soundOn:false,
-    statusText:'STANDING BY', climax:false, learned:null
-  };
-  const props = { theatrics:55, soundEnabled:true, showBetaOffer:true };
+        <div class="demo-main">
+          <div class="demo-info">
+            <div class="demo-info__label">Business Profile</div>
+            <div class="demo-info__name" id="agent-info-name"></div>
+            <div class="demo-info__url" id="agent-info-url"></div>
+            <div class="demo-info__detail" id="agent-info-rating" style="display:none;"><span class="demo-info__detail-icon">★</span> <span id="agent-rating-text"></span></div>
+            <div class="demo-info__detail" id="agent-info-address" style="display:none;"><span class="demo-info__detail-icon">📍</span> <span id="agent-address-text"></span></div>
+            <div class="demo-info__detail" id="agent-info-phone" style="display:none;"><span class="demo-info__detail-icon">📞</span> <span id="agent-phone-text"></span></div>
+            <div class="demo-info__detail" id="agent-info-hours" style="display:none;"><span class="demo-info__detail-icon">🕐</span> <span id="agent-hours-text"></span></div>
+            <div id="agent-info-learned" style="display:none;">
+              <div class="demo-info__divider"></div>
+              <div class="demo-info__label" style="margin-bottom:8px;">What the AI learned</div>
+              <div id="agent-learned-list" style="font-size:0.84rem;color:var(--text-secondary);line-height:1.6;"></div>
+            </div>
+            <div class="demo-info__divider"></div>
+            <div class="demo-info__built"><span class="g">●</span>&nbsp;Agent built in <strong id="agent-build-time" style="margin:0 3px;">—</strong> seconds</div>
+          </div>
 
-  // ── Compute derived values for binding ───────────────────────────────────
-  function computed(){
-    return {
-      isLanding: state.page==='landing',
-      isWaking:  state.page==='waking',
-      isReveal:  state.page==='reveal',
-      urlError:  state.urlError,
-      showSoundToggle: props.soundEnabled,
-      soundOn: state.soundOn,
-      showBeta: props.showBetaOffer,
-      climax: state.climax,
-      notClimax: !state.climax,
-      statusText: state.statusText,
-      domain: state.domain,
-      soundLabel:  state.soundOn?'🔊 SOUND ON':'🔇 SOUND OFF',
-      soundLabel2: state.soundOn?'SOUND ON':'SOUND OFF',
-      soundIcon:   state.soundOn?'🔊':'🔇',
-      soundColor:  state.soundOn?'#67E8F9':'#9aa0ad',
-      soundBorder: state.soundOn?'rgba(103,232,249,.6)':'rgba(255,255,255,.18)',
-      soundGlow:   state.soundOn?'0 0 16px rgba(103,232,249,.4)':'none',
-      learned: state.learned||{name:'',url:'',tagline:'',blurb:'',servicesText:'',hours:'',location:'',rating:''}
-    };
+          <div class="demo-chat-zone">
+            <div class="demo-chat-zone__header">
+              <div class="demo-chat-zone__title">💬 Live Conversation</div>
+              <div class="demo-chat-zone__live"><span class="demo-chat-zone__dot"></span> Agent online</div>
+            </div>
+            <div class="demo-chat-zone__body" id="chat-zone-body">
+              <div class="chat-zone-cta">
+                <div class="chat-zone-cta__bubble">
+                  <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="18" cy="18" r="18" fill="var(--accent-light)"/><path d="M10 13.5C10 12.12 11.12 11 12.5 11h11C24.88 11 26 12.12 26 13.5v7C26 21.88 24.88 23 23.5 23H20l-4 3v-3h-3.5C11.12 23 10 21.88 10 20.5v-7z" fill="var(--accent)" opacity="0.85"/></svg>
+                </div>
+                <div class="chat-zone-cta__prompt" id="agent-prompt-text">Your website is ready to talk</div>
+                <div class="chat-zone-cta__instruction">
+                  Tap the <strong>chat bubble</strong> at the bottom-right to start talking — by text or voice. Ask it anything a real customer would.
+                </div>
+                <div class="chat-zone-cta__arrow">
+                  <svg width="22" height="48" viewBox="0 0 22 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 2 Q18 16 11 30 Q7 38 14 44" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" fill="none" stroke-dasharray="4 3"/><path d="M10 40 L14 44 L18 40" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+                </div>
+                <div class="demo-chat-zone__suggestions">
+                  <span class="demo-chat-zone__suggestion">"What services do you offer?"</span>
+                  <span class="demo-chat-zone__suggestion">"What are your hours?"</span>
+                  <span class="demo-chat-zone__suggestion">"Can I get a quote?"</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="peakcta">
+          <h2 class="peakcta__title">This is your business, answered.</h2>
+          <p class="peakcta__sub">That's your own website talking. Add it to your real site and it answers every customer, 24/7.</p>
+          <button class="peakcta__btn" onclick="startCheckout('talking')">Add this to my site — $19/mo →</button>
+          <p class="peakcta__note">Secure Stripe checkout · About 63¢ a day · Cancel in one click</p>
+        </div>
+
+        <div class="pricing" id="demo-pricing">
+          <div class="pricing__header">
+            <h2 class="pricing__title">Keep it running on your website</h2>
+            <p class="pricing__sub">One booked job pays for the year. No setup fee, no contract, cancel anytime.</p>
+          </div>
+          <p class="pricing__anchor">A receptionist costs <b>$2,000+/mo</b>. A missed after-hours customer costs you the <b>whole job</b>. This costs <b>$19</b>.</p>
+          <div class="pricing__grid pricing__grid--two">
+            <div class="plan">
+              <div class="plan__name">Talking Website</div>
+              <div class="plan__commitment">Your existing site, upgraded</div>
+              <div class="plan__price-row"><span class="plan__price">$19</span><span class="plan__period">/mo</span></div>
+              <div class="plan__daily">about 63¢ a day</div>
+              <div class="plan__divider"></div>
+              <ul class="plan__perks">
+                <li class="plan__perk">24/7 AI chat + voice on your website</li>
+                <li class="plan__perk">Trained on your own business</li>
+                <li class="plan__perk">Answers services, hours &amp; pricing</li>
+                <li class="plan__perk">No setup fee · cancel anytime</li>
+              </ul>
+              <button class="plan__btn plan__btn--outline" onclick="startCheckout('talking')">Add this to my site →</button>
+            </div>
+            <div class="plan plan--featured">
+              <div class="plan__badge">Most Popular</div>
+              <div class="plan__name">+ Scheduling</div>
+              <div class="plan__commitment">Let it book the job, not just answer</div>
+              <div class="plan__price-row"><span class="plan__price">$29</span><span class="plan__period">/mo</span></div>
+              <div class="plan__daily">about 97¢ a day · just +$10</div>
+              <div class="plan__divider"></div>
+              <ul class="plan__perks">
+                <li class="plan__perk">Everything in Talking Website</li>
+                <li class="plan__perk">Visitors book appointments in chat</li>
+                <li class="plan__perk">Request estimates automatically</li>
+                <li class="plan__perk">No setup fee · cancel anytime</li>
+              </ul>
+              <button class="plan__btn plan__btn--primary" onclick="startCheckout('scheduling')">Add booking — +$10/mo →</button>
+            </div>
+          </div>
+          <p class="pricing__guarantee"><strong>Cancel in one click</strong> — no contract, no call to cancel. Keep it only if it earns its keep.</p>
+        </div>
+      </div>
+
+      <div class="demo-error" id="agent-error" style="display:none;">
+        <h2 class="demo-error__title">Couldn't load this demo</h2>
+        <p class="demo-error__desc">Something went wrong building the agent. Try refreshing or double-check the URL.</p>
+        <a href="/" class="btn">← Back to home</a>
+      </div>
+
+      <div class="demo-footer">Built by <a href="/">AgentCopyAI</a> · Turn your website into one that talks.</div>
+    </div>
+  </div>
+
+  <!-- SIGNUP MODAL -->
+  <div class="modal-overlay" id="signup-modal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal__close" onclick="closeModal()" aria-label="Close">&#x2715;</button>
+      <div id="modal-form-view">
+        <h2 class="modal__title" id="modal-title">Add it to your site</h2>
+        <p class="modal__sub">Drop your details below and we'll send your secure Stripe checkout link and your code snippet the same day. Prefer we install it? Give us registrar access and we'll have it live within 24 hours.</p>
+        <div class="modal__plan-tag" id="modal-plan-tag">Talking Website — $19/mo</div>
+        <div class="modal__field"><label class="modal__label" for="modal-biz">Business Name</label><input class="modal__input" id="modal-biz" type="text" placeholder="Joe's Plumbing" /></div>
+        <div class="modal__field"><label class="modal__label" for="modal-name">Your Name</label><input class="modal__input" id="modal-name" type="text" placeholder="Joe Smith" /></div>
+        <div class="modal__field"><label class="modal__label" for="modal-email">Email Address</label><input class="modal__input" id="modal-email" type="email" placeholder="joe@joesplumbing.com" /></div>
+        <div class="modal__field"><label class="modal__label" for="modal-phone">Phone Number</label><input class="modal__input" id="modal-phone" type="tel" placeholder="(978) 555-0123" /></div>
+        <div class="modal__field"><label class="modal__label" for="modal-platform">Where's your website? (so we can add the widget)</label><input class="modal__input" id="modal-platform" type="text" placeholder="WordPress, Wix, Squarespace, GoDaddy…" /></div>
+        <p id="modal-error" role="alert" aria-live="assertive" style="display:none;color:var(--error);font-size:.78rem;margin:4px 0 0;">Please fill in your business, name, email, and phone.</p>
+        <button class="modal__submit" id="modal-submit" onclick="submitSignup()">Send my checkout link →</button>
+        <p class="modal__disclaimer">$19/mo via Stripe ($29 with scheduling). We'll email your checkout link and code snippet the same day. Cancel anytime, one click.</p>
+      </div>
+      <div id="modal-success-view" style="display:none;">
+        <div class="modal__success">
+          <div class="modal__success-icon" aria-hidden="true">🎉</div>
+          <h2 class="modal__success-title">You're in.</h2>
+          <p class="modal__success-desc">Check your email — we'll send your Stripe checkout link and your code snippet the same day. Once it's in, your website starts talking to every visitor. Welcome aboard.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){var r=sessionStorage.redirect;delete sessionStorage.redirect;if(r&&r!==location.href){history.replaceState(null,null,r)}else{var q=window.location.search;if(q.indexOf('?/')===0){var d=q.slice(2).split('&').map(function(s){return s.replace(/~and~/g,'&')});history.replaceState(null,null,'/'+d[0]+(d.length>1?'?'+d.slice(1).join('&'):'')+window.location.hash)}}})();
+
+    var CONFIG={WORKER_URL:'https://agentcopy-api.vercel.app',GHL_WIDGET_ID:'69c34fd013ad14bdd250aace',GHL_LOCATION_ID:'yJJywGNGFHkp8aQ5UtEE',
+      /* Paste your Stripe Payment Link URLs below. Until set, the buttons open the contact form as a safe fallback. */
+      STRIPE_LINK_19:'https://buy.stripe.com/bJeaEY7xh4fte7qcwt3Je0M',STRIPE_LINK_29:'https://buy.stripe.com/aFa9AUaJth2fd3mbsp3Je0N'};
+
+    function getRoute(){var p=window.location.pathname;var m=p.match(/^\/(?:agent|site-agent)\/(.+?)\/?$/);if(m)return{page:'agent',slug:decodeURIComponent(m[1])};return{page:'landing'}}
+
+    function init(){var route=getRoute();if(route.page==='agent'){document.getElementById('nav-links-landing').style.display='none';document.getElementById('nav-cta').style.display='none';showPage('agent-page');loadAgent(route.slug)}else{showPage('landing-page');initObserver()}}
+
+    function showPage(id){document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});document.getElementById(id).classList.add('active')}
+
+    function scrollToDemo(){var el=document.getElementById('try');if(el){el.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(function(){var inp=document.getElementById('bottom-company-input')||document.getElementById('bottom-url-input');if(inp)inp.focus()},400)}}
+
+    function initObserver(){var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)'}})},{threshold:0.1});document.querySelectorAll('.step,.feat').forEach(function(el,i){el.style.opacity='0';el.style.transform='translateY(8px)';el.style.transition='opacity 0.3s ease '+(i*0.04)+'s, transform 0.3s ease '+(i*0.04)+'s';obs.observe(el)})}
+
+    function handleDemoRequest(source){
+  var urlInput=document.getElementById(source+'-url-input');
+  var companyInput=document.getElementById(source+'-company-input');
+  var errEl=document.getElementById(source+'-url-error');
+  var url=urlInput.value.trim();
+  var company=(companyInput?companyInput.value.trim():'');
+
+  function showError(){
+    urlInput.style.borderColor='#ef4444';
+    if(errEl)errEl.style.display='block';
+    urlInput.focus();
+    setTimeout(function(){urlInput.style.borderColor='';},2000);
   }
 
-  // ── Render ───────────────────────────────────────────────────────────────
-  // Walks all .sc-cond, shows/hides by data-show-when matching computed[]; then
-  // walks all elements and substitutes {{ X }} in text nodes + style attrs.
-  let _templateCache = null;
-  function getTpl(el){
-    let t = el._wwu_tpl;
-    if (!t){
-      t = {
-        text: {},  // textNodeIndex -> original text
-        style: el.getAttribute('style') || null,
-      };
-      // Capture original text node contents that have {{ }}
-      let i = 0;
-      for (const node of el.childNodes){
-        if (node.nodeType === 3 && /\{\{[^}]+\}\}/.test(node.nodeValue)){
-          t.text[i] = node.nodeValue;
-        }
-        i++;
+  if(!url){showError();return;}
+
+  var clean=url.replace(/^https?:\/\//,'').replace(/^www\./,'').replace(/\/.*$/,'').toLowerCase().trim();
+
+  // Require a valid TLD — reject plain business names with no domain suffix
+  if(!/(\.(com|net|org|co|io|biz|us|info|dev|ai|app|edu|gov|me|tv|ca|uk|au))$/.test(clean)){showError();return;}
+
+  if(errEl)errEl.style.display='none';
+
+  clean=clean.replace(/\.com$/,'').replace(/\.(net|org|co|io|biz|us|info|dev|ai|app|edu|gov|me|tv|ca|uk|au)$/,'-$1');
+  var slug=clean.replace(/[^a-zA-Z0-9-]+/g,'-').replace(/^-|-$/g,'');
+  if(company)sessionStorage.setItem('sa-hint-'+slug,company);
+  window.location.href='/site-agent/'+slug;
+}
+
+    async function loadAgent(slug){var loading=document.getElementById('agent-loading');var result=document.getElementById('agent-result');var errorEl=document.getElementById('agent-error');var t0=Date.now();var tldMatch=slug.match(/^(.+)-(net|org|co|io|biz|us|info|dev|ai|app)$/i);var displaySlug=tldMatch?tldMatch[1]:slug;var displayName=displaySlug.split('-').map(function(w){return w.charAt(0).toUpperCase()+w.slice(1)}).join(' ');document.title=displayName+' — AI Demo | AgentCopyAI';try{var apiPromise;if(CONFIG.WORKER_URL){apiPromise=fetch(CONFIG.WORKER_URL+'/api/create-agent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({slug:slug})}).then(function(r){return r.json()}).catch(function(){return fallbackData(slug)})}else{apiPromise=Promise.resolve(fallbackData(slug))}await animateStep('step-scrape',1400);await animateStep('step-places',1100);await animateStep('step-agent',1200);// Hold on "Going live" until the API actually resolves
+var data=await apiPromise;await animateStep('step-ready',300);var buildTime=data.buildTime||((Date.now()-t0)/1000).toFixed(1);loading.style.display='none';result.style.display='block';result.style.animation='fadeIn 0.4s ease-out both';var hdr=result.querySelector('.demo-header');var info=result.querySelector('.demo-info');var chat=result.querySelector('.demo-chat-zone');var peak=result.querySelector('.peakcta');[hdr,info,chat,peak].forEach(function(el,i){if(el){el.classList.add('fi');el.style.animationDelay=(0.08+i*0.1)+'s'}});(function(){var bt=parseFloat(buildTime)||0;var target=document.getElementById('agent-build-time');if(!target||!bt){if(target)target.textContent=buildTime;return}var start=null,dur=900;function tick(ts){if(!start)start=ts;var p=Math.min((ts-start)/dur,1);target.textContent=(bt*p).toFixed(1);if(p<1)requestAnimationFrame(tick)}requestAnimationFrame(tick)})();var name=data.name||displayName;var sourceUrl=data.sourceUrl||displaySlug+'.com';document.getElementById('agent-source-url').textContent=sourceUrl;document.getElementById('agent-biz-name').innerHTML='<em>'+name+'</em> — your website is talking';document.getElementById('agent-showcase-desc').innerHTML='We just turned <strong>'+name+'\'s</strong> own website into a talking one. It knows the services, hours, and everything in between. Go ahead — ask it anything a customer would.';document.getElementById('agent-info-name').textContent=name;document.getElementById('agent-info-url').textContent=sourceUrl;var hasPlaces=false;if(data.rating){document.getElementById('agent-info-rating').style.display='flex';document.getElementById('agent-rating-text').textContent='\u2605 '+data.rating+(data.reviewCount?' ('+data.reviewCount+' reviews)':'');hasPlaces=true}if(data.address){document.getElementById('agent-info-address').style.display='flex';document.getElementById('agent-address-text').textContent=data.address;hasPlaces=true}if(data.phone){document.getElementById('agent-info-phone').style.display='flex';document.getElementById('agent-phone-text').textContent=data.phone;hasPlaces=true}if(data.hours){document.getElementById('agent-info-hours').style.display='flex';document.getElementById('agent-hours-text').textContent=data.hours;hasPlaces=true}if(!hasPlaces){var learned=document.getElementById('agent-info-learned');var list=document.getElementById('agent-learned-list');var items=[];if(data.services){var svcLines=data.services.replace(/#{1,4}\s*/g,'').replace(/\[([^\]]+)\]\([^)]+\)/g,'$1').replace(/[_*`]/g,'').replace(/^\s*[-•]\s*/gm,'').split('\n').map(function(l){return l.trim()}).filter(function(l){return l.length>3&&l.length<100&&!/^https?:/i.test(l)}).slice(0,6);if(svcLines.length>0)items.push('<strong>Services:</strong> '+svcLines.join(', '))}if(data.about){var aboutClean=data.about.replace(/#{1,4}\s*/g,'').replace(/\[([^\]]+)\]\([^)]+\)/g,'$1').replace(/[_*`]/g,'').replace(/\n+/g,' ').trim().slice(0,220);if(aboutClean.length>20)items.push('<strong>About:</strong> '+aboutClean)}if(items.length>0){list.innerHTML=items.join('<br style="margin-bottom:8px;">');learned.style.display='block'}else{list.innerHTML='<span style="color:var(--text-muted);">Website scanned — services, capabilities, and company info loaded into the AI agent.</span>';learned.style.display='block'}}document.getElementById('agent-prompt-text').textContent=name+'’s website is ready to talk';window.__agentBizName=name;injectChatWidget()}catch(err){console.error(err);loading.style.display='none';errorEl.style.display='block'}}
+
+    function animateStep(id,ms){return new Promise(function(resolve){var el=document.getElementById(id);el.classList.add('active');el.querySelector('span').textContent='\u25C9';setTimeout(function(){el.classList.remove('active');el.classList.add('done');el.querySelector('span').textContent='\u2713';resolve()},ms)})}
+
+    function fallbackData(slug){var tldMatch=slug.match(/^(.+)-(net|org|co|io|biz|us|info|dev|ai|app)$/i);var cleaned=tldMatch?tldMatch[1]:slug;var tld=tldMatch?tldMatch[2]:'com';var parts=cleaned.split('-').filter(Boolean);var suffixes=['corp','inc','llc','group','tech','labs','works','systems','solutions','services','america','global','international','industries','enterprise','company','partners','associates','consulting','digital','media','design','studio','agency','pro','plus','hub','ai'];if(parts.length===1&&parts[0].length>6){for(var i=0;i<suffixes.length;i++){if(parts[0].toLowerCase().endsWith(suffixes[i])&&parts[0].length>suffixes[i].length+2){parts=[parts[0].slice(0,parts[0].length-suffixes[i].length),suffixes[i]];break}}}var name=parts.map(function(w){return w.charAt(0).toUpperCase()+w.slice(1)}).join(' ');return{name:name||'Local Business',address:'',phone:'',rating:null,reviewCount:0,hours:'',sourceUrl:cleaned+'.'+tld,widgetEmbed:null}}
+
+    function injectChatWidget(){if(!CONFIG.GHL_WIDGET_ID||document.getElementById('ghl-chat-script'))return;var s=document.createElement('script');s.id='ghl-chat-script';s.src='https://beta.leadconnectorhq.com/loader.js';s.setAttribute('data-resources-url','https://beta.leadconnectorhq.com/chat-widget/loader.js');s.setAttribute('data-widget-id',CONFIG.GHL_WIDGET_ID);document.body.appendChild(s)}
+
+    var selectedPlan='';var planLabels={talking:'Talking Website — $19/mo',scheduling:'+ Scheduling — $29/mo'};
+
+    function startCheckout(plan){
+      var link=(plan==='scheduling')?CONFIG.STRIPE_LINK_29:CONFIG.STRIPE_LINK_19;
+      // Pass business + email as Stripe prefill when we have them
+      if(link){
+        var url=link;var params=[];
+        if(window.__agentBizName)params.push('client_reference_id='+encodeURIComponent(window.__agentBizName));
+        if(params.length)url+=(link.indexOf('?')>-1?'&':'?')+params.join('&');
+        window.location.href=url;return;
       }
-      el._wwu_tpl = t;
+      // Fallback: no Stripe link configured yet -> capture details, we send checkout link same day
+      openModal(plan);
     }
-    return t;
-  }
-  function interp(s, c){
-    return s.replace(/\{\{\s*([\w\.]+)\s*\}\}/g, function(_,key){
-      const parts = key.split('.');
-      let v = c;
-      for (const p of parts){
-        if (v == null) return '';
-        v = v[p];
-      }
-      return v == null ? '' : String(v);
-    });
-  }
-  function applyBindings(root, c){
-    // For every element under root: substitute {{ X }} in text nodes and style
-    const walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT);
-    let el;
-    while ((el = walker.nextNode())){
-      // Text nodes
-      const orig = el._wwu_text_orig;
-      if (orig){
-        let i = 0;
-        for (const node of el.childNodes){
-          if (orig[i] != null) node.nodeValue = interp(orig[i], c);
-          i++;
-        }
-      } else {
-        // Snapshot text nodes that contain {{ }}
-        let has=false, snap={};
-        let i=0;
-        for (const node of el.childNodes){
-          if (node.nodeType===3 && /\{\{[^}]+\}\}/.test(node.nodeValue)){
-            snap[i] = node.nodeValue;
-            node.nodeValue = interp(node.nodeValue, c);
-            has = true;
-          }
-          i++;
-        }
-        if (has) el._wwu_text_orig = snap;
-      }
-      // Style attribute
-      const styleAttr = el.getAttribute && el.getAttribute('style');
-      if (styleAttr && styleAttr.indexOf('{{')>=0){
-        if (!el._wwu_style_orig) el._wwu_style_orig = styleAttr;
-        el.setAttribute('style', interp(el._wwu_style_orig, c));
-      } else if (el._wwu_style_orig){
-        el.setAttribute('style', interp(el._wwu_style_orig, c));
-      }
-    }
-  }
-  function render(){
-    const c = computed();
-    // sc-cond visibility
-    document.querySelectorAll('.sc-cond').forEach(function(el){
-      const cond = el.getAttribute('data-show-when');
-      const visible = !!evalCond(cond, c);
-      if (visible){
-        el.removeAttribute('hidden');
-        el.style.display = '';
-      } else {
-        el.setAttribute('hidden','');
-        el.style.display = 'none';
-      }
-    });
-    // {{ X }} interpolation
-    const root = document.getElementById('wwu-root') || document.body;
-    applyBindings(root, c);
-  }
-  function evalCond(name, c){
-    // Supports simple dotted access like learned.foo (boolean-cast)
-    const parts = name.split('.');
-    let v = c;
-    for (const p of parts){
-      if (v == null) return false;
-      v = v[p];
-    }
-    return !!v;
-  }
-  function setState(patch){
-    Object.assign(state, patch);
-    render();
-  }
 
-  // ── DOM refs (cached after first render) ────────────────────────────────
-  const $ = id => document.getElementById(id);
+    var __lastFocus=null;function openModal(plan){selectedPlan=plan;document.getElementById('modal-plan-tag').textContent=planLabels[plan]||plan;document.getElementById('modal-form-view').style.display='block';document.getElementById('modal-success-view').style.display='none';var errEl=document.getElementById('modal-error');if(errEl)errEl.style.display='none';if(window.__agentBizName)document.getElementById('modal-biz').value=window.__agentBizName;__lastFocus=document.activeElement;document.getElementById('signup-modal').classList.add('active');document.body.style.overflow='hidden';setTimeout(function(){var f=document.getElementById('modal-biz');if(f&&!f.value)f.focus();else document.getElementById('modal-name').focus()},60)}
 
-  // ── Audio ───────────────────────────────────────────────────────────────
-  let audio = null, buffers = {}, arcSrc = null, _wantArc = false, _loadStarted = false;
-  function ensureAudio(){
-    if (audio) return audio;
-    try {
-      const C = window.AudioContext || window.webkitAudioContext;
-      const ctx = new C();
-      const master = ctx.createGain(); master.gain.value=0; master.connect(ctx.destination);
-      audio = {ctx, master};
-      loadSounds();
-    } catch(e){ audio = null; }
-    return audio;
-  }
-  function loadSounds(){
-    if (!audio || _loadStarted) return;
-    _loadStarted = true;
-    const defs = { switch:'assets/switch-thunk.wav', arc:'assets/electric-arc.wav', thunder:'assets/thunder-rumble.wav' };
-    Object.keys(defs).forEach(function(k){
-      fetch(defs[k]).then(r=>r.ok?r.arrayBuffer():Promise.reject(0))
-        .then(buf=>new Promise((res,rej)=>audio.ctx.decodeAudioData(buf,res,rej)))
-        .then(b=>{ buffers[k]=b; if (k==='arc'&&_wantArc) startArc(); })
-        .catch(()=>{});
-    });
-  }
-  function setMuted(m){
-    if (!audio) return;
-    try { audio.master.gain.setTargetAtTime(m?0:0.9, audio.ctx.currentTime, 0.05); } catch(e){}
-  }
-  function play(key, gain){
-    if (!audio || !buffers[key]) return null;
-    try {
-      const src = audio.ctx.createBufferSource(); src.buffer = buffers[key];
-      const g = audio.ctx.createGain(); g.gain.value = gain==null?0.9:gain;
-      src.connect(g); g.connect(audio.master); src.start();
-      return {src,g};
-    } catch(e){ return null; }
-  }
-  function startArc(){
-    ensureAudio(); if (!audio || arcSrc) return; _wantArc = true;
-    if (!buffers.arc) return;
-    const src = audio.ctx.createBufferSource(); src.buffer = buffers.arc; src.loop = true;
-    const g = audio.ctx.createGain(); g.gain.value = 0.5;
-    src.connect(g); g.connect(audio.master); src.start();
-    arcSrc = {src,g};
-  }
-  function stopArc(){
-    _wantArc = false;
-    if (!arcSrc) return;
-    try { arcSrc.src.stop(); } catch(e){}
-    arcSrc = null;
-  }
-  function kathunk(){ ensureAudio(); play('switch', 1.0); }
-  function thunder(big){ ensureAudio(); play('thunder', big?1.0:0.55); }
+    function closeModal(){document.getElementById('signup-modal').classList.remove('active');document.body.style.overflow='';if(__lastFocus&&__lastFocus.focus)__lastFocus.focus()}
 
-  // ── Canvas sparks ───────────────────────────────────────────────────────
-  let sparks = [], _sparkRaf = null;
-  let reduced = false;
-  try { reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(e){}
-  const theatrics = ()=>Math.max(0,Math.min(100,props.theatrics))/100;
+    document.getElementById('signup-modal').addEventListener('click',function(e){if(e.target===this)closeModal()});document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.getElementById('signup-modal').classList.contains('active'))closeModal()});
 
-  function sizeCanvas(cv){
-    if (!cv) return;
-    const p = cv.parentElement;
-    const w = (p&&p.clientWidth)||window.innerWidth, h=(p&&p.clientHeight)||window.innerHeight;
-    cv.width = Math.max(2,w); cv.height = Math.max(2,h);
-  }
-  function sparkBurst(x,y){
-    const cv = $('wwu-sparkcanvas'); if (!cv) return;
-    sizeCanvas(cv);
-    const ox = x!=null?x:cv.width*0.6, oy = y!=null?y:cv.height*0.35;
-    const N = Math.round(16 + theatrics()*20);
-    for (let i=0;i<N;i++){
-      const ang = -Math.PI/2 + (Math.random()-0.5)*2.2;
-      const sp = 2 + Math.random()*5;
-      sparks.push({x:ox,y:oy,vx:Math.cos(ang)*sp,vy:Math.sin(ang)*sp,life:1,r:Math.random()*1.7+0.5});
-    }
-    if (!_sparkRaf) sparkLoop();
-  }
-  function sparkLoop(){
-    const cv = $('wwu-sparkcanvas'); if (!cv){ _sparkRaf=null; return; }
-    const ctx = cv.getContext('2d');
-    const step = ()=>{
-      ctx.clearRect(0,0,cv.width,cv.height);
-      for (let i=sparks.length-1;i>=0;i--){
-        const sp = sparks[i];
-        sp.vy += 0.12; sp.x += sp.vx; sp.y += sp.vy; sp.life -= 0.022;
-        if (sp.life<=0){ sparks.splice(i,1); continue; }
-        ctx.globalAlpha = Math.max(0,sp.life);
-        ctx.beginPath(); ctx.arc(sp.x,sp.y,sp.r,0,7);
-        ctx.fillStyle = sp.life>0.5?'#eaffff':'#7fd6ff';
-        ctx.shadowColor = '#7fd6ff'; ctx.shadowBlur = 8; ctx.fill();
-      }
-      ctx.globalAlpha = 1;
-      if (sparks.length) _sparkRaf = requestAnimationFrame(step);
-      else _sparkRaf = null;
-    };
-    _sparkRaf = requestAnimationFrame(step);
-  }
+    async function submitSignup(){var biz=document.getElementById('modal-biz').value.trim();var name=document.getElementById('modal-name').value.trim();var email=document.getElementById('modal-email').value.trim();var phone=document.getElementById('modal-phone').value.trim();var platform=(document.getElementById('modal-platform')||{}).value;platform=platform?platform.trim():'';var errEl=document.getElementById('modal-error');if(!biz||!name||!email||!phone){if(errEl)errEl.style.display='block';['modal-biz','modal-name','modal-email','modal-phone'].forEach(function(id){var inp=document.getElementById(id);if(!inp.value.trim()){inp.setAttribute('aria-invalid','true');inp.style.borderColor='var(--error)';setTimeout(function(){inp.style.borderColor='';inp.removeAttribute('aria-invalid')},2000)}});return}if(errEl)errEl.style.display='none';var btn=document.getElementById('modal-submit');btn.disabled=true;btn.textContent='Submitting…';try{await fetch(CONFIG.WORKER_URL+'/api/create-agent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({slug:'__signup__',signupData:{businessName:biz,contactName:name,email:email,phone:phone,platform:platform,plan:selectedPlan,source:'agentcopyai-demo-page'}})}).catch(function(){})}catch(e){}document.getElementById('modal-form-view').style.display='none';document.getElementById('modal-success-view').style.display='block';btn.disabled=false;btn.textContent='Put my website live \u2192'}
 
-  // ── SVG bolts ───────────────────────────────────────────────────────────
-  function genBolt(x1,y1,x2,y2,W){
-    let pts = [[x1,y1],[x2,y2]];
-    let disp = W*0.11;
-    for (let it=0;it<6;it++){
-      const np=[];
-      for (let i=0;i<pts.length-1;i++){
-        const aa=pts[i], bb=pts[i+1];
-        np.push(aa);
-        np.push([(aa[0]+bb[0])/2+(Math.random()-0.5)*disp,(aa[1]+bb[1])/2+(Math.random()-0.5)*disp]);
-      }
-      np.push(pts[pts.length-1]); pts = np; disp *= 0.56;
-    }
-    let d = 'M' + pts.map(p=>p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' L');
-    for (let i=3;i<pts.length-3;i+=5){
-      if (Math.random()<0.5){
-        const p = pts[i];
-        d += ' M'+p[0].toFixed(1)+' '+p[1].toFixed(1)+' L'+(p[0]+(Math.random()-0.5)*W*0.16).toFixed(1)+' '+(p[1]+(Math.random()-0.5)*W*0.16).toFixed(1);
-      }
-    }
-    return d;
-  }
-  function pulse(el, fade){
-    if (!el) return;
-    el.style.transition = 'none'; el.style.opacity = '1';
-    clearTimeout(el._pt);
-    el._pt = setTimeout(()=>{ el.style.transition = 'opacity '+(fade||0.3)+'s ease-out'; el.style.opacity = '0'; }, 55);
-  }
-  function strikeScene(big){
-    const el = $('wwu-bolt'); if (!el) return;
-    const groups = [...el.querySelectorAll('[data-bolt]')];
-    const srcs = [[640,70],[310,120],[655,65]];
-    const n = big ? groups.length : 1 + Math.round(Math.random());
-    groups.forEach((g,i)=>{
-      if (i>=n) return;
-      const sx = srcs[i%srcs.length][0] + (Math.random()-0.5)*40;
-      const sy = srcs[i%srcs.length][1] + (Math.random()-0.5)*30;
-      const tx = Math.max(15, Math.min(935, sx + (Math.random()-0.5)*640));
-      const ty = -30 + Math.random()*150;
-      const d = genBolt(sx,sy,tx,ty,950);
-      g.querySelectorAll('path').forEach(p=>p.setAttribute('d',d));
-      setTimeout(()=>pulse(g, big?0.45:0.3), i*45);
-    });
-    if (big) flashScene();
-  }
-  function flashScene(){
-    const el = $('wwu-sceneflash'); if (!el) return;
-    el.style.transition = 'none'; el.style.opacity = '0.6';
-    clearTimeout(el._pt);
-    el._pt = setTimeout(()=>{ el.style.transition = 'opacity .55s ease-out'; el.style.opacity = '0'; }, 50);
-  }
-  function strike(svgEl){
-    if (!svgEl) return;
-    const W = svgEl.clientWidth || window.innerWidth, H = svgEl.clientHeight || window.innerHeight;
-    svgEl.querySelectorAll('[data-bolt]').forEach((g,idx)=>{
-      const d = genBolt(W*(0.15+Math.random()*0.7), 0, W*(0.2+Math.random()*0.6), H*(0.6+Math.random()*0.35), W);
-      g.querySelectorAll('path').forEach(p=>p.setAttribute('d',d));
-      setTimeout(()=>pulse(g,0.34), idx*55);
-    });
-  }
-
-  // ── Lightning loop during waking ────────────────────────────────────────
-  let _lightningTimer = null;
-  function startLightning(){
-    const fire = ()=>{
-      if (state.page !== 'waking') return;
-      strikeScene(false);
-      if (state.soundOn && Math.random() < 0.4) thunder(false);
-      _lightningTimer = setTimeout(fire, 650 + Math.random()*1000);
-    };
-    _lightningTimer = setTimeout(fire, 350);
-  }
-  function stopLightning(){ if (_lightningTimer){ clearTimeout(_lightningTimer); _lightningTimer=null; } }
-
-  // ── URL validate ────────────────────────────────────────────────────────
-  function validate(raw){
-    const c = (raw||'').replace(/^https?:\/\//,'').replace(/^www\./,'').replace(/\/.*$/,'').toLowerCase().trim();
-    if (!c || !/\.(com|net|org|co|io|biz|us|info|dev|ai|app|edu|gov|me|tv|ca|uk|au)$/.test(c)) return null;
-    return c;
-  }
-
-  // ── Routing ─────────────────────────────────────────────────────────────
-  function setHash(p, slug){
-    try {
-      const u = p==='waking' ? '#/waking/'+(slug||'') :
-                p==='reveal' ? '#/site-agent/'+(slug||'') : '#/';
-      history.replaceState(null,'',u);
-    } catch(e){}
-  }
-
-  // ── Main flow ───────────────────────────────────────────────────────────
-  let slug = null;
-  function startFlow(domain){
-    slug = domain;
-    setState({page:'waking', domain, climax:false, statusText:'STANDING BY'});
-    setHash('waking', domain);
-    startWaking();
-  }
-  function startWaking(){
-    startLightning();
-    if (state.soundOn) startArc();
-    setTimeout(()=>{
-      kathunk(); strikeScene(true);
-      setState({statusText:'POWERING UP'});
-      const cv = $('wwu-sparkcanvas');
-      sparkBurst(cv?cv.width*0.62:null, cv?cv.height*0.34:null);
-    }, 600);
-    setTimeout(()=>runStepsMock(), 1700);
-  }
-  function runStepsMock(){
-    let i = 0;
-    const step = ()=>{
-      if (i>=4){ enterHold(); return; }
-      completeStep(i); i++;
-      setTimeout(step, reduced?140:1100);
-    };
-    step();
-  }
-  function completeStep(i){
-    const status = ['READING SITE...','CHARGING GOOGLE PROFILE...','TRAINING AGENT...','ACTIVATING VOICE...'];
-    setState({statusText: status[i] || status[3]});
-    strikeScene(true);
-    const cv = $('wwu-sparkcanvas');
-    sparkBurst(cv?cv.width*(0.5+Math.random()*0.2):null, cv?cv.height*0.34:null);
-  }
-  function enterHold(){
-    setState({statusText:'SYSTEM LIVE — FINAL POWER UP'});
-    setTimeout(()=>climax(), reduced?200:1500);
-  }
-  function climax(){
-    setState({climax:true, statusText:'SYSTEM LIVE.'});
-    thunder(true); strikeScene(true);
-    const ov = $('wwu-transoverlay'), fl = $('wwu-transflash');
-    if (ov) ov.style.display = 'block';
-    if ($('wwu-transbolt')) strike($('wwu-transbolt'));
-    if (fl){
-      fl.style.transition='none'; fl.style.opacity='0.98';
-      requestAnimationFrame(()=>{ fl.style.transition='opacity .7s ease-out'; fl.style.opacity='0'; });
-    }
-    if ($('wwu-page2root')) $('wwu-page2root').style.animation = 'wwuShake .5s ease';
-    setTimeout(()=>{
-      enterReveal(slug);
-      setTimeout(()=>{ if (ov) ov.style.display='none'; }, 700);
-    }, 1500);
-  }
-
-  // ── Reveal ──────────────────────────────────────────────────────────────
-  function enterReveal(domain){
-    clearAllTimers();
-    stopLightning();
-    stopArc();
-    const learned = mockLearned(domain || slug || state.domain);
-    setState({page:'reveal', domain:learned.url, learned});
-    setHash('reveal', learned.url);
-    startRevealFx();
-  }
-  function mockLearned(domain){
-    const base = (domain||'yoursite.com').replace(/\.(com|net|org|co|io|biz|us|info|dev|ai|app|edu|gov|me|tv|ca|uk|au)$/,'');
-    const name = base.split(/[-.]/).filter(Boolean).map(w=>w[0].toUpperCase()+w.slice(1)).join(' ') || 'Your Business';
-    return {
-      name, url:domain, tagline:'Fast, reliable service — done right.',
-      blurb:'Serving the local area with quality work and honest pricing, seven days a week.',
-      servicesText:'Repairs · Installs · Estimates',
-      hours:'Mon–Sat · 7a–7p', location:'Greater metro area',
-      rating:'4.8 (126)'
-    };
-  }
-  let _revRaf = null;
-  function startRevealFx(){
-    const cv = $('wwu-revealcanvas'); if (!cv || reduced) return;
-    sizeCanvas(cv);
-    const ctx = cv.getContext('2d');
-    const N = 40; const ps = [];
-    for (let i=0;i<N;i++) ps.push({x:Math.random()*cv.width,y:Math.random()*cv.height,vx:(Math.random()-0.5)*0.12,vy:-0.1-Math.random()*0.25,r:Math.random()*1.6+0.4,a:Math.random()*0.35+0.1});
-    const loop = ()=>{
-      ctx.clearRect(0,0,cv.width,cv.height);
-      for (const p of ps){
-        p.x += p.vx; p.y += p.vy;
-        if (p.y < -6){ p.y = cv.height+6; p.x = Math.random()*cv.width; }
-        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,7);
-        ctx.fillStyle = 'rgba(103,232,249,'+p.a+')';
-        ctx.shadowColor = '#67E8F9'; ctx.shadowBlur = 5; ctx.fill();
-      }
-      _revRaf = requestAnimationFrame(loop);
-    };
-    loop();
-  }
-
-  // ── Timer cleanup ───────────────────────────────────────────────────────
-  function clearAllTimers(){
-    stopLightning();
-    if (_sparkRaf){ cancelAnimationFrame(_sparkRaf); _sparkRaf = null; }
-    if (_revRaf){ cancelAnimationFrame(_revRaf); _revRaf = null; }
-    sparks = [];
-  }
-
-  // ── Public API ──────────────────────────────────────────────────────────
-  const app = {
-    onWake(e){
-      if (e && e.preventDefault) e.preventDefault();
-      const input = $('wwu-input');
-      const domain = validate(input ? input.value : '');
-      if (!domain){
-        setState({urlError:true});
-        if (input) input.focus();
-        return;
-      }
-      setState({urlError:false});
-      const a = ensureAudio();
-      if (a && a.ctx.state === 'suspended') a.ctx.resume();
-      if (state.soundOn) setMuted(false);
-      const ov = $('wwu-transoverlay'), fl = $('wwu-transflash');
-      if (ov) ov.style.display = 'block';
-      thunder(true);
-      if ($('wwu-transbolt')) strike($('wwu-transbolt'));
-      if (fl){
-        fl.style.transition='none'; fl.style.opacity='0.96';
-        requestAnimationFrame(()=>{ fl.style.transition='opacity .55s ease-out'; fl.style.opacity='0'; });
-      }
-      setTimeout(()=>{
-        startFlow(domain);
-        setTimeout(()=>{ if (ov) ov.style.display='none'; }, 560);
-        // Fire real backend in parallel (we ignore response — reveal uses mock data
-        // because reveal page is the actual /site-agent/<slug> demo which loads
-        // from API itself)
-        try {
-          fetch(CONFIG.WORKER_URL+'/api/create-agent', {
-            method:'POST', headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({slug:domain.replace(/\./g,'-')})
-          }).catch(()=>{});
-        } catch(e){}
-      }, 270);
-    },
-    onKey(e){ if (e.key === 'Enter') app.onWake(e); },
-    goWake(e){
-      if (e && e.preventDefault) e.preventDefault();
-      if (state.page !== 'landing'){ app.restart(); return; }
-      const el = $('wwu-input');
-      if (el){ try { el.scrollIntoView({block:'center'}); } catch(e){} el.focus(); }
-    },
-    toggleSound(){
-      const on = !state.soundOn;
-      setState({soundOn:on});
-      const a = ensureAudio();
-      if (a && a.ctx.state === 'suspended') a.ctx.resume();
-      setMuted(!on);
-      if (on && state.page === 'waking') startArc();
-      else if (!on) stopArc();
-    },
-    restart(){
-      clearAllTimers();
-      if ($('wwu-transoverlay')) $('wwu-transoverlay').style.display = 'none';
-      if ($('wwu-page2root')) $('wwu-page2root').style.animation = '';
-      setState({page:'landing', climax:false, learned:null, statusText:'STANDING BY'});
-      setHash('landing');
-    },
-    checkoutTalking(){
-      window.open(CONFIG.STRIPE_LINK_19, '_blank', 'noopener');
-    },
-    checkoutSched(){
-      window.open(CONFIG.STRIPE_LINK_29, '_blank', 'noopener');
-    },
-  };
-  window._app = app;
-
-  // ── Boot ────────────────────────────────────────────────────────────────
-  function boot(){
-    render();
-    // Hash-based deep links
-    const h = location.hash || '';
-    let m;
-    if ((m = h.match(/waking\/(.+?)\/?$/))){ startFlow(decodeURIComponent(m[1])); }
-    else if ((m = h.match(/site-agent\/(.+?)\/?$/))){ enterReveal(decodeURIComponent(m[1])); }
-    window.addEventListener('resize', function(){
-      if (state.page==='waking') sizeCanvas($('wwu-sparkcanvas'));
-      if (state.page==='reveal') sizeCanvas($('wwu-revealcanvas'));
-    });
-  }
-  if (document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', boot);
-  } else {
-    boot();
-  }
-})();
-
-</script>
+    init();
+  </script>
 </body>
 </html>
