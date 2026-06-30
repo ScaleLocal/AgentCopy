@@ -21,58 +21,128 @@
 </script>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="robots" content="noindex,nofollow" />
 <title>WebsiteWakeUp — Your AI agent is awake</title>
-<meta name="description" content="Your website is now answering customers — by chat and voice — 24/7. Add this AI agent to your site for $19/mo." />
+<meta name="description" content="Your website just hired a 24/7 receptionist. AI chat + voice agent trained on your business. $19/mo. Cancel in 1 click." />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230C0A09'/%3E%3Cpolyline points='6,9 11,23 16,15.5 21,23 26,9' fill='none' stroke='%2322D3EE' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
-  *,*::before,*::after{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{background:#FAFAF9;color:#0C0A09;font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;}
+  :root{
+    --bg:#FAFAF9; --ink:#0C0A09; --ink-2:#1C1917; --ink-3:#57534E; --ink-4:#78716C; --ink-5:#A8A29E;
+    --line:#E2E0DB; --line-soft:#EFEDE9; --line-strong:#D6D3D1;
+    --teal:#0D9488; --teal-2:#0F766E; --teal-bg:#CCFBF1; --teal-border:#99F6E4; --teal-soft:#F0FDFA;
+    --cyan:#22D3EE; --cyan-2:#67E8F9;
+    --grad:linear-gradient(135deg,#0D9488,#22D3EE);
+    --shadow-card:0 10px 30px rgba(12,10,9,.05);
+    --shadow-cta:0 8px 22px rgba(34,211,238,.26);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html,body{background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;}
+
   @keyframes wwuPulse{0%,100%{opacity:1}50%{opacity:.4}}
   @keyframes wwuPop{0%{opacity:0;transform:scale(.72)}60%{opacity:1;transform:scale(1.05)}100%{opacity:1;transform:scale(1)}}
   @keyframes wwuRise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-
-  /* iPhone — locked to 280px to match original sizing + keep widget at natural size */
-  .phone-bezel{position:relative;background:linear-gradient(145deg,#2A2A30,#0B0B0E);border-radius:42px;padding:9px;box-shadow:0 36px 70px rgba(12,10,9,.28),inset 0 1px 0 rgba(255,255,255,.14);width:280px;}
-  .phone-screen{position:relative;border-radius:34px;overflow:hidden;background:#0E2034;aspect-ratio:9/19.3;}
-  .phone-notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:82px;height:19px;background:#0B0B0E;border-radius:0 0 13px 13px;z-index:5;pointer-events:none;}
-  .phone-frame{position:absolute;inset:0;border:0;width:100%;height:100%;display:block;background:#fff;}
-  @media (max-width:760px){
-    .phone-bezel{width:min(280px,82vw);}
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation:none !important;transition:none !important;}
   }
 
-  /* Sales CTA buttons */
-  .pricebtn-primary{display:block;width:100%;text-align:center;padding:16px 14px;border-radius:12px;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;background:linear-gradient(135deg,#0D9488,#22D3EE);color:#04201E;box-shadow:0 8px 22px rgba(34,211,238,.26);transition:transform .15s,box-shadow .15s;line-height:1.2;}
-  .pricebtn-primary:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(34,211,238,.4);}
-  .pricebtn-primary small{display:block;font-size:.7rem;font-weight:600;opacity:.78;letter-spacing:.05em;margin-bottom:3px;}
+  /* Skip nav for screen readers */
+  .skip{position:absolute;left:-9999px;top:0;background:#000;color:#fff;padding:10px 14px;border-radius:6px;}
+  .skip:focus{left:16px;top:16px;z-index:9999;}
+
+  /* iPhone — bumped to 320px desktop, scales on mobile */
+  .phone-bezel{position:relative;background:linear-gradient(145deg,#2A2A30,#0B0B0E);border-radius:46px;padding:10px;box-shadow:0 36px 70px rgba(12,10,9,.28),inset 0 1px 0 rgba(255,255,255,.14);width:320px;}
+  .phone-screen{position:relative;border-radius:36px;overflow:hidden;background:#0E2034;aspect-ratio:9/19.5;}
+  /* Real Dynamic Island shape */
+  .phone-notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:95px;height:28px;background:#000;border-radius:18px;z-index:5;pointer-events:none;}
+  .phone-frame{position:absolute;inset:0;border:0;width:100%;height:100%;display:block;background:#fff;}
+  @media (max-width:760px){
+    .phone-bezel{width:min(300px,80vw);}
+  }
+
+  /* Sales CTA buttons (now <a> for iOS Safari) */
+  .cta-primary{display:block;width:100%;text-align:center;padding:16px 14px;border-radius:14px;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.02rem;background:var(--grad);color:#03100F;box-shadow:var(--shadow-cta);transition:transform .15s,box-shadow .15s;line-height:1.2;text-decoration:none;}
+  .cta-primary:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(34,211,238,.4);}
+  .cta-primary:focus-visible{outline:3px solid var(--ink);outline-offset:3px;}
+  .cta-primary small{display:block;font-size:.7rem;font-weight:600;opacity:.78;letter-spacing:.05em;margin-bottom:3px;}
   .anchor-strike{color:#A8A29E;text-decoration:line-through;font-weight:600;margin-right:8px;font-size:.92em;}
 
-  .sched-card{display:flex;align-items:flex-start;gap:14px;padding:18px;border-radius:14px;border:1.5px dashed #D6D3D1;background:#fff;cursor:pointer;transition:all .15s;}
-  .sched-card.on{background:#F0FDFA;border-color:#0D9488;border-style:solid;}
-  .sched-card input{margin-top:3px;width:18px;height:18px;accent-color:#0D9488;cursor:pointer;flex-shrink:0;}
+  /* Tier comparison cards (replaces toggle) */
+  .tier-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  @media (max-width:520px){.tier-grid{grid-template-columns:1fr;}}
+  .tier{position:relative;background:#fff;border:1.5px solid var(--line-strong);border-radius:16px;padding:18px 16px 16px;cursor:pointer;transition:all .15s;text-align:left;}
+  .tier:hover{border-color:var(--teal);}
+  .tier.selected{border-color:var(--teal);background:var(--teal-soft);box-shadow:0 0 0 3px rgba(13,148,136,.12);}
+  .tier-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.96rem;color:var(--ink);}
+  .tier-tag{position:absolute;top:-10px;right:14px;font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.1em;background:var(--grad);color:#03100F;padding:4px 9px;border-radius:6px;font-weight:700;}
+  .tier-price{margin-top:6px;display:flex;align-items:baseline;gap:6px;}
+  .tier-price .anchor{color:var(--ink-5);text-decoration:line-through;font-size:.95rem;font-weight:600;}
+  .tier-price .now{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.6rem;color:var(--ink);}
+  .tier-price .per{color:var(--ink-3);font-size:.78rem;}
+  .tier-desc{font-size:.78rem;color:var(--ink-3);margin-top:5px;line-height:1.45;}
+  .tier-radio{display:inline-block;width:14px;height:14px;border:2px solid var(--line-strong);border-radius:50%;margin-right:7px;vertical-align:-2px;position:relative;}
+  .tier.selected .tier-radio{border-color:var(--teal);}
+  .tier.selected .tier-radio::after{content:'';position:absolute;top:2px;left:2px;width:6px;height:6px;border-radius:50%;background:var(--teal);}
 
-  .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:32px;margin-top:0;max-width:880px;margin-left:auto;margin-right:auto;}
-  .stat-num{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(2.4rem,5vw,3.4rem);line-height:1;color:#0C0A09;font-weight:400;}
-  .stat-lbl{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.16em;color:#A8A29E;text-transform:uppercase;margin-top:10px;line-height:1.5;}
+  /* "Try it" instructions */
+  .try-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow-card);}
+  .try-card h3{font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:700;margin:0 0 8px;color:var(--ink);letter-spacing:-.01em;}
+  .try-card .sub{color:var(--ink-3);font-size:.9rem;line-height:1.55;margin:0 0 14px;}
+  .try-list{display:flex;flex-direction:column;gap:9px;margin:0;padding:0;list-style:none;}
+  .try-list li{display:flex;gap:11px;font-size:.88rem;color:var(--ink-2);line-height:1.5;align-items:flex-start;}
+  .try-list .num{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--teal-bg);color:var(--teal-2);font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;display:flex;align-items:center;justify-content:center;line-height:1;}
 
-  .testimonial-q{font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-size:clamp(1.3rem,3vw,1.8rem);color:#0C0A09;line-height:1.3;max-width:600px;margin:0 auto;}
-  .testimonial-sub{font-size:.95rem;color:#57534E;line-height:1.6;margin:14px auto 0;max-width:520px;}
-  .testimonial-sub b{color:#0C0A09;font-weight:600;}
+  /* Lab report — REAL DATA ONLY (rows hidden by default, shown only if API returns data) */
+  .lab-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:var(--shadow-card);}
+  .lab-card .lab-h{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.14em;color:var(--teal);margin-bottom:12px;}
+  .lab-row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px dashed var(--line-soft);}
+  .lab-row:last-of-type{border-bottom:none;}
+  .lab-row[hidden]{display:none !important;}
+  .lab-lbl{font-family:'JetBrains Mono',monospace;font-size:.66rem;color:var(--ink-5);letter-spacing:.06em;}
+  .lab-val{color:var(--ink-2);font-weight:600;font-size:.86rem;text-align:right;}
 
-  /* "Try it" instructions card */
-  .try-card{background:#fff;border:1px solid #E2E0DB;border-radius:18px;padding:24px;box-shadow:0 10px 30px rgba(12,10,9,.05);}
-  .try-card h3{font-family:'Space Grotesk',sans-serif;font-size:1.15rem;font-weight:700;margin:0 0 8px;color:#0C0A09;letter-spacing:-.01em;}
-  .try-card .sub{color:#57534E;font-size:.92rem;line-height:1.55;margin:0 0 16px;}
-  .try-list{display:flex;flex-direction:column;gap:10px;margin:0 0 14px;padding:0;list-style:none;}
-  .try-list li{display:flex;gap:11px;font-size:.9rem;color:#1C1917;line-height:1.55;align-items:flex-start;}
-  .try-list .num{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:#CCFBF1;color:#0F766E;font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;display:flex;align-items:center;justify-content:center;line-height:1;}
-  .try-card .pro-tip{margin-top:14px;padding-top:14px;border-top:1px solid #EFEDE9;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#0F766E;letter-spacing:.04em;line-height:1.5;}
+  /* Money-back badge */
+  .guarantee{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:10px;font-size:.82rem;color:#15803D;}
+  .guarantee svg{flex-shrink:0;}
 
+  /* Beta strip — kept honest */
+  .beta-strip{background:linear-gradient(135deg,var(--teal-soft),#ECFEFF);border:1px solid var(--teal-border);border-radius:12px;padding:12px 16px;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--teal-2);letter-spacing:.04em;text-align:center;line-height:1.5;}
+  .beta-strip b{color:var(--teal-2);}
+
+  /* Closing pitch */
+  .testimonial-q{font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-size:clamp(1.3rem,3vw,1.8rem);color:var(--ink);line-height:1.3;max-width:600px;margin:0 auto;}
+  .testimonial-sub{font-size:.95rem;color:var(--ink-3);line-height:1.6;margin:14px auto 0;max-width:520px;}
+  .testimonial-sub b{color:var(--ink);font-weight:600;}
+
+  /* Value prop cards — SVG icons not emoji */
+  .vprop{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;}
+  .vprop-icon{width:28px;height:28px;color:var(--teal);margin-bottom:8px;}
+  .vprop-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.02rem;color:var(--ink);margin-bottom:5px;}
+  .vprop-body{font-size:.86rem;color:var(--ink-3);line-height:1.5;}
+
+  /* Objection FAQ */
+  .obj-accordion{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;transition:border-color .2s;}
+  .obj-accordion + .obj-accordion{margin-top:8px;}
+  .obj-accordion[open]{border-color:var(--teal);}
+  .obj-accordion summary{padding:16px 18px;cursor:pointer;font-weight:600;font-size:.92rem;color:var(--ink);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;}
+  .obj-accordion summary::-webkit-details-marker{display:none;}
+  .obj-accordion summary::after{content:'+';color:var(--teal);font-size:1.3rem;font-weight:400;transition:transform .2s;line-height:1;}
+  .obj-accordion[open] summary::after{transform:rotate(45deg);}
+  .obj-body{padding:0 18px 16px;color:var(--ink-3);font-size:.88rem;line-height:1.55;}
+
+  /* Mobile sticky CTA */
+  .sticky-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:100;padding:12px 14px;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-top:1px solid var(--line);}
+  @media (max-width:760px){
+    body{padding-bottom:80px;}
+    .sticky-cta{display:block;}
+  }
+
+  /* Layout */
+  .reveal-grid{display:grid;grid-template-columns:auto 1fr;gap:48px;align-items:start;margin-top:clamp(40px,6vh,64px);justify-content:center;}
   @media (max-width:880px){
-    .reveal-grid{grid-template-columns:1fr !important;}
+    .reveal-grid{grid-template-columns:1fr;}
     .reveal-grid > div:first-child{order:1;}
     .reveal-grid > div:last-child{order:2;}
   }
@@ -80,275 +150,392 @@
 </head>
 <body>
 
-<div style="position:fixed;inset:0;overflow:auto;background:#FAFAF9;color:#0C0A09;">
+<a href="#main" class="skip">Skip to content</a>
+
+<div style="position:relative;background:var(--bg);color:var(--ink);min-height:100vh;">
 
   <!-- NAV -->
-  <div style="position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:14px 22px;background:rgba(250,250,249,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid #ECEAE6;">
-    <a href="/" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;">
-      <span style="width:32px;height:32px;border-radius:8px;background:#0C0A09;display:inline-flex;align-items:center;justify-content:center;">
-        <svg viewBox="0 0 32 32" width="20" height="20"><polyline points="6,9 11,23 16,15.5 21,23 26,9" fill="none" stroke="#22D3EE" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <header style="position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:14px 22px;background:rgba(250,250,249,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid #ECEAE6;">
+    <a href="/" aria-label="WebsiteWakeUp home" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;">
+      <span style="width:32px;height:32px;border-radius:8px;background:#0C0A09;display:inline-flex;align-items:center;justify-content:center;" aria-hidden="true">
+        <svg viewBox="0 0 32 32" width="20" height="20" focusable="false"><polyline points="6,9 11,23 16,15.5 21,23 26,9" fill="none" stroke="#22D3EE" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </span>
-      <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;letter-spacing:-.01em;color:#0C0A09;"><b>Website</b><span style="color:#0D9488;">WakeUp</span></span>
+      <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;letter-spacing:-.01em;color:var(--ink);"><b>Website</b><span style="color:var(--teal);">WakeUp</span></span>
     </a>
-    <a href="/" style="padding:8px 14px;border-radius:9px;border:1px solid #E2E0DB;background:#fff;text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:#57534E;">← START OVER</a>
-  </div>
+    <a href="/" style="padding:8px 14px;border-radius:9px;border:1px solid var(--line);background:#fff;text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--ink-3);">← Start over</a>
+  </header>
 
-  <!-- HERO -->
-  <div style="max-width:1100px;margin:0 auto;padding:clamp(40px,7vh,72px) 22px 30px;">
-    <div style="text-align:center;animation:wwuPop .55s cubic-bezier(.2,.9,.3,1.2) both;">
-      <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 15px;border-radius:100px;border:1px solid #99F6E4;background:#CCFBF1;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.14em;color:#0F766E;margin-bottom:22px;">
-        <span style="width:7px;height:7px;border-radius:50%;background:#0D9488;animation:wwuPulse 2s infinite;"></span>
-        <span>YOUR AGENT IS LIVE</span>
-      </div>
-      <h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2.8rem,8vw,5rem);line-height:1.0;letter-spacing:-.035em;margin:0;color:#0C0A09;">It&rsquo;s <span style="color:#0D9488;">awake.</span></h1>
-      <p style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(1.1rem,2.5vw,1.55rem);line-height:1.2;letter-spacing:-.01em;margin:16px auto 0;max-width:640px;color:#1C1917;">
-        <span style="color:#0D9488;" id="hero-bizname">Your website</span> is now answering customers &mdash; by chat <span style="color:#0D9488;">and voice</span>, 24/7.
-      </p>
-      <p style="font-family:'Inter',sans-serif;font-size:1rem;color:#57534E;margin:14px auto 0;max-width:560px;line-height:1.55;">
-        Pick up your phone and treat it like a customer would. Click chat. Try voice. Ask anything.
-      </p>
-    </div>
+  <main id="main">
 
-    <!-- iPhone + Sales grid -->
-    <div class="reveal-grid" style="display:grid;grid-template-columns:auto 1fr;gap:48px;align-items:start;margin-top:clamp(40px,6vh,64px);justify-content:center;">
-
-      <!-- LEFT: iPhone with real iframe -->
-      <div style="display:flex;flex-direction:column;align-items:center;">
-        <div class="phone-bezel">
-          <div class="phone-screen">
-            <div class="phone-notch"></div>
-            <iframe id="sa-iframe" class="phone-frame" src="about:blank" allow="microphone *; autoplay *; clipboard-write *" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-top-navigation-by-user-activation"></iframe>
-          </div>
+    <!-- HERO -->
+    <section style="max-width:1100px;margin:0 auto;padding:clamp(40px,7vh,72px) 22px 30px;">
+      <div style="text-align:center;animation:wwuPop .55s cubic-bezier(.2,.9,.3,1.2) both;">
+        <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 15px;border-radius:100px;border:1px solid var(--teal-border);background:var(--teal-bg);font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.14em;color:var(--teal-2);margin-bottom:18px;">
+          <span style="width:7px;height:7px;border-radius:50%;background:var(--teal);animation:wwuPulse 2s infinite;" aria-hidden="true"></span>
+          <span>IT'S AWAKE</span>
         </div>
-        <p style="text-align:center;font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.1em;color:#A8A29E;margin-top:16px;text-transform:uppercase;line-height:1.5;max-width:280px;">
-          ↑ This is your live website, plus the AI agent we just trained.
+        <h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2.4rem,6vw,4.2rem);line-height:1.05;letter-spacing:-.03em;margin:0;color:var(--ink);">
+          <span id="hero-bizname">Your website</span> just hired<br>a <span style="color:var(--teal);">24/7 receptionist</span>.
+        </h1>
+        <p style="font-family:'Inter',sans-serif;font-size:clamp(1rem,2vw,1.18rem);color:var(--ink-3);margin:18px auto 0;max-width:600px;line-height:1.55;">
+          It just answered a customer while you were reading this. Try it yourself — pick up your phone and treat it like a customer would.
         </p>
       </div>
 
-      <!-- RIGHT: Sales stack -->
-      <div style="display:flex;flex-direction:column;gap:16px;max-width:460px;">
+      <!-- iPhone + Sales -->
+      <div class="reveal-grid">
 
-        <!-- "Try it" instructions -->
-        <div class="try-card">
-          <h3>Test it like one of your customers would.</h3>
-          <p class="sub">This is your <strong>actual website</strong>, with the AI agent installed. Try this:</p>
-          <ol class="try-list">
-            <li><span class="num">1</span>Tap the chat bubble in the bottom-right of the phone.</li>
-            <li><span class="num">2</span>Ask something a real customer would ask &mdash; pricing, hours, services, anything.</li>
-            <li><span class="num">3</span>Try voice. Tap the mic icon and talk to it like you'd talk to a person.</li>
-          </ol>
-          <div class="pro-tip">⚡ THE AGENT KNOWS YOUR SITE &middot; TRAINED ON YOUR REAL CONTENT</div>
-        </div>
-
-        <!-- Beta urgency strip -->
-        <div style="background:linear-gradient(135deg,#F0FDFA,#ECFEFF);border:1px solid #99F6E4;border-radius:14px;padding:14px 18px;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#0F766E;letter-spacing:.04em;text-align:center;line-height:1.55;">
-          <span style="font-weight:700;">PRIVATE BETA &middot; 50% OFF FOR LIFE</span><br>
-          <span style="color:#0D9488;">Locked in forever when you sign up during beta &middot; First 50 businesses only</span>
-        </div>
-
-        <!-- Primary CTA: $19 with anchor -->
-        <button id="cta-primary" onclick="handleCheckout()" class="pricebtn-primary">
-          <small><span class="anchor-strike" id="anchor-price">$39</span>just <span id="cur-price">$19</span>/mo</small>
-          <span id="cta-label">Add this to my site →</span>
-        </button>
-
-        <!-- $10 SCHEDULING toggle -->
-        <label for="sched-toggle" id="sched-card" class="sched-card">
-          <input id="sched-toggle" type="checkbox" onchange="toggleScheduling()" />
-          <div style="flex:1;">
-            <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.98rem;color:#0C0A09;">+ Add Booking &mdash; just $10/mo more</div>
-            <div style="font-size:.83rem;color:#57534E;margin-top:3px;line-height:1.5;">
-              Let your agent <strong>book the job</strong> in chat &mdash; not just answer. Customer picks a slot, you&rsquo;re booked. <em style="color:#0F766E;">Most customers add this.</em>
+        <!-- LEFT: iPhone with REAL iframe -->
+        <div style="display:flex;flex-direction:column;align-items:center;">
+          <div class="phone-bezel">
+            <div class="phone-screen">
+              <div class="phone-notch" aria-hidden="true"></div>
+              <iframe id="sa-iframe" class="phone-frame" src="about:blank" title="Live preview of your website with the AI agent installed" allow="microphone *; autoplay *; clipboard-write *" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-top-navigation-by-user-activation"></iframe>
             </div>
           </div>
-        </label>
+          <p style="text-align:center;font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.1em;color:var(--ink-5);margin-top:14px;text-transform:uppercase;max-width:300px;line-height:1.5;">
+            ↑ Your real site + the AI agent we just trained
+          </p>
+        </div>
 
-        <p style="text-align:center;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:#78716C;line-height:1.6;margin:6px 0 0;">
-          Free install &middot; Cancel anytime, 1 click &middot; No setup fee
-        </p>
+        <!-- RIGHT: Sales stack -->
+        <div style="display:flex;flex-direction:column;gap:14px;max-width:440px;">
 
+          <!-- "Try it" -->
+          <div class="try-card">
+            <h3>Try it. Be a customer.</h3>
+            <p class="sub">This is your <strong>actual website</strong>, with the AI agent installed.</p>
+            <ol class="try-list">
+              <li><span class="num">1</span>Tap the chat bubble in the bottom-right of the phone.</li>
+              <li><span class="num">2</span>Ask anything a real customer would — pricing, hours, services.</li>
+              <li><span class="num">3</span>Try voice. Tap the mic icon and talk to it.</li>
+            </ol>
+          </div>
+
+          <!-- Lab report — REAL DATA ONLY -->
+          <div class="lab-card" id="lab-card" hidden>
+            <div class="lab-h">TRAINED ON YOUR REAL CONTENT</div>
+            <div class="lab-row" id="lab-pages" hidden><span class="lab-lbl">PAGES INDEXED</span><span class="lab-val" id="lab-pages-v">—</span></div>
+            <div class="lab-row" id="lab-services" hidden><span class="lab-lbl">SERVICES DETECTED</span><span class="lab-val" id="lab-services-v">—</span></div>
+            <div class="lab-row" id="lab-hours" hidden><span class="lab-lbl">HOURS</span><span class="lab-val" id="lab-hours-v">—</span></div>
+            <div class="lab-row" id="lab-rating" hidden><span class="lab-lbl">GOOGLE RATING</span><span class="lab-val" id="lab-rating-v">—</span></div>
+            <div class="lab-row" id="lab-phone" hidden><span class="lab-lbl">PHONE</span><span class="lab-val" id="lab-phone-v">—</span></div>
+            <div class="lab-row" id="lab-voice"><span class="lab-lbl">VOICE</span><span class="lab-val" style="color:var(--teal-2);">✓ Enabled in-browser</span></div>
+          </div>
+
+          <!-- Beta strip -->
+          <div class="beta-strip">
+            <b>BETA PRICE — 50% OFF, LOCKED FOR LIFE</b><br>
+            <span style="color:var(--teal);">First 50 businesses · Cancel anytime</span>
+          </div>
+
+          <!-- Tier comparison (replaces toggle) -->
+          <div role="radiogroup" aria-label="Choose your plan" class="tier-grid">
+            <div class="tier" id="tier-19" role="radio" tabindex="0" aria-checked="false" onclick="selectTier(19)" onkeydown="if(event.key===' '||event.key==='Enter'){event.preventDefault();selectTier(19)}">
+              <span class="tier-radio" aria-hidden="true"></span>
+              <span class="tier-name">Talking Website</span>
+              <div class="tier-price"><span class="anchor">$39</span><span class="now">$19</span><span class="per">/mo</span></div>
+              <p class="tier-desc">Answers visitor questions 24/7 in chat + voice.</p>
+            </div>
+            <div class="tier selected" id="tier-29" role="radio" tabindex="0" aria-checked="true" onclick="selectTier(29)" onkeydown="if(event.key===' '||event.key==='Enter'){event.preventDefault();selectTier(29)}">
+              <span class="tier-tag">MOST POPULAR</span>
+              <span class="tier-radio" aria-hidden="true"></span>
+              <span class="tier-name">Talking + Booking</span>
+              <div class="tier-price"><span class="anchor">$59</span><span class="now">$29</span><span class="per">/mo</span></div>
+              <p class="tier-desc"><strong>Books jobs while you sleep.</strong> Customer picks a slot, you're booked.</p>
+            </div>
+          </div>
+
+          <!-- Primary CTA -->
+          <a id="cta-primary" href="https://buy.stripe.com/aFa9AUaJth2fd3mbsp3Je0N" target="_blank" rel="noopener" class="cta-primary">
+            <small><span class="anchor-strike" id="anchor-price">$59</span>just <span id="cur-price">$29</span>/mo</small>
+            <span id="cta-label">Add this to my site →</span>
+          </a>
+
+          <!-- Risk reversal -->
+          <div class="guarantee">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span><b>30-day money-back guarantee.</b> Try it. If it doesn't earn its keep, full refund — no questions asked.</span>
+          </div>
+
+          <p style="text-align:center;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--ink-4);line-height:1.6;margin:4px 0 0;">
+            Free install · Cancel in 1 click · No setup fee · No contract
+          </p>
+
+        </div>
       </div>
-    </div>
-  </div>
+    </section>
 
-  <!-- STATS ROW -->
-  <div style="background:#fff;border-top:1px solid #EFEDE9;border-bottom:1px solid #EFEDE9;padding:clamp(48px,8vh,80px) 22px;margin-top:clamp(40px,6vh,64px);">
-    <div style="max-width:1000px;margin:0 auto;text-align:center;">
-      <div class="stats-row">
-        <div style="animation:wwuRise .6s ease both .1s;">
-          <div class="stat-num">~30s</div>
-          <div class="stat-lbl">TO BUILD &amp; DEPLOY</div>
+    <!-- VALUE PROPS + OBJECTIONS -->
+    <section style="background:#fff;border-top:1px solid var(--line-soft);padding:clamp(56px,9vh,90px) 22px;">
+      <div style="max-width:1000px;margin:0 auto;">
+        <div style="text-align:center;max-width:680px;margin:0 auto 40px;">
+          <p class="testimonial-q">&ldquo;That&rsquo;s not a demo. That&rsquo;s your actual business — answering customers right now.&rdquo;</p>
+          <p class="testimonial-sub">It just handled a customer inquiry while you read this. <b>It&rsquo;ll do that 24/7</b> — saving hours of phone tag, late-night texts, and missed leads every week.</p>
         </div>
-        <div style="animation:wwuRise .6s ease both .2s;">
-          <div class="stat-num">24/7</div>
-          <div class="stat-lbl">ALWAYS ANSWERING</div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;max-width:880px;margin:0 auto;">
+          <div class="vprop">
+            <svg class="vprop-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/></svg>
+            <div class="vprop-title">Never miss a lead</div>
+            <p class="vprop-body">Customer fills out chat at 11pm. Their info hits your inbox before you wake up.</p>
+          </div>
+          <div class="vprop">
+            <svg class="vprop-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+            <div class="vprop-title">Voice + chat</div>
+            <p class="vprop-body">Some visitors type. Some talk. Yours answers both — trained on your real content.</p>
+          </div>
+          <div class="vprop">
+            <svg class="vprop-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <div class="vprop-title">Books appointments</div>
+            <p class="vprop-body">With booking add-on, your agent puts confirmed jobs straight on your calendar.</p>
+          </div>
+          <div class="vprop">
+            <svg class="vprop-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            <div class="vprop-title">60-second install</div>
+            <p class="vprop-body">One line of code on your site. Or send us your website login and we&rsquo;ll install it.</p>
+          </div>
         </div>
-        <div style="animation:wwuRise .6s ease both .3s;">
-          <div class="stat-num">78<span style="font-size:.6em;">%</span></div>
-          <div class="stat-lbl">OF VISITORS WILL INTERACT<br>WITH YOUR AGENT</div>
+
+        <!-- Objection-handler FAQ -->
+        <div style="max-width:680px;margin:48px auto 0;">
+          <div style="text-align:center;font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.16em;color:var(--teal);text-transform:uppercase;margin-bottom:18px;">Common questions</div>
+          <details class="obj-accordion">
+            <summary>Will it sound robotic?</summary>
+            <div class="obj-body">No. It uses natural voice and is trained on your business's actual website language — services, hours, tone. It answers like a knowledgeable team member would, not like a script.</div>
+          </details>
+          <details class="obj-accordion">
+            <summary>What if it gives a wrong answer?</summary>
+            <div class="obj-body">It only answers from what's on your website. If it doesn't know something, it says so and offers to take the visitor's name and number for you to follow up. It never invents prices or makes promises.</div>
+          </details>
+          <details class="obj-accordion">
+            <summary>Can I really cancel in 1 click?</summary>
+            <div class="obj-body">Yes. There's a cancel button in your Stripe dashboard. No phone call, no email, no "are you sure?" form. Cancel anytime, keep service through end of billing period.</div>
+          </details>
+          <details class="obj-accordion">
+            <summary>What does the visitor see if I'm not using the booking add-on?</summary>
+            <div class="obj-body">The chat captures their name, contact info, and what they need — then drops it in your inbox so you can follow up. The booking add-on automates that final step.</div>
+          </details>
         </div>
-        <div style="animation:wwuRise .6s ease both .4s;">
-          <div class="stat-num">3<span style="font-size:.7em;">x</span></div>
-          <div class="stat-lbl">MORE LEADS WITH<br>INSTANT AI RESPONSE</div>
+
+        <!-- Final CTA -->
+        <div style="display:flex;flex-direction:column;gap:12px;align-items:center;margin:48px auto 0;max-width:440px;">
+          <a id="cta-bottom" href="https://buy.stripe.com/aFa9AUaJth2fd3mbsp3Je0N" target="_blank" rel="noopener" class="cta-primary">
+            <small><span class="anchor-strike" id="anchor-price-2">$59</span>just <span id="cur-price-2">$29</span>/mo</small>
+            <span id="cta-label-2">Add this to my site →</span>
+          </a>
+          <p style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--ink-4);letter-spacing:.04em;text-align:center;">
+            30-day money-back guarantee · Cancel in 1 click · No setup fee
+          </p>
         </div>
       </div>
-    </div>
-  </div>
+    </section>
 
-  <!-- CLOSING SECTION — sales pitch -->
-  <div style="padding:clamp(56px,9vh,90px) 22px;text-align:center;background:#FAFAF9;">
-    <div style="max-width:780px;margin:0 auto;">
-      <span style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.16em;color:#0D9488;text-transform:uppercase;margin-bottom:14px;">WHY THIS MATTERS</span>
-      <p class="testimonial-q">&ldquo;That&rsquo;s not a demo. That&rsquo;s your actual business&mdash;answering customers right now.&rdquo;</p>
-      <p class="testimonial-sub">
-        Your AI agent just handled a customer inquiry while you read this. <b>It&rsquo;ll do that 24/7</b> &mdash; saving hours of phone tag, late-night texts, and missed leads every single week.
-      </p>
-
-      <!-- Value bullets -->
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:38px;text-align:left;max-width:760px;margin-left:auto;margin-right:auto;">
-        <div style="background:#fff;border:1px solid #E2E0DB;border-radius:14px;padding:18px 20px;">
-          <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.02rem;color:#0C0A09;margin-bottom:6px;">📞 Never miss a lead</div>
-          <div style="font-size:.88rem;color:#57534E;line-height:1.5;">Customer fills out the chat at 11pm. Their info hits your inbox before you wake up.</div>
-        </div>
-        <div style="background:#fff;border:1px solid #E2E0DB;border-radius:14px;padding:18px 20px;">
-          <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.02rem;color:#0C0A09;margin-bottom:6px;">🎙 Voice + chat</div>
-          <div style="font-size:.88rem;color:#57534E;line-height:1.5;">Some visitors type. Some talk. Yours answers both &mdash; in your business&rsquo;s voice.</div>
-        </div>
-        <div style="background:#fff;border:1px solid #E2E0DB;border-radius:14px;padding:18px 20px;">
-          <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.02rem;color:#0C0A09;margin-bottom:6px;">📅 Books appointments</div>
-          <div style="font-size:.88rem;color:#57534E;line-height:1.5;">With the +$10 booking add-on, your agent puts confirmed jobs straight on your calendar.</div>
-        </div>
-        <div style="background:#fff;border:1px solid #E2E0DB;border-radius:14px;padding:18px 20px;">
-          <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.02rem;color:#0C0A09;margin-bottom:6px;">🔧 60-second install</div>
-          <div style="font-size:.88rem;color:#57534E;line-height:1.5;">One line of code. Or we install it for you, free &mdash; just send us your CMS login.</div>
-        </div>
-      </div>
-
-      <!-- Final CTA -->
-      <div style="display:flex;flex-direction:column;gap:14px;align-items:center;margin-top:44px;max-width:420px;margin-left:auto;margin-right:auto;">
-        <button onclick="handleCheckout()" class="pricebtn-primary">
-          <small><span class="anchor-strike" id="anchor-price-2">$39</span>just <span id="cur-price-2">$19</span>/mo</small>
-          <span id="cta-label-2">Add this to my site →</span>
-        </button>
-        <p style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:#78716C;letter-spacing:.04em;">
-          50% OFF LOCKED IN FOR LIFE &middot; 50 SPOTS &middot; Cancel anytime
-        </p>
-      </div>
-    </div>
-  </div>
+  </main>
 
   <!-- FOOTER -->
-  <div style="background:#18181B;padding:34px 22px;border-top:1px solid rgba(255,255,255,.07);">
-    <div style="max-width:1000px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;color:#A8A29E;font-family:'JetBrains Mono',monospace;font-size:.78rem;">
-      <span>© 2026 WebsiteWakeUp &middot; Built by <a href="https://scalelocal.net" target="_blank" style="color:#67E8F9;text-decoration:none;">ScaleLocal</a></span>
-      <a href="/" style="color:#A8A29E;text-decoration:none;">← Wake up another site</a>
+  <footer style="background:#1C1917;padding:34px 22px;border-top:1px solid rgba(255,255,255,.07);">
+    <div style="max-width:1000px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;color:var(--ink-5);font-family:'JetBrains Mono',monospace;font-size:.78rem;">
+      <span>© 2026 WebsiteWakeUp · Built by <a href="https://scalelocal.net" target="_blank" rel="noopener" style="color:var(--cyan-2);text-decoration:none;">ScaleLocal</a></span>
+      <a href="/" style="color:var(--ink-5);text-decoration:none;">← Back to start</a>
     </div>
+  </footer>
+
+  <!-- Mobile sticky bottom CTA -->
+  <div class="sticky-cta">
+    <a id="cta-sticky" href="https://buy.stripe.com/aFa9AUaJth2fd3mbsp3Je0N" target="_blank" rel="noopener" class="cta-primary" style="padding:12px;">
+      <small><span class="anchor-strike" id="anchor-price-3">$59</span>just <span id="cur-price-3">$29</span>/mo · 30-day guarantee</small>
+      <span id="cta-label-3">Add this to my site →</span>
+    </a>
   </div>
 
 </div>
 
+<noscript>
+  <div style="position:fixed;top:80px;left:0;right:0;padding:20px;background:#fff;text-align:center;z-index:99;">
+    <p>This demo needs JavaScript. <a href="https://buy.stripe.com/aFa9AUaJth2fd3mbsp3Je0N">Get the AI agent — $29/mo</a></p>
+  </div>
+</noscript>
+
 <script>
 // ============================================================================
-// CONFIG
+// CONFIG (Stripe payment links are PUBLIC by design — Stripe never exposes secrets here)
 // ============================================================================
-var CONFIG = {
+const CONFIG = {
   API: 'https://agentcopy-api.vercel.app',
   STRIPE_LINK_19: 'https://buy.stripe.com/bJeaEY7xh4fte7qcwt3Je0M',
   STRIPE_LINK_29: 'https://buy.stripe.com/aFa9AUaJth2fd3mbsp3Je0N'
 };
-var schedulingOn = false;
+
+let selectedTier = 29; // default to $29 (decoy pricing pattern)
 
 // ============================================================================
 // Slug parsing
 // ============================================================================
 function getSlug(){
-  var p = window.location.pathname;
-  var m = p.match(/^\/site-agent\/(.+?)\/?$/);
-  return m ? decodeURIComponent(m[1]) : null;
+  try {
+    const p = window.location.pathname;
+    const m = p.match(/^\/site-agent\/(.+?)\/?$/);
+    return m ? decodeURIComponent(m[1]) : null;
+  } catch(e){ return null; }
 }
 function slugToDomain(slug){
-  var m = slug.match(/^(.+)-(net|org|co|io|biz|us|info|dev|ai|app|edu|gov|me|tv|ca|uk|au)$/i);
-  if (m) return (m[1] + '.' + m[2].toLowerCase());
+  const m = slug.match(/^(.+)-(net|org|co|io|biz|us|info|dev|ai|app|edu|gov|me|tv|ca|uk|au)$/i);
+  if (m) return m[1] + '.' + m[2].toLowerCase();
   return slug + '.com';
 }
 function prettyName(slug){
-  var m = slug.match(/^(.+)-(net|org|co|io|biz|us|info|dev|ai|app|edu|gov|me|tv|ca|uk|au)$/i);
-  var base = m ? m[1] : slug;
-  return base.split(/[-.]/).filter(Boolean).map(function(w){return w[0].toUpperCase()+w.slice(1);}).join(' ');
+  const m = slug.match(/^(.+)-(net|org|co|io|biz|us|info|dev|ai|app|edu|gov|me|tv|ca|uk|au)$/i);
+  const base = m ? m[1] : slug;
+  return base.split(/[-.]/).filter(Boolean).map(w=>w[0].toUpperCase()+w.slice(1)).join(' ');
 }
 
 // ============================================================================
 // Load real iframe (frame.html)
 // ============================================================================
 function loadFrame(domain, bizName){
-  var iframe = document.getElementById('sa-iframe');
-  var src = '/frame.html?url=' + encodeURIComponent('https://' + domain) + '&name=' + encodeURIComponent(bizName);
-  iframe.src = src;
+  const iframe = document.getElementById('sa-iframe');
+  if (!iframe) return;
+  iframe.src = '/frame.html?url=' + encodeURIComponent('https://' + domain) + '&name=' + encodeURIComponent(bizName);
 }
 
 // ============================================================================
-// Fetch business profile from API + populate hero name (only)
+// Reveal a lab-card field ONLY if there's real data for it
+// ============================================================================
+function showLabField(rowId, valueId, value){
+  if (value == null || value === '' || (typeof value === 'string' && !value.trim())) return false;
+  const row = document.getElementById(rowId);
+  const v = document.getElementById(valueId);
+  if (!row || !v) return false;
+  v.textContent = value;
+  row.hidden = false;
+  return true;
+}
+
+// ============================================================================
+// Fetch business profile with timeout + populate ONLY what's real
 // ============================================================================
 async function loadBusinessProfile(slug){
-  var fallbackName = prettyName(slug);
-  var fallbackDomain = slugToDomain(slug);
+  const fallbackName = prettyName(slug);
+  const fallbackDomain = slugToDomain(slug);
 
-  document.getElementById('hero-bizname').textContent = fallbackName;
+  // Hero name placeholder
+  const heroEl = document.getElementById('hero-bizname');
+  if (heroEl) heroEl.textContent = fallbackName;
+
+  // Eagerly start iframe with the slug-derived domain
   loadFrame(fallbackDomain, fallbackName);
 
+  // API call with 8s timeout
+  const ctrl = new AbortController();
+  const timeoutId = setTimeout(() => ctrl.abort(), 8000);
+  let data = {};
   try {
-    var res = await fetch(CONFIG.API + '/api/create-agent', {
+    const res = await fetch(CONFIG.API + '/api/create-agent', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({slug: slug})
+      body: JSON.stringify({slug}),
+      signal: ctrl.signal
     });
-    var data = await res.json();
-    var name = data.name || fallbackName;
-    document.getElementById('hero-bizname').textContent = name;
-    if (data.sourceUrl && data.sourceUrl !== fallbackDomain){
-      loadFrame(data.sourceUrl, name);
-    }
+    data = await res.json();
   } catch(err){
-    console.error('[SA] API error:', err);
+    console.warn('[SA] API timeout/error:', err);
+  } finally {
+    clearTimeout(timeoutId);
+  }
+
+  const name = (data && data.name) || fallbackName;
+  if (heroEl) heroEl.textContent = name;
+
+  // If API returns a different sourceUrl, reload the iframe
+  if (data && data.sourceUrl && data.sourceUrl !== fallbackDomain){
+    loadFrame(data.sourceUrl, name);
+  }
+
+  // Populate lab card — REAL DATA ONLY
+  let anyShown = false;
+  // Services — only if scraped content yields clean items (filter junk)
+  if (data && data.services && typeof data.services === 'string'){
+    const cleaned = data.services
+      .replace(/#{1,4}\s*/g,'')
+      .replace(/\[([^\]]+)\]\([^)]+\)/g,'$1')
+      .replace(/[_*`]/g,'')
+      .replace(/^\s*[-•]\s*/gm,'')
+      .split('\n')
+      .map(s=>s.trim())
+      .filter(s => s.length>3 && s.length<60
+        && !/^skip to/i.test(s)
+        && !/^welcome/i.test(s)
+        && !/^menu/i.test(s)
+        && !/^http/i.test(s)
+        && !/^×/i.test(s))
+      .slice(0,3);
+    if (cleaned.length >= 2){
+      if (showLabField('lab-services','lab-services-v', cleaned.join(' · '))) anyShown = true;
+    }
+  }
+  if (data && data.hours && typeof data.hours === 'string' && data.hours.trim().length > 4){
+    if (showLabField('lab-hours','lab-hours-v', data.hours.trim())) anyShown = true;
+  }
+  if (data && data.rating != null && data.rating !== 0 && data.rating !== ''){
+    const txt = '★ ' + data.rating + (data.reviewCount ? ' (' + data.reviewCount + ')' : '');
+    if (showLabField('lab-rating','lab-rating-v', txt)) anyShown = true;
+  }
+  if (data && data.phone && typeof data.phone === 'string' && data.phone.length >= 7){
+    if (showLabField('lab-phone','lab-phone-v', data.phone)) anyShown = true;
+  }
+
+  // Pages indexed — only if we have a real count
+  // (Not currently returned by API; left wired for future)
+  // if (data && data.pageCount) { showLabField('lab-pages','lab-pages-v', data.pageCount + ' pages'); anyShown = true; }
+
+  // Voice is always enabled — already shown by default
+  // Reveal the lab card if any real data made it in OR show the always-on voice row
+  document.getElementById('lab-card').hidden = false;
+  if (!anyShown){
+    // Only the voice row is shown — that's still valuable
   }
 }
 
 // ============================================================================
-// Scheduling toggle: swaps anchor, price, label, Stripe destination
+// Tier selection — updates anchor, current, label, AND href on all CTAs
 // ============================================================================
-function toggleScheduling(){
-  schedulingOn = document.getElementById('sched-toggle').checked;
-  var anchor = schedulingOn ? '$59' : '$39';
-  var current = schedulingOn ? '$29' : '$19';
-  var label = schedulingOn ? 'Add this to my site + booking →' : 'Add this to my site →';
-  document.getElementById('anchor-price').textContent = anchor;
-  document.getElementById('cur-price').textContent = current;
-  document.getElementById('anchor-price-2').textContent = anchor;
-  document.getElementById('cur-price-2').textContent = current;
-  document.getElementById('cta-label').textContent = label;
-  document.getElementById('cta-label-2').textContent = label;
-  var card = document.getElementById('sched-card');
-  if (schedulingOn) card.classList.add('on');
-  else card.classList.remove('on');
-}
+function selectTier(plan){
+  selectedTier = plan;
+  document.getElementById('tier-19').classList.toggle('selected', plan===19);
+  document.getElementById('tier-29').classList.toggle('selected', plan===29);
+  document.getElementById('tier-19').setAttribute('aria-checked', plan===19?'true':'false');
+  document.getElementById('tier-29').setAttribute('aria-checked', plan===29?'true':'false');
 
-// ============================================================================
-// Stripe checkout
-// ============================================================================
-function handleCheckout(){
-  var link = schedulingOn ? CONFIG.STRIPE_LINK_29 : CONFIG.STRIPE_LINK_19;
-  window.open(link, '_blank', 'noopener');
+  const anchor = plan===29 ? '$59' : '$39';
+  const current = plan===29 ? '$29' : '$19';
+  const label = plan===29 ? 'Add this to my site →' : 'Add this to my site →';
+  const stripeUrl = plan===29 ? CONFIG.STRIPE_LINK_29 : CONFIG.STRIPE_LINK_19;
+
+  ['anchor-price','anchor-price-2','anchor-price-3'].forEach(id=>{
+    const el = document.getElementById(id); if (el) el.textContent = anchor;
+  });
+  ['cur-price','cur-price-2','cur-price-3'].forEach(id=>{
+    const el = document.getElementById(id); if (el) el.textContent = current;
+  });
+  ['cta-label','cta-label-2','cta-label-3'].forEach(id=>{
+    const el = document.getElementById(id); if (el) el.textContent = label;
+  });
+  ['cta-primary','cta-bottom','cta-sticky'].forEach(id=>{
+    const el = document.getElementById(id); if (el) el.href = stripeUrl;
+  });
 }
 
 // ============================================================================
 // Boot
 // ============================================================================
 (function(){
-  var slug = getSlug();
+  const slug = getSlug();
   if (!slug){
     window.location.href = '/';
     return;
   }
+  selectTier(29); // ensure default state syncs UI + href
   loadBusinessProfile(slug);
 })();
 </script>
