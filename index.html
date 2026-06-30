@@ -1,6 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+// SPA route restoration — runs FIRST. Handles redirects from 404.html for
+// GitHub Pages SPA routing of /site-agent/<slug> etc.
+(function(){
+  try {
+    var r = sessionStorage.redirect;
+    delete sessionStorage.redirect;
+    if (r && r !== location.href){
+      history.replaceState(null, null, r);
+    } else {
+      var q = window.location.search;
+      if (q.indexOf('?/') === 0){
+        var d = q.slice(2).split('&').map(function(s){return s.replace(/~and~/g,'&');});
+        history.replaceState(null, null, '/' + d[0] + (d.length>1?'?'+d.slice(1).join('&'):'') + window.location.hash);
+      }
+    }
+    // If after restoration we're on /site-agent/<slug>, forward to site-agent.html
+    if (window.location.pathname.indexOf('/site-agent/') === 0){
+      var rest = window.location.pathname + window.location.search + window.location.hash;
+      window.location.replace(rest);
+      return;
+    }
+  } catch(e){}
+})();
+</script>
+
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <title>WebsiteWakeUp — Your website is asleep. Wake it up in 30 seconds.</title>

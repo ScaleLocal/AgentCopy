@@ -1,6 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+// SPA route restoration — GitHub Pages 404.html rewrites /site-agent/<slug> to
+// /site-agent.html?/site-agent/<slug>. Restore the pretty path so getSlug() works.
+(function(){
+  try {
+    var r = sessionStorage.redirect;
+    delete sessionStorage.redirect;
+    if (r && r !== location.href){
+      history.replaceState(null, null, r);
+    } else {
+      var q = window.location.search;
+      if (q.indexOf('?/') === 0){
+        var d = q.slice(2).split('&').map(function(s){return s.replace(/~and~/g,'&');});
+        history.replaceState(null, null, '/' + d[0] + (d.length>1?'?'+d.slice(1).join('&'):'') + window.location.hash);
+      }
+    }
+  } catch(e){}
+})();
+</script>
+
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <title>WebsiteWakeUp — Your AI agent is awake</title>
