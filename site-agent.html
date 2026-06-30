@@ -51,19 +51,25 @@
   .skip{position:absolute;left:-9999px;top:0;background:#000;color:#fff;padding:10px 14px;border-radius:6px;}
   .skip:focus{left:16px;top:16px;z-index:9999;}
 
-  /* iPhone */
-  .phone-bezel{position:relative;background:linear-gradient(145deg,#2A2A30,#0B0B0E);border-radius:46px;padding:10px;box-shadow:0 30px 60px rgba(12,10,9,.24),inset 0 1px 0 rgba(255,255,255,.14);width:280px;}
-  /* phone-screen = the OVERFLOW container (clips the scaled iframe). Background matches frame.html body so any edge spillover is invisible. aspect-ratio 9/19.5 = iPhone 15 Pro. */
-  .phone-screen{position:relative;border-radius:36px;overflow:hidden;background:#0E2034;aspect-ratio:9/19.5;max-height:75vh;}
-  .phone-notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:88px;height:26px;background:#000;border-radius:18px;z-index:5;pointer-events:none;}
-  /* Iframe renders at 393×851 (real iPhone width × scaled height that = 563px after scale 0.6616).
-     This way the GHL chat widget (which positions to bottom of iframe viewport) stays visible inside the screen. */
-  .phone-frame{position:absolute;top:0;left:0;border:0;width:393px;height:851px;display:block;background:#0E2034;transform-origin:top left;transform:scale(0.6616);}
-  @media (max-width:760px){
-    .phone-bezel{width:min(260px,80vw);}
-    .phone-screen{max-height:60vh;}
-    .phone-frame{transform:scale(0.611);}
-  }
+  /* iPhone — copied verbatim from the original working AgentCopyAI demo (290px width, no transform tricks) */
+  .phone-bezel{position:relative;background:#0C0A09;border-radius:44px;padding:11px;box-shadow:0 24px 60px rgba(12,10,9,.28),0 4px 12px rgba(12,10,9,.16);width:290px;}
+  .phone-screen{position:relative;border-radius:34px;overflow:hidden;background:#0E2034;aspect-ratio:9/19.3;}
+  .phone-notch{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:90px;height:22px;background:#0C0A09;border-radius:0 0 14px 14px;z-index:5;}
+  .phone-status{position:absolute;top:0;left:0;right:0;height:34px;display:flex;align-items:center;justify-content:space-between;padding:9px 22px 0;font-size:.62rem;font-weight:700;color:#fff;z-index:4;}
+  .phone-urlbar{position:absolute;top:34px;left:14px;right:14px;height:24px;background:rgba(255,255,255,.92);border-radius:7px;display:flex;align-items:center;justify-content:center;gap:5px;font-size:.6rem;color:#57534E;z-index:4;}
+  .site{position:absolute;inset:0;padding:70px 18px 0;color:#fff;background:radial-gradient(circle at 80% 8%,rgba(37,99,235,.18),transparent 45%),#0E2034;}
+  .site__logo{font-weight:800;font-size:.95rem;letter-spacing:-0.01em;}
+  .site__logo span{color:#60A5FA;}
+  .site__menu{float:right;color:#fff;font-size:1rem;}
+  .site__eyebrow{margin-top:30px;font-size:.5rem;font-weight:800;letter-spacing:.08em;color:#34D399;text-transform:uppercase;}
+  .site__h1{margin-top:8px;font-family:inherit;font-weight:800;font-size:1.5rem;line-height:1.04;letter-spacing:-0.02em;}
+  .site__h1 b{color:#3B82F6;font-weight:800;}
+  .site__p{margin-top:12px;font-size:.66rem;line-height:1.5;color:#CBD5E1;}
+  .site__cta{margin-top:14px;background:#2563EB;color:#fff;text-align:center;font-size:.7rem;font-weight:700;padding:9px;border-radius:7px;}
+  .site__widget{position:absolute;right:14px;bottom:16px;z-index:6;}
+  .site__widget-card{background:#fff;color:#1C1917;border-radius:12px;padding:11px 13px;font-size:.62rem;line-height:1.4;box-shadow:0 10px 24px rgba(0,0,0,.28);width:150px;margin-bottom:9px;position:relative;}
+  .site__widget-card .x{position:absolute;top:7px;right:9px;color:#A8A29E;font-size:.7rem;}
+  .site__widget-btn{width:42px;height:42px;border-radius:50%;background:#2563EB;display:flex;align-items:center;justify-content:center;margin-left:auto;box-shadow:0 6px 16px rgba(37,99,235,.4);}
 
   /* CTA */
   .cta-primary{display:block;width:100%;text-align:center;padding:16px 14px;border-radius:14px;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.06rem;background:var(--grad);color:#0C0A09;box-shadow:var(--shadow-cta);transition:transform .15s,box-shadow .15s;line-height:1.2;text-decoration:none;}
@@ -172,7 +178,19 @@
           <div class="phone-bezel">
             <div class="phone-screen">
               <div class="phone-notch" aria-hidden="true"></div>
-              <iframe id="sa-iframe" class="phone-frame" src="about:blank" title="Live preview of your website with the AI agent installed" allow="microphone *; autoplay *; clipboard-write *" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-top-navigation-by-user-activation"></iframe>
+              <div class="phone-status"><span>1:06</span><span>&#9646;&#9646;&#9646; &#128246; &#128267;</span></div>
+              <div class="phone-urlbar">&#128274; <span id="sa-urlbar-text">your-site.com</span></div>
+              <div class="site">
+                <div><span class="site__logo"><span id="sa-logo-text">YourBiz</span></span><span class="site__menu">&#9776;</span></div>
+                <div class="site__eyebrow" id="sa-tagline">Your business · live with AI</div>
+                <div class="site__h1">Your website <b>just woke up.</b></div>
+                <div class="site__p">Every visitor now gets answered the moment they arrive — services, hours, quotes. 24/7.</div>
+                <div class="site__cta">Tap the chat below &darr;</div>
+                <div class="site__widget">
+                  <div class="site__widget-card"><span class="x">&#10005;</span>Have a question? Chat with us here.</div>
+                  <div class="site__widget-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 6.5C5 5.67 5.67 5 6.5 5h11C18.33 5 19 5.67 19 6.5v8C19 15.33 18.33 16 17.5 16H11l-4 3v-3H6.5C5.67 16 5 15.33 5 14.5v-8z" fill="#fff"/></svg></div>
+                </div>
+              </div>
             </div>
           </div>
           <p style="text-align:center;font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.1em;color:var(--ink-5);margin-top:12px;text-transform:uppercase;">
@@ -314,9 +332,24 @@ function prettyName(slug){
 }
 
 function loadFrame(domain, bizName){
-  const iframe = document.getElementById('sa-iframe');
-  if (!iframe) return;
-  iframe.src = '/frame.html?url=' + encodeURIComponent('https://' + domain) + '&name=' + encodeURIComponent(bizName);
+  // Update the static mockup with the business's real domain + name
+  const urlbar = document.getElementById('sa-urlbar-text');
+  const logo = document.getElementById('sa-logo-text');
+  const tagline = document.getElementById('sa-tagline');
+  if (urlbar) urlbar.textContent = domain;
+  if (logo) logo.textContent = bizName;
+  if (tagline) tagline.textContent = bizName + ' · live with AI';
+  // Inject the real GHL chat widget onto THIS page (floats bottom-right) — original working pattern
+  injectGHLWidget();
+}
+function injectGHLWidget(){
+  if (document.getElementById('ghl-chat-script')) return;
+  const s = document.createElement('script');
+  s.id = 'ghl-chat-script';
+  s.src = 'https://beta.leadconnectorhq.com/loader.js';
+  s.setAttribute('data-resources-url', 'https://beta.leadconnectorhq.com/chat-widget/loader.js');
+  s.setAttribute('data-widget-id', '69c34fd013ad14bdd250aace');
+  document.body.appendChild(s);
 }
 
 function showLabField(rowId, valueId, value){
