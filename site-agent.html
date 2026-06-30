@@ -73,11 +73,11 @@
   .tier:hover{border-color:var(--teal);}
   .tier:focus-visible{outline:3px solid var(--ink);outline-offset:3px;}
   .tier.selected{border-color:var(--teal);background:var(--teal-soft);box-shadow:0 0 0 2px rgba(13,148,136,.18);}
-  .tier-head{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+  .tier-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;padding-bottom:6px;}
   .tier-radio{display:inline-block;width:14px;height:14px;border:2px solid var(--line-strong);border-radius:50%;position:relative;flex-shrink:0;}
   .tier.selected .tier-radio{border-color:var(--teal);}
   .tier.selected .tier-radio::after{content:'';position:absolute;top:2px;left:2px;width:6px;height:6px;border-radius:50%;background:var(--teal);}
-  .tier-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.94rem;color:var(--ink);}
+  .tier-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;color:var(--ink);line-height:1.2;}
   .tier-price{display:flex;align-items:baseline;gap:6px;margin-top:4px;}
   .tier-price .anchor{color:var(--ink-5);text-decoration:line-through;font-size:.92rem;font-weight:600;}
   .tier-price .now{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.5rem;color:var(--ink);}
@@ -387,12 +387,18 @@ async function loadBusinessProfile(slug){
 
   // REAL DATA ONLY
   if (data && data.services && typeof data.services === 'string'){
+    // Aggressive filter — service lines must look like real services, not nav/banner/CTA copy
+    const banListRegex = /(skip to|welcome|menu|sign in|log in|home|about|contact|book a|talk to|see how|get started|learn more|click here|pick up where|left off|brings you in today|free demo|wake mine up|wake it up|read more|view all|all rights|privacy|terms|cookie|©|navigation|toggle|opens in)/i;
     const cleaned = data.services
       .replace(/#{1,4}\s*/g,'').replace(/\[([^\]]+)\]\([^)]+\)/g,'$1').replace(/[_*`]/g,'').replace(/^\s*[-•]\s*/gm,'')
-      .split('\n').map(s=>s.trim())
-      .filter(s => s.length>3 && s.length<60
-        && !/^skip to/i.test(s) && !/^welcome/i.test(s) && !/^menu/i.test(s)
-        && !/^http/i.test(s) && !/^×/i.test(s))
+      .split(/[\n·•|]/).map(s=>s.trim())  // split on common separators too
+      .filter(s => s.length >= 4 && s.length <= 40   // real service names are short
+        && !banListRegex.test(s)
+        && !/^http/i.test(s)
+        && !/^×|^→|^—|^-/.test(s)
+        && !/[?!]$/.test(s)                            // exclude questions / exclamations
+        && /^[A-Z]/.test(s)                            // services usually capitalize
+        && (s.match(/\s/g) || []).length <= 5)        // exclude long sentences
       .slice(0,3);
     if (cleaned.length >= 2) showLabField('lab-services','lab-services-v', cleaned.join(' · '));
   }
