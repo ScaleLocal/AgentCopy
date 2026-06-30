@@ -53,11 +53,12 @@
 
   /* iPhone */
   .phone-bezel{position:relative;background:linear-gradient(145deg,#2A2A30,#0B0B0E);border-radius:46px;padding:10px;box-shadow:0 30px 60px rgba(12,10,9,.24),inset 0 1px 0 rgba(255,255,255,.14);width:280px;}
-  /* phone-screen is the OVERFLOW container. Iframe inside renders at real iPhone width (393px) then scales down. This is critical for the GHL chat widget to position correctly. */
+  /* phone-screen = the OVERFLOW container (clips the scaled iframe). Background matches frame.html body so any edge spillover is invisible. aspect-ratio 9/19.5 = iPhone 15 Pro. */
   .phone-screen{position:relative;border-radius:36px;overflow:hidden;background:#0E2034;aspect-ratio:9/19.5;max-height:75vh;}
   .phone-notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:88px;height:26px;background:#000;border-radius:18px;z-index:5;pointer-events:none;}
-  /* Iframe renders at 393px (real iPhone width) and scales to fit the screen. transform-origin top-left so it anchors to the corner. */
-  .phone-frame{position:absolute;top:0;left:0;border:0;width:393px;height:850px;display:block;background:#fff;transform-origin:top left;transform:scale(0.661);}
+  /* Iframe renders at 393×851 (real iPhone width × scaled height that = 563px after scale 0.6616).
+     This way the GHL chat widget (which positions to bottom of iframe viewport) stays visible inside the screen. */
+  .phone-frame{position:absolute;top:0;left:0;border:0;width:393px;height:851px;display:block;background:#0E2034;transform-origin:top left;transform:scale(0.6616);}
   @media (max-width:760px){
     .phone-bezel{width:min(260px,80vw);}
     .phone-screen{max-height:60vh;}
