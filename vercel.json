@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/site-agent/:slug", "destination": "/site-agent.html" },
+    { "source": "/site-agent", "destination": "/site-agent.html" },
+    { "source": "/frame", "destination": "/frame.html" },
+    { "source": "/welcome", "destination": "/welcome.html" }
+  ]
+}
