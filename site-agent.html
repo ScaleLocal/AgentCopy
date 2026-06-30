@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
 <script>
-// SPA route restoration — GitHub Pages 404.html rewrites /site-agent/<slug> to
-// /site-agent.html?/site-agent/<slug>. Restore the pretty path so getSlug() works.
+// SPA route restoration — runs FIRST.
 (function(){
   try {
     var r = sessionStorage.redirect;
@@ -20,7 +19,6 @@
   } catch(e){}
 })();
 </script>
-
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <title>WebsiteWakeUp — Your AI agent is awake</title>
@@ -37,22 +35,26 @@
   @keyframes wwuPop{0%{opacity:0;transform:scale(.72)}60%{opacity:1;transform:scale(1.05)}100%{opacity:1;transform:scale(1)}}
   @keyframes wwuRise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 
-  /* iPhone frame holds the REAL iframe to frame.html */
-  .phone-bezel{position:relative;background:linear-gradient(145deg,#2A2A30,#0B0B0E);border-radius:46px;padding:11px;box-shadow:0 36px 70px rgba(12,10,9,.28),inset 0 1px 0 rgba(255,255,255,.14);}
-  .phone-screen{position:relative;border-radius:36px;overflow:hidden;background:#0E2034;aspect-ratio:9/19.3;}
-  .phone-notch{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:88px;height:21px;background:#0B0B0E;border-radius:0 0 14px 14px;z-index:5;pointer-events:none;}
+  /* iPhone — locked to 280px to match original sizing + keep widget at natural size */
+  .phone-bezel{position:relative;background:linear-gradient(145deg,#2A2A30,#0B0B0E);border-radius:42px;padding:9px;box-shadow:0 36px 70px rgba(12,10,9,.28),inset 0 1px 0 rgba(255,255,255,.14);width:280px;}
+  .phone-screen{position:relative;border-radius:34px;overflow:hidden;background:#0E2034;aspect-ratio:9/19.3;}
+  .phone-notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:82px;height:19px;background:#0B0B0E;border-radius:0 0 13px 13px;z-index:5;pointer-events:none;}
   .phone-frame{position:absolute;inset:0;border:0;width:100%;height:100%;display:block;background:#fff;}
+  @media (max-width:760px){
+    .phone-bezel{width:min(280px,82vw);}
+  }
 
-  .pricebtn-primary{width:100%;padding:15px;border-radius:12px;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;background:linear-gradient(135deg,#0D9488,#22D3EE);color:#04201E;box-shadow:0 8px 22px rgba(34,211,238,.26);transition:transform .15s,box-shadow .15s;}
+  /* Sales CTA buttons */
+  .pricebtn-primary{display:block;width:100%;text-align:center;padding:16px 14px;border-radius:12px;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;background:linear-gradient(135deg,#0D9488,#22D3EE);color:#04201E;box-shadow:0 8px 22px rgba(34,211,238,.26);transition:transform .15s,box-shadow .15s;line-height:1.2;}
   .pricebtn-primary:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(34,211,238,.4);}
-  .pricebtn-secondary{width:100%;padding:14px;border-radius:12px;border:1.5px solid #D6D3D1;background:#fff;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.95rem;color:#0C0A09;transition:all .15s;}
-  .pricebtn-secondary:hover{border-color:#0D9488;color:#0D9488;}
-  .pricebtn-secondary.selected{background:#F0FDFA;border-color:#0D9488;color:#0F766E;}
-  .pricebtn-secondary.selected::before{content:'✓ ';color:#0D9488;font-weight:800;}
+  .pricebtn-primary small{display:block;font-size:.7rem;font-weight:600;opacity:.78;letter-spacing:.05em;margin-bottom:3px;}
+  .anchor-strike{color:#A8A29E;text-decoration:line-through;font-weight:600;margin-right:8px;font-size:.92em;}
 
-  .anchor-strike{color:#A8A29E;text-decoration:line-through;font-weight:600;margin-right:8px;font-size:.85em;}
+  .sched-card{display:flex;align-items:flex-start;gap:14px;padding:18px;border-radius:14px;border:1.5px dashed #D6D3D1;background:#fff;cursor:pointer;transition:all .15s;}
+  .sched-card.on{background:#F0FDFA;border-color:#0D9488;border-style:solid;}
+  .sched-card input{margin-top:3px;width:18px;height:18px;accent-color:#0D9488;cursor:pointer;flex-shrink:0;}
 
-  .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:32px;margin-top:60px;max-width:880px;margin-left:auto;margin-right:auto;}
+  .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:32px;margin-top:0;max-width:880px;margin-left:auto;margin-right:auto;}
   .stat-num{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(2.4rem,5vw,3.4rem);line-height:1;color:#0C0A09;font-weight:400;}
   .stat-lbl{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.16em;color:#A8A29E;text-transform:uppercase;margin-top:10px;line-height:1.5;}
 
@@ -60,8 +62,19 @@
   .testimonial-sub{font-size:.95rem;color:#57534E;line-height:1.6;margin:14px auto 0;max-width:520px;}
   .testimonial-sub b{color:#0C0A09;font-weight:600;}
 
-  @media (max-width:760px){
+  /* "Try it" instructions card */
+  .try-card{background:#fff;border:1px solid #E2E0DB;border-radius:18px;padding:24px;box-shadow:0 10px 30px rgba(12,10,9,.05);}
+  .try-card h3{font-family:'Space Grotesk',sans-serif;font-size:1.15rem;font-weight:700;margin:0 0 8px;color:#0C0A09;letter-spacing:-.01em;}
+  .try-card .sub{color:#57534E;font-size:.92rem;line-height:1.55;margin:0 0 16px;}
+  .try-list{display:flex;flex-direction:column;gap:10px;margin:0 0 14px;padding:0;list-style:none;}
+  .try-list li{display:flex;gap:11px;font-size:.9rem;color:#1C1917;line-height:1.55;align-items:flex-start;}
+  .try-list .num{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:#CCFBF1;color:#0F766E;font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;display:flex;align-items:center;justify-content:center;line-height:1;}
+  .try-card .pro-tip{margin-top:14px;padding-top:14px;border-top:1px solid #EFEDE9;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#0F766E;letter-spacing:.04em;line-height:1.5;}
+
+  @media (max-width:880px){
     .reveal-grid{grid-template-columns:1fr !important;}
+    .reveal-grid > div:first-child{order:1;}
+    .reveal-grid > div:last-child{order:2;}
   }
 </style>
 </head>
@@ -80,102 +93,90 @@
     <a href="/" style="padding:8px 14px;border-radius:9px;border:1px solid #E2E0DB;background:#fff;text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:#57534E;">← START OVER</a>
   </div>
 
-  <!-- HERO ===================================== -->
-  <div style="max-width:1000px;margin:0 auto;padding:clamp(34px,7vh,70px) 22px 30px;">
+  <!-- HERO -->
+  <div style="max-width:1100px;margin:0 auto;padding:clamp(40px,7vh,72px) 22px 30px;">
     <div style="text-align:center;animation:wwuPop .55s cubic-bezier(.2,.9,.3,1.2) both;">
-      <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 15px;border-radius:100px;border:1px solid #99F6E4;background:#CCFBF1;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.12em;color:#0F766E;margin-bottom:20px;">
+      <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 15px;border-radius:100px;border:1px solid #99F6E4;background:#CCFBF1;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.14em;color:#0F766E;margin-bottom:22px;">
         <span style="width:7px;height:7px;border-radius:50%;background:#0D9488;animation:wwuPulse 2s infinite;"></span>
-        <span>AGENT LIVE</span> &nbsp;<span style="color:#0F766E;font-weight:700;" id="hero-bizname">Your business</span> &mdash; AI agent live
+        <span>YOUR AGENT IS LIVE</span>
       </div>
       <h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2.8rem,8vw,5rem);line-height:1.0;letter-spacing:-.035em;margin:0;color:#0C0A09;">It&rsquo;s <span style="color:#0D9488;">awake.</span></h1>
-      <p style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(1.1rem,2.6vw,1.55rem);line-height:1.18;letter-spacing:-.01em;margin:14px auto 0;max-width:600px;color:#1C1917;">
-        <span style="color:#0D9488;" id="hero-bizname-2">Your business</span> is answering customers now &mdash; by chat <span style="color:#0D9488;">and voice</span>, 24/7.
+      <p style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(1.1rem,2.5vw,1.55rem);line-height:1.2;letter-spacing:-.01em;margin:16px auto 0;max-width:640px;color:#1C1917;">
+        <span style="color:#0D9488;" id="hero-bizname">Your website</span> is now answering customers &mdash; by chat <span style="color:#0D9488;">and voice</span>, 24/7.
+      </p>
+      <p style="font-family:'Inter',sans-serif;font-size:1rem;color:#57534E;margin:14px auto 0;max-width:560px;line-height:1.55;">
+        Pick up your phone and treat it like a customer would. Click chat. Try voice. Ask anything.
       </p>
     </div>
 
-    <!-- iPhone + Lab Report grid =================================== -->
-    <div class="reveal-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:32px;align-items:start;margin-top:clamp(34px,6vh,58px);">
+    <!-- iPhone + Sales grid -->
+    <div class="reveal-grid" style="display:grid;grid-template-columns:auto 1fr;gap:48px;align-items:start;margin-top:clamp(40px,6vh,64px);justify-content:center;">
 
-      <!-- LEFT: Real iPhone with REAL frame.html iframe inside -->
-      <div style="justify-self:center;width:clamp(280px,82vw,360px);">
+      <!-- LEFT: iPhone with real iframe -->
+      <div style="display:flex;flex-direction:column;align-items:center;">
         <div class="phone-bezel">
           <div class="phone-screen">
             <div class="phone-notch"></div>
             <iframe id="sa-iframe" class="phone-frame" src="about:blank" allow="microphone *; autoplay *; clipboard-write *" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-top-navigation-by-user-activation"></iframe>
           </div>
         </div>
-        <p style="text-align:center;font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.1em;color:#A8A29E;margin-top:14px;text-transform:uppercase;">
-          ↑ Try the chat widget on the live demo
+        <p style="text-align:center;font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.1em;color:#A8A29E;margin-top:16px;text-transform:uppercase;line-height:1.5;max-width:280px;">
+          ↑ This is your live website, plus the AI agent we just trained.
         </p>
       </div>
 
-      <!-- RIGHT: Lab report + pricing CTAs -->
-      <div style="display:flex;flex-direction:column;gap:16px;">
-        <div style="border:1px solid #E2E0DB;border-radius:18px;background:#fff;padding:24px;box-shadow:0 10px 30px rgba(12,10,9,.05);">
-          <div style="font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.14em;color:#0D9488;margin-bottom:14px;">TRAINED ON YOUR BUSINESS</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px 18px;">
-            <div>
-              <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.05em;color:#A8A29E;">SERVICES</div>
-              <div id="lr-services" style="color:#1C1917;font-weight:600;font-size:.86rem;margin-top:3px;">Loading…</div>
-            </div>
-            <div>
-              <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.05em;color:#A8A29E;">HOURS</div>
-              <div id="lr-hours" style="color:#1C1917;font-weight:600;font-size:.86rem;margin-top:3px;">—</div>
-            </div>
-            <div>
-              <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.05em;color:#A8A29E;">LOCATION</div>
-              <div id="lr-location" style="color:#1C1917;font-weight:600;font-size:.86rem;margin-top:3px;">—</div>
-            </div>
-            <div>
-              <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.05em;color:#A8A29E;">GOOGLE RATING</div>
-              <div id="lr-rating" style="color:#1C1917;font-weight:600;font-size:.86rem;margin-top:3px;">—</div>
-            </div>
-          </div>
-          <div style="margin-top:15px;padding-top:14px;border-top:1px solid #EFEDE9;display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:#0F766E;">
-            🎙 VOICE &middot; <span style="color:#0D9488;font-weight:700;">ENABLED IN-BROWSER</span>
-          </div>
+      <!-- RIGHT: Sales stack -->
+      <div style="display:flex;flex-direction:column;gap:16px;max-width:460px;">
+
+        <!-- "Try it" instructions -->
+        <div class="try-card">
+          <h3>Test it like one of your customers would.</h3>
+          <p class="sub">This is your <strong>actual website</strong>, with the AI agent installed. Try this:</p>
+          <ol class="try-list">
+            <li><span class="num">1</span>Tap the chat bubble in the bottom-right of the phone.</li>
+            <li><span class="num">2</span>Ask something a real customer would ask &mdash; pricing, hours, services, anything.</li>
+            <li><span class="num">3</span>Try voice. Tap the mic icon and talk to it like you'd talk to a person.</li>
+          </ol>
+          <div class="pro-tip">⚡ THE AGENT KNOWS YOUR SITE &middot; TRAINED ON YOUR REAL CONTENT</div>
         </div>
 
         <!-- Beta urgency strip -->
         <div style="background:linear-gradient(135deg,#F0FDFA,#ECFEFF);border:1px solid #99F6E4;border-radius:14px;padding:14px 18px;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#0F766E;letter-spacing:.04em;text-align:center;line-height:1.55;">
-          <span style="font-weight:700;">PRIVATE BETA · 50% OFF FOR LIFE</span><br>
-          <span style="color:#0D9488;">Locked in forever when you sign up during beta · First 50 businesses only</span>
+          <span style="font-weight:700;">PRIVATE BETA &middot; 50% OFF FOR LIFE</span><br>
+          <span style="color:#0D9488;">Locked in forever when you sign up during beta &middot; First 50 businesses only</span>
         </div>
 
-        <!-- $19 primary CTA -->
+        <!-- Primary CTA: $19 with anchor -->
         <button id="cta-primary" onclick="handleCheckout()" class="pricebtn-primary">
-          <span style="display:block;font-size:.7rem;font-weight:600;opacity:.7;letter-spacing:.05em;margin-bottom:3px;">
-            <span class="anchor-strike" id="anchor-price">$39</span>just <span id="cur-price">$19</span>/mo
-          </span>
+          <small><span class="anchor-strike" id="anchor-price">$39</span>just <span id="cur-price">$19</span>/mo</small>
           <span id="cta-label">Add this to my site →</span>
         </button>
 
-        <!-- $10 SCHEDULING TOGGLE — converts $19 → $29 on click -->
-        <label for="sched-toggle" id="sched-card" style="display:flex;align-items:flex-start;gap:14px;padding:18px 18px;border-radius:14px;border:1.5px dashed #D6D3D1;background:#fff;cursor:pointer;transition:all .15s;">
-          <input id="sched-toggle" type="checkbox" onchange="toggleScheduling()" style="margin-top:3px;width:18px;height:18px;accent-color:#0D9488;cursor:pointer;flex-shrink:0;" />
+        <!-- $10 SCHEDULING toggle -->
+        <label for="sched-toggle" id="sched-card" class="sched-card">
+          <input id="sched-toggle" type="checkbox" onchange="toggleScheduling()" />
           <div style="flex:1;">
-            <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.98rem;color:#0C0A09;">+ Add Booking — just $10/mo more</div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.98rem;color:#0C0A09;">+ Add Booking &mdash; just $10/mo more</div>
             <div style="font-size:.83rem;color:#57534E;margin-top:3px;line-height:1.5;">
-              Let your agent <strong>book the job</strong> right in the chat — not just answer.
-              Customer picks a slot, you're booked. <em style="color:#0F766E;">Most customers add this.</em>
+              Let your agent <strong>book the job</strong> in chat &mdash; not just answer. Customer picks a slot, you&rsquo;re booked. <em style="color:#0F766E;">Most customers add this.</em>
             </div>
           </div>
         </label>
 
         <p style="text-align:center;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:#78716C;line-height:1.6;margin:6px 0 0;">
-          Free install · Cancel anytime, 1 click · No setup fee
+          Free install &middot; Cancel anytime, 1 click &middot; No setup fee
         </p>
 
       </div>
     </div>
   </div>
 
-  <!-- WHY-IT-CONVERTS STATS ROW ===================================== -->
-  <div style="background:#fff;border-top:1px solid #EFEDE9;border-bottom:1px solid #EFEDE9;padding:clamp(48px,8vh,80px) 22px;">
+  <!-- STATS ROW -->
+  <div style="background:#fff;border-top:1px solid #EFEDE9;border-bottom:1px solid #EFEDE9;padding:clamp(48px,8vh,80px) 22px;margin-top:clamp(40px,6vh,64px);">
     <div style="max-width:1000px;margin:0 auto;text-align:center;">
       <div class="stats-row">
         <div style="animation:wwuRise .6s ease both .1s;">
-          <div class="stat-num" id="stat-buildtime">~30s</div>
+          <div class="stat-num">~30s</div>
           <div class="stat-lbl">TO BUILD &amp; DEPLOY</div>
         </div>
         <div style="animation:wwuRise .6s ease both .2s;">
@@ -194,32 +195,52 @@
     </div>
   </div>
 
-  <!-- TESTIMONIAL / CTA REPEAT ===================================== -->
-  <div style="padding:clamp(48px,8vh,80px) 22px;text-align:center;background:#FAFAF9;">
+  <!-- CLOSING SECTION — sales pitch -->
+  <div style="padding:clamp(56px,9vh,90px) 22px;text-align:center;background:#FAFAF9;">
     <div style="max-width:780px;margin:0 auto;">
-      <p class="testimonial-q">&ldquo;That&rsquo;s not a demo. That&rsquo;s your actual business.&rdquo;</p>
+      <span style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.16em;color:#0D9488;text-transform:uppercase;margin-bottom:14px;">WHY THIS MATTERS</span>
+      <p class="testimonial-q">&ldquo;That&rsquo;s not a demo. That&rsquo;s your actual business&mdash;answering customers right now.&rdquo;</p>
       <p class="testimonial-sub">
-        Your AI agent just handled a customer inquiry while you read this. <b>It'll do that 24/7</b> — saving your team hours of calls, texts, and e-mails every month.
+        Your AI agent just handled a customer inquiry while you read this. <b>It&rsquo;ll do that 24/7</b> &mdash; saving hours of phone tag, late-night texts, and missed leads every single week.
       </p>
 
-      <div style="display:flex;flex-direction:column;gap:14px;align-items:center;margin-top:38px;max-width:420px;margin-left:auto;margin-right:auto;">
-        <button onclick="handleCheckout()" class="pricebtn-primary" id="cta-primary-2">
-          <span style="display:block;font-size:.7rem;font-weight:600;opacity:.7;letter-spacing:.05em;margin-bottom:3px;">
-            <span class="anchor-strike" id="anchor-price-2">$39</span>just <span id="cur-price-2">$19</span>/mo
-          </span>
+      <!-- Value bullets -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:38px;text-align:left;max-width:760px;margin-left:auto;margin-right:auto;">
+        <div style="background:#fff;border:1px solid #E2E0DB;border-radius:14px;padding:18px 20px;">
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.02rem;color:#0C0A09;margin-bottom:6px;">📞 Never miss a lead</div>
+          <div style="font-size:.88rem;color:#57534E;line-height:1.5;">Customer fills out the chat at 11pm. Their info hits your inbox before you wake up.</div>
+        </div>
+        <div style="background:#fff;border:1px solid #E2E0DB;border-radius:14px;padding:18px 20px;">
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.02rem;color:#0C0A09;margin-bottom:6px;">🎙 Voice + chat</div>
+          <div style="font-size:.88rem;color:#57534E;line-height:1.5;">Some visitors type. Some talk. Yours answers both &mdash; in your business&rsquo;s voice.</div>
+        </div>
+        <div style="background:#fff;border:1px solid #E2E0DB;border-radius:14px;padding:18px 20px;">
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.02rem;color:#0C0A09;margin-bottom:6px;">📅 Books appointments</div>
+          <div style="font-size:.88rem;color:#57534E;line-height:1.5;">With the +$10 booking add-on, your agent puts confirmed jobs straight on your calendar.</div>
+        </div>
+        <div style="background:#fff;border:1px solid #E2E0DB;border-radius:14px;padding:18px 20px;">
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.02rem;color:#0C0A09;margin-bottom:6px;">🔧 60-second install</div>
+          <div style="font-size:.88rem;color:#57534E;line-height:1.5;">One line of code. Or we install it for you, free &mdash; just send us your CMS login.</div>
+        </div>
+      </div>
+
+      <!-- Final CTA -->
+      <div style="display:flex;flex-direction:column;gap:14px;align-items:center;margin-top:44px;max-width:420px;margin-left:auto;margin-right:auto;">
+        <button onclick="handleCheckout()" class="pricebtn-primary">
+          <small><span class="anchor-strike" id="anchor-price-2">$39</span>just <span id="cur-price-2">$19</span>/mo</small>
           <span id="cta-label-2">Add this to my site →</span>
         </button>
         <p style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:#78716C;letter-spacing:.04em;">
-          50% OFF LOCKED IN FOR LIFE · 50 SPOTS · Cancel anytime
+          50% OFF LOCKED IN FOR LIFE &middot; 50 SPOTS &middot; Cancel anytime
         </p>
       </div>
     </div>
   </div>
 
-  <!-- FOOTER ===================================== -->
+  <!-- FOOTER -->
   <div style="background:#18181B;padding:34px 22px;border-top:1px solid rgba(255,255,255,.07);">
     <div style="max-width:1000px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;color:#A8A29E;font-family:'JetBrains Mono',monospace;font-size:.78rem;">
-      <span>© 2026 WebsiteWakeUp · Built by <a href="https://scalelocal.net" target="_blank" style="color:#67E8F9;text-decoration:none;">ScaleLocal</a></span>
+      <span>© 2026 WebsiteWakeUp &middot; Built by <a href="https://scalelocal.net" target="_blank" style="color:#67E8F9;text-decoration:none;">ScaleLocal</a></span>
       <a href="/" style="color:#A8A29E;text-decoration:none;">← Wake up another site</a>
     </div>
   </div>
@@ -228,21 +249,17 @@
 
 <script>
 // ============================================================================
-// CONFIG — real Stripe payment links + agentcopy-api endpoint
+// CONFIG
 // ============================================================================
 var CONFIG = {
   API: 'https://agentcopy-api.vercel.app',
   STRIPE_LINK_19: 'https://buy.stripe.com/bJeaEY7xh4fte7qcwt3Je0M',
   STRIPE_LINK_29: 'https://buy.stripe.com/aFa9AUaJth2fd3mbsp3Je0N'
 };
-
-// ============================================================================
-// State
-// ============================================================================
 var schedulingOn = false;
 
 // ============================================================================
-// Slug → domain parsing (compat with WWU landing's slug format)
+// Slug parsing
 // ============================================================================
 function getSlug(){
   var p = window.location.pathname;
@@ -250,7 +267,6 @@ function getSlug(){
   return m ? decodeURIComponent(m[1]) : null;
 }
 function slugToDomain(slug){
-  // 'scalelocal-net' → 'scalelocal.net'; 'startup-io' → 'startup.io'; 'foo' → 'foo.com'
   var m = slug.match(/^(.+)-(net|org|co|io|biz|us|info|dev|ai|app|edu|gov|me|tv|ca|uk|au)$/i);
   if (m) return (m[1] + '.' + m[2].toLowerCase());
   return slug + '.com';
@@ -262,7 +278,7 @@ function prettyName(slug){
 }
 
 // ============================================================================
-// Load REAL iframe (frame.html) with the customer's website + GHL chat widget
+// Load real iframe (frame.html)
 // ============================================================================
 function loadFrame(domain, bizName){
   var iframe = document.getElementById('sa-iframe');
@@ -271,17 +287,13 @@ function loadFrame(domain, bizName){
 }
 
 // ============================================================================
-// Fetch business profile from /api/create-agent + populate sidebar
+// Fetch business profile from API + populate hero name (only)
 // ============================================================================
 async function loadBusinessProfile(slug){
   var fallbackName = prettyName(slug);
   var fallbackDomain = slugToDomain(slug);
 
-  // Show name immediately for snap response
   document.getElementById('hero-bizname').textContent = fallbackName;
-  document.getElementById('hero-bizname-2').textContent = fallbackName;
-
-  // Kick off iframe load with what we know
   loadFrame(fallbackDomain, fallbackName);
 
   try {
@@ -291,74 +303,37 @@ async function loadBusinessProfile(slug){
       body: JSON.stringify({slug: slug})
     });
     var data = await res.json();
-
     var name = data.name || fallbackName;
-    var domain = data.sourceUrl || fallbackDomain;
-
     document.getElementById('hero-bizname').textContent = name;
-    document.getElementById('hero-bizname-2').textContent = name;
-
-    // If API returned a better domain, reload iframe
     if (data.sourceUrl && data.sourceUrl !== fallbackDomain){
-      loadFrame(domain, name);
-    }
-
-    // Sidebar lab report
-    var servicesText = '';
-    if (data.services){
-      servicesText = String(data.services).replace(/#{1,4}\s*/g,'').replace(/\[([^\]]+)\]\([^)]+\)/g,'$1')
-        .replace(/[_*`]/g,'').replace(/^\s*[-•]\s*/gm,'').split('\n').map(function(l){return l.trim();})
-        .filter(function(l){return l.length>3 && l.length<60;}).slice(0,3).join(' · ');
-    }
-    document.getElementById('lr-services').textContent = servicesText || 'Repairs · Installs · Estimates';
-    document.getElementById('lr-hours').textContent    = data.hours    || 'Mon–Sat · 7a–7p';
-    document.getElementById('lr-location').textContent = data.address  || (data.location || 'Greater area');
-    document.getElementById('lr-rating').textContent   = data.rating   ? ('★ ' + data.rating + (data.reviewCount?(' ('+data.reviewCount+')'):'')) : '★ 4.8 (real-time)';
-
-    // Build time stat
-    if (data.buildTime){
-      document.getElementById('stat-buildtime').textContent = (Math.round(data.buildTime*10)/10) + 's';
+      loadFrame(data.sourceUrl, name);
     }
   } catch(err){
     console.error('[SA] API error:', err);
-    // Use sensible fallbacks
-    document.getElementById('lr-services').textContent = 'Repairs · Installs · Estimates';
-    document.getElementById('lr-hours').textContent    = 'Mon–Sat · 7a–7p';
-    document.getElementById('lr-location').textContent = 'Greater area';
-    document.getElementById('lr-rating').textContent   = '★ 4.8';
   }
 }
 
 // ============================================================================
-// $10 SCHEDULING TOGGLE — swaps anchor + current price + Stripe destination
+// Scheduling toggle: swaps anchor, price, label, Stripe destination
 // ============================================================================
 function toggleScheduling(){
   schedulingOn = document.getElementById('sched-toggle').checked;
   var anchor = schedulingOn ? '$59' : '$39';
   var current = schedulingOn ? '$29' : '$19';
-  document.getElementById('anchor-price').textContent = anchor;
-  document.getElementById('cur-price').textContent    = current;
-  document.getElementById('anchor-price-2').textContent = anchor;
-  document.getElementById('cur-price-2').textContent    = current;
   var label = schedulingOn ? 'Add this to my site + booking →' : 'Add this to my site →';
-  document.getElementById('cta-label').textContent   = label;
+  document.getElementById('anchor-price').textContent = anchor;
+  document.getElementById('cur-price').textContent = current;
+  document.getElementById('anchor-price-2').textContent = anchor;
+  document.getElementById('cur-price-2').textContent = current;
+  document.getElementById('cta-label').textContent = label;
   document.getElementById('cta-label-2').textContent = label;
-
-  // Visual highlight on the toggle card when checked
   var card = document.getElementById('sched-card');
-  if (schedulingOn){
-    card.style.borderColor = '#0D9488';
-    card.style.borderStyle = 'solid';
-    card.style.background  = '#F0FDFA';
-  } else {
-    card.style.borderColor = '#D6D3D1';
-    card.style.borderStyle = 'dashed';
-    card.style.background  = '#fff';
-  }
+  if (schedulingOn) card.classList.add('on');
+  else card.classList.remove('on');
 }
 
 // ============================================================================
-// Checkout — opens correct Stripe link based on toggle state
+// Stripe checkout
 // ============================================================================
 function handleCheckout(){
   var link = schedulingOn ? CONFIG.STRIPE_LINK_29 : CONFIG.STRIPE_LINK_19;
@@ -371,7 +346,6 @@ function handleCheckout(){
 (function(){
   var slug = getSlug();
   if (!slug){
-    // No slug in path — redirect to landing
     window.location.href = '/';
     return;
   }
