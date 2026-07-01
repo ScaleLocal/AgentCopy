@@ -161,6 +161,19 @@
     .reveal-grid > div:first-child{order:1;}
     .reveal-grid > div:last-child{order:2;}
   }
+  /* Pre-checkout modal */
+  #checkout-modal{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;}
+  #checkout-modal[hidden]{display:none;}
+  #checkout-modal .cm-backdrop{position:absolute;inset:0;background:rgba(12,10,9,.55);backdrop-filter:blur(2px);}
+  #checkout-modal .cm-card{position:relative;z-index:1;background:#fff;border-radius:18px;padding:26px 24px 22px;width:min(92vw,420px);max-height:92vh;overflow:auto;box-shadow:0 24px 60px rgba(0,0,0,.28);font-family:system-ui,sans-serif;}
+  #checkout-modal .cm-x{position:absolute;top:12px;right:14px;border:none;background:none;font-size:26px;line-height:1;color:#A8A29E;cursor:pointer;}
+  #checkout-modal .cm-title{font-family:Georgia,serif;font-size:1.35rem;color:#0C0A09;margin-bottom:6px;}
+  #checkout-modal .cm-sub{font-size:.85rem;color:#78716C;line-height:1.45;margin-bottom:16px;}
+  #checkout-modal .cm-label{display:block;font-size:.72rem;font-weight:600;color:#57534E;text-transform:uppercase;letter-spacing:.03em;margin-bottom:12px;}
+  #checkout-modal .cm-input{display:block;width:100%;margin-top:5px;padding:11px 12px;border:1px solid #E7E5E4;border-radius:10px;font-size:.95rem;color:#0C0A09;font-family:inherit;}
+  #checkout-modal .cm-input:focus{outline:none;border-color:#0D9488;box-shadow:0 0 0 3px rgba(13,148,136,.12);}
+  #checkout-modal .cm-error{color:#DC2626;font-size:.8rem;margin:2px 0 10px;}
+  #checkout-modal .cm-fine{text-align:center;font-size:.72rem;color:#A8A29E;margin-top:10px;}
 </style>
 </head>
 <body>
@@ -325,6 +338,36 @@
     </div>
   </footer>
 
+  <!-- Pre-checkout info-capture modal -->
+  <div id="checkout-modal" role="dialog" aria-modal="true" aria-labelledby="cm-title" hidden>
+    <div class="cm-backdrop" data-cm-close></div>
+    <div class="cm-card" role="document">
+      <button type="button" class="cm-x" aria-label="Close" data-cm-close>&times;</button>
+      <h2 id="cm-title" class="cm-title">Deploy your AI agent</h2>
+      <p class="cm-sub">We'll set up the AI for the business below. Confirm the details and we'll take you to secure checkout.</p>
+      <form id="cm-form" novalidate>
+        <label class="cm-label">Business name
+          <input type="text" id="cm-biz" class="cm-input" autocomplete="organization" required/>
+        </label>
+        <label class="cm-label">Website
+          <input type="text" id="cm-url" class="cm-input" autocomplete="url" required/>
+        </label>
+        <label class="cm-label">Your name
+          <input type="text" id="cm-name" class="cm-input" autocomplete="name" required/>
+        </label>
+        <label class="cm-label">Phone
+          <input type="tel" id="cm-phone" class="cm-input" autocomplete="tel" required/>
+        </label>
+        <label class="cm-label">Email
+          <input type="email" id="cm-email" class="cm-input" autocomplete="email" required/>
+        </label>
+        <p id="cm-error" class="cm-error" hidden></p>
+        <button type="submit" id="cm-submit" class="cta-primary" style="width:100%;margin-top:6px;">Continue to secure checkout</button>
+        <p class="cm-fine">Secure payment by Stripe. Cancel anytime.</p>
+      </form>
+    </div>
+  </div>
+
   <!-- Mobile sticky CTA -->
   <div class="sticky-cta">
     <a id="cta-sticky" href="https://buy.stripe.com/aFa9AUaJth2fd3mbsp3Je0N" target="_blank" rel="noopener" class="cta-primary" style="padding:13px;font-size:1rem;">
@@ -347,6 +390,9 @@ const CONFIG = {
   STRIPE_LINK_29: 'https://buy.stripe.com/aFa9AUaJth2fd3mbsp3Je0N'
 };
 let selectedTier = 29;
+// Demo context captured from /api/create-agent — passed to /api/checkout so
+// the payment (and Task #40 provisioning) knows exactly which business paid.
+let demoContext = { slug: null, bizName: null, url: null, wakeUpSlot: null, chatWidgetId: null };
 
 function getSlug(){
   try {
@@ -442,6 +488,14 @@ async function loadBusinessProfile(slug){
   const apiDomain = data && data.sourceUrl ? data.sourceUrl.replace(/^https?:\/\//,'').replace(/\/.*$/,'') : null;
   const finalDomain = apiDomain || fallbackDomain;
   const widgetId = data && data.chatWidgetId ? data.chatWidgetId : null;
+  // Stash the demo context for the pre-checkout modal / checkout call.
+  demoContext = {
+    slug: getSlug(),
+    bizName: name,
+    url: (apiDomain || fallbackDomain),
+    wakeUpSlot: (data && data.wakeUpSlot) || null,
+    chatWidgetId: widgetId
+  };
   // We must (re)load the frame with the rotated slot's widgetId. The eager
   // 600ms load has no widgetId (Alex fallback), so once the API returns a
   // real widgetId we reload so the visitor talks to THEIR business's agent.
@@ -482,10 +536,8 @@ function selectTier(plan){
     t29.setAttribute('tabindex', plan===29?'0':'-1');
   }
   const current = plan===29 ? '$29' : '$19';
-  const stripeUrl = plan===29 ? CONFIG.STRIPE_LINK_29 : CONFIG.STRIPE_LINK_19;
-  ['cta-primary','cta-sticky'].forEach(id=>{
-    const el = document.getElementById(id); if (el) el.href = stripeUrl;
-  });
+  // CTAs no longer link straight to Stripe — clicking opens the pre-checkout
+  // modal (openCheckoutModal), which creates a Checkout Session with metadata.
   ['cta-label','cta-label-2'].forEach(id=>{
     const el = document.getElementById(id); if (el) el.textContent = 'Add to my site — ' + current + '/mo';
   });
@@ -509,6 +561,75 @@ function bindTierClicks(){
   }
   if (t19) t19.addEventListener('keydown', e=>key(e, 19));
   if (t29) t29.addEventListener('keydown', e=>key(e, 29));
+
+  // Intercept the CTA links → open the pre-checkout modal instead of navigating.
+  ['cta-primary','cta-sticky'].forEach(id=>{
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('click', function(e){ e.preventDefault(); openCheckoutModal(); });
+  });
+  bindCheckoutModal();
+}
+
+// ── Pre-checkout info-capture modal ──
+function openCheckoutModal(){
+  const m = document.getElementById('checkout-modal');
+  if (!m) return;
+  // Prefill business + url from the demo context (editable by the visitor).
+  const biz = document.getElementById('cm-biz');
+  const url = document.getElementById('cm-url');
+  if (biz && !biz.value) biz.value = demoContext.bizName || (document.getElementById('hero-bizname')||{}).textContent || '';
+  if (url && !url.value)  url.value  = demoContext.url || '';
+  const err = document.getElementById('cm-error'); if (err){ err.hidden = true; err.textContent=''; }
+  m.hidden = false;
+  const first = document.getElementById('cm-name'); if (first) setTimeout(()=>first.focus(), 50);
+}
+function closeCheckoutModal(){
+  const m = document.getElementById('checkout-modal'); if (m) m.hidden = true;
+}
+function bindCheckoutModal(){
+  const m = document.getElementById('checkout-modal');
+  if (!m) return;
+  m.querySelectorAll('[data-cm-close]').forEach(el=> el.addEventListener('click', closeCheckoutModal));
+  document.addEventListener('keydown', e=>{ if (e.key==='Escape') closeCheckoutModal(); });
+  const form = document.getElementById('cm-form');
+  if (form) form.addEventListener('submit', onCheckoutSubmit);
+}
+async function onCheckoutSubmit(e){
+  e.preventDefault();
+  const err = document.getElementById('cm-error');
+  const btn = document.getElementById('cm-submit');
+  const val = id => (document.getElementById(id)||{}).value || '';
+  const bizName = val('cm-biz').trim();
+  const url     = val('cm-url').trim();
+  const name    = val('cm-name').trim();
+  const phone   = val('cm-phone').trim();
+  const email   = val('cm-email').trim();
+  function fail(msg){ if (err){ err.textContent = msg; err.hidden = false; } }
+  if (!bizName || !url){ return fail('Please confirm your business name and website.'); }
+  if (!name){ return fail('Please enter your name.'); }
+  if (!/^[+()\d\s.-]{7,}$/.test(phone)){ return fail('Please enter a valid phone number.'); }
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ return fail('Please enter a valid email.'); }
+  if (err) err.hidden = true;
+  if (btn){ btn.disabled = true; btn.textContent = 'Setting up secure checkout…'; }
+
+  const plan = selectedTier === 19 ? 'talking-website' : 'talking-website-scheduling';
+  const payload = {
+    plan,
+    slug: demoContext.slug || getSlug(),
+    bizName, url, name, phone, email,
+    wakeUpSlot: demoContext.wakeUpSlot
+  };
+  try {
+    const res = await fetch(CONFIG.API + '/api/checkout', {
+      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if (data && data.url){ window.location.href = data.url; return; }
+    fail('Something went wrong starting checkout. Please try again.');
+  } catch(e2){
+    fail('Network error — please try again.');
+  }
+  if (btn){ btn.disabled = false; btn.textContent = 'Continue to secure checkout'; }
 }
 
 (function(){
