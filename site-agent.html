@@ -366,14 +366,18 @@ function prettyName(slug){
   return base.split(/[-.]/).filter(Boolean).map(w=>w[0].toUpperCase()+w.slice(1)).join(' ');
 }
 
-function loadFrame(domain, bizName){
+function loadFrame(domain, bizName, widgetId){
   // Update Safari URL bar
   const urlbar = document.getElementById('sa-domain-display');
   if (urlbar) urlbar.textContent = domain;
-  // Load proxied customer site with GHL widget injected (handled by /frame.html)
+  // Load proxied customer site with GHL widget injected (handled by /frame.html).
+  // widgetId is the WakeUpAgent slot's chat widget id from /api/create-agent —
+  // frame.html falls back to the Alex widget if it's absent.
   const iframe = document.getElementById('sa-iframe');
   if (!iframe) return;
-  iframe.src = '/frame.html?url=' + encodeURIComponent('https://' + domain) + '&name=' + encodeURIComponent(bizName);
+  let src = '/frame.html?url=' + encodeURIComponent('https://' + domain) + '&name=' + encodeURIComponent(bizName);
+  if (widgetId) src += '&widgetId=' + encodeURIComponent(widgetId);
+  iframe.src = src;
 }
 
 function showLabField(rowId, valueId, value){
@@ -437,12 +441,16 @@ async function loadBusinessProfile(slug){
   // If iframe hasn't loaded yet and API gave us a domain, load with API's
   const apiDomain = data && data.sourceUrl ? data.sourceUrl.replace(/^https?:\/\//,'').replace(/\/.*$/,'') : null;
   const finalDomain = apiDomain || fallbackDomain;
+  const widgetId = data && data.chatWidgetId ? data.chatWidgetId : null;
+  // We must (re)load the frame with the rotated slot's widgetId. The eager
+  // 600ms load has no widgetId (Alex fallback), so once the API returns a
+  // real widgetId we reload so the visitor talks to THEIR business's agent.
   if (!frameLoaded){
     clearTimeout(eagerLoadTimer);
-    loadFrame(finalDomain, name);
-  } else if (apiDomain && apiDomain !== fallbackDomain){
-    // Only reload if API truly returned a different domain
-    loadFrame(apiDomain, name);
+    loadFrame(finalDomain, name, widgetId);
+  } else if (widgetId || (apiDomain && apiDomain !== fallbackDomain)){
+    // Reload if we got a slot widgetId (the common case) OR the domain changed.
+    loadFrame(finalDomain, name, widgetId);
   }
 
   // REAL DATA ONLY

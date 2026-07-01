@@ -90,12 +90,21 @@
 })();
 </script>
 
-<!-- GHL Chat Widget -->
-<script
-  src="https://beta.leadconnectorhq.com/loader.js"
-  data-resources-url="https://beta.leadconnectorhq.com/chat-widget/loader.js"
-  data-widget-id="69c34fd013ad14bdd250aace"
-></script>
+<!-- GHL Chat Widget — widget id comes from the WakeUpAgent rotation.
+     site-agent.html passes ?widgetId=<slot widget id> in the iframe src.
+     Falls back to the ScaleLocal Alex widget only if none was passed
+     (e.g. API failed) so the demo never renders widget-less. -->
+<script>
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  var widgetId = params.get('widgetId') || '69c34fd013ad14bdd250aace'; // fallback: Alex
+  var s = document.createElement('script');
+  s.src = 'https://widgets.leadconnectorhq.com/loader.js';
+  s.setAttribute('data-resources-url', 'https://widgets.leadconnectorhq.com/chat-widget/loader.js');
+  s.setAttribute('data-widget-id', widgetId);
+  document.body.appendChild(s);
+})();
+</script>
 
 <!-- Auto-open the widget using the real Stencil component .open() method -->
 <script>
