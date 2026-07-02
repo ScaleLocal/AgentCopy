@@ -451,6 +451,67 @@ function finalizeLab(domain){
   showLabField('lab-website','lab-website-v', domain);
 }
 
+// -- Slot keep-alive + re-claim ------------------------------
+// The 5 demo slots are shared. A heartbeat keeps THIS page's slot from
+// being reassigned while it is open; assignment always prefers idle slots,
+// so an active demo is never stolen. If our slot IS ever taken (e.g. this
+// tab was frozen in the background and reclaimed), we grab a fresh idle
+// slot so the visitor never ends up talking to another business's agent.
+let _hbTimer = null, _hiddenAt = 0, _reclaiming = false;
+
+async function sendHeartbeat(){
+  const slug = getSlug(); const slot = demoContext.wakeUpSlot;
+  if (!slug || !slot) return;
+  try {
+    const res = await fetch(CONFIG.API + '/api/heartbeat', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ slot, slug })
+    });
+    const d = await res.json();
+    if (d && d.ok && d.owned === false) reclaimSlot(); // our slot was taken
+  } catch(e){ /* non-fatal */ }
+}
+
+function startSlotKeepAlive(){
+  if (_hbTimer) clearInterval(_hbTimer);
+  sendHeartbeat();
+  _hbTimer = setInterval(function(){ if (document.visibilityState === 'visible') sendHeartbeat(); }, 25000);
+}
+
+async function reclaimSlot(){
+  const slug = getSlug();
+  if (!slug || _reclaiming) return;
+  _reclaiming = true;
+  try {
+    const res = await fetch(CONFIG.API + '/api/create-agent', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ slug })
+    });
+    const data = await res.json();
+    const widgetId = data && data.chatWidgetId ? data.chatWidgetId : null;
+    if (widgetId){
+      const apiDomain = data && data.sourceUrl ? data.sourceUrl.replace(/^https?:\/\//,'').replace(/\/.*$/,'') : null;
+      const domain = apiDomain || demoContext.url || slugToDomain(slug);
+      const name = (data && data.name) || demoContext.bizName || prettyName(slug);
+      demoContext.wakeUpSlot = (data && data.wakeUpSlot) || demoContext.wakeUpSlot;
+      demoContext.chatWidgetId = widgetId;
+      demoContext.bizName = name; demoContext.url = domain;
+      loadFrame(domain, name, widgetId);
+    }
+  } catch(e){ /* non-fatal */ }
+  finally { _reclaiming = false; }
+}
+
+document.addEventListener('visibilitychange', function(){
+  if (document.visibilityState === 'hidden'){ _hiddenAt = Date.now(); return; }
+  const away = _hiddenAt ? (Date.now() - _hiddenAt) : 0;
+  _hiddenAt = 0;
+  // Long background absence: our slot may have been reclaimed while the
+  // tab was frozen (heartbeats pause). Re-claim a fresh slot proactively.
+  if (away > 45000) reclaimSlot(); else sendHeartbeat();
+});
+window.addEventListener('focus', function(){ sendHeartbeat(); });
+
 async function loadBusinessProfile(slug){
   const fallbackName = prettyName(slug);
   // sourceUrl comes back without protocol; keep matching it without protocol so we don't double-load
@@ -509,6 +570,9 @@ async function loadBusinessProfile(slug){
     // Reload if we got a slot widgetId (the common case) OR the domain changed.
     loadFrame(finalDomain, name, widgetId);
   }
+
+  // Begin heartbeating this slot so it is not reassigned while the demo is open.
+  startSlotKeepAlive();
 
   // REAL DATA ONLY
   if (data && data.hours && typeof data.hours === 'string' && data.hours.trim().length > 4){
